@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoice Percuma Pro Malaysia | NiagaSenang</title>
+  <meta name="description" content="Invoice percuma pro untuk peniaga Malaysia. Multi-item, diskaun, SST 6%, auto numbering dan terus download PDF tanpa login.">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P81GM8SJWX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-P81GM8SJWX');
+  </script>
+
+  <style>
+    table { width:100%; border-collapse:collapse; margin-top:8px; }
+    th, td { border-bottom:1px solid #e5e7eb; padding:8px 6px; vertical-align:top; }
+    th { font-size:13px; text-align:left; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .grid-3 { display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:12px; }
+    .btn-secondary {
+      background:rgba(15,118,110,.12);
+      color:#0f766e;
+      border:1px solid rgba(15,118,110,.25);
+      padding:10px 14px;
+      border-radius:8px;
+      cursor:pointer;
+      margin-right:8px;
+    }
+    .btn-secondary:hover { background:rgba(15,118,110,.18); }
+    .totals-box {
+      background:#f8fafc;
+      border:1px solid #e5e7eb;
+      border-radius:10px;
+      padding:12px;
+      margin-top:12px;
+    }
+    .totals-row { display:flex; justify-content:space-between; margin:6px 0; }
+    .muted { color:#64748b; font-size:13px; }
+    .small { font-size:12px; color:#64748b; }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+
+      <h2>🧾 Invoice Percuma (Pro)</h2>
+      <p class="muted">Multi-item, diskaun, SST 6% & auto numbering. Data auto simpan (draft).</p>
+
+      <label>Nama Perniagaan</label>
+      <input id="biz" placeholder="Contoh: Kedai Makan Pak Ali">
+
+      <label>Alamat Perniagaan (optional)</label>
+      <input id="bizAddr" placeholder="Contoh: No 12, Jalan ABC, 43000 Kajang">
+
+      <div class="grid-2">
+        <div>
+          <label>No Invoice</label>
+          <input id="docNo" readonly>
+        </div>
+        <div>
+          <label>Tarikh</label>
+          <input id="docDate" type="date">
+        </div>
+      </div>
+
+      <label>Nama Pelanggan</label>
+      <input id="cust" placeholder="Contoh: Ahmad">
+
+      <label>Alamat Pelanggan (optional)</label>
+      <input id="custAddr" placeholder="Contoh: Shah Alam, Selangor">
+
+      <hr style="margin:16px 0;">
+
+      <h3>Item</h3>
+      <table id="itemsTable">
+        <thead>
+          <tr>
+            <th style="width:52%;">Butiran</th>
+            <th style="width:12%;">Qty</th>
+            <th style="width:20%;">Harga (RM)</th>
+            <th style="width:16%;"></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <button class="btn-secondary" onclick="addRow()">➕ Tambah Item</button>
+      <button class="btn-secondary" onclick="clearItems()">🧹 Clear</button>
+
+      <hr style="margin:16px 0;">
+
+      <div class="grid-3">
+        <div>
+          <label>Diskaun Type</label>
+          <select id="discountType">
+            <option value="rm">RM</option>
+            <option value="percent">%</option>
+          </select>
+        </div>
+        <div>
+          <label>Diskaun</label>
+          <input id="discountVal" type="number" step="0.01" value="0">
+        </div>
+        <div>
+          <label>SST 6%</label>
+          <div style="display:flex; gap:10px; align-items:center; margin-top:6px;">
+            <input id="sstOn" type="checkbox">
+            <span>Apply</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="totals-box">
+        <div class="totals-row"><span>Subtotal</span><span>RM <span id="subtotalTxt">0.00</span></span></div>
+        <div class="totals-row"><span>Diskaun</span><span>- RM <span id="discountAmtTxt">0.00</span></span></div>
+        <div class="totals-row"><span>SST (6%)</span><span>RM <span id="sstAmtTxt">0.00</span></span></div>
+        <hr>
+        <div class="totals-row"><strong>TOTAL</strong><strong>RM <span id="grandTotalTxt">0.00</span></strong></div>
+      </div>
+
+      <label>Nota (optional)</label>
+      <input id="note" placeholder="Contoh: Terima kasih!">
+
+      <div style="margin-top:14px;">
+        <button class="btn" onclick="generatePDF()">Download PDF</button>
+        <button class="btn-secondary" onclick="newDoc()">🆕 Invoice Baru</button>
+      </div>
+
+      <p class="small" style="margin-top:14px;">
+        Ada cadangan / perlukan bantuan? Email <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>
+      </p>
+
+      <p style="margin-top:16px;">
+        <a href="index.html">← Kembali ke NiagaSenang</a>
+      </p>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    /* ========= helpers ========= */
+    function money(n){ return (Math.round((Number(n||0) + Number.EPSILON) * 100)/100).toFixed(2); }
+    function today(){ return new Date().toISOString().slice(0,10); }
+
+    const LS_KEY = "ns_invoice_v2";
+    const SEQ_KEY = "ns_invoice_seq";
+
+    function getState(){
+      try { return JSON.parse(localStorage.getItem(LS_KEY) || "{}"); } catch(e){ return {}; }
+    }
+    function setState(obj){ localStorage.setItem(LS_KEY, JSON.stringify(obj)); }
+
+    function nextInvoiceNo(){
+      let seq = Number(localStorage.getItem(SEQ_KEY) || 0) + 1;
+      localStorage.setItem(SEQ_KEY, String(seq));
+      return "INV-" + String(seq).padStart(4,"0");
+    }
+
+    /* ========= items ========= */
+    function hookRow(tr){
+      tr.querySelectorAll("input").forEach(inp=>{
+        inp.addEventListener("input", ()=>{ calc(); saveDraft(); });
+      });
+    }
+
+    function addRow(prefill){
+      const tr=document.createElement("tr");
+      tr.innerHTML=`
+        <td><input class="desc" placeholder="Contoh: Nasi Ayam"></td>
+        <td><input class="qty" type="number" min="1" value="1"></td>
+        <td><input class="price" type="number" step="0.01" placeholder="0.00"></td>
+        <td style="text-align:right;">
+          <button class="btn-secondary" style="padding:6px 10px;" onclick="removeRow(this)">❌</button>
+        </td>
+      `;
+      document.querySelector("#itemsTable tbody").appendChild(tr);
+
+      if(prefill){
+        tr.querySelector(".desc").value = prefill.desc || "";
+        tr.querySelector(".qty").value  = prefill.qty ?? 1;
+        tr.querySelector(".price").value= prefill.price ?? "";
+      }
+
+      hookRow(tr);
+      calc();
+      saveDraft();
+    }
+
+    function removeRow(btn){
+      btn.closest("tr").remove();
+      if(document.querySelectorAll("#itemsTable tbody tr").length === 0) addRow();
+      calc();
+      saveDraft();
+    }
+
+    function clearItems(){
+      document.querySelector("#itemsTable tbody").innerHTML="";
+      addRow();
+      calc();
+      saveDraft();
+    }
+
+    /* ========= calc ========= */
+    function calc(){
+      let sub=0;
+      const rows=[...document.querySelectorAll("#itemsTable tbody tr")];
+      rows.forEach(r=>{
+        const q=Number(r.querySelector(".qty").value||0);
+        const p=Number(r.querySelector(".price").value||0);
+        sub += q*p;
+      });
+
+      let dVal=Number(document.getElementById("discountVal").value||0);
+      let dAmt = 0;
+      if(document.getElementById("discountType").value==="percent"){
+        dAmt = sub * (dVal/100);
+      } else {
+        dAmt = dVal;
+      }
+      if(dAmt > sub) dAmt = sub;
+
+      let after=sub-dAmt;
+      let sst = document.getElementById("sstOn").checked ? after*0.06 : 0;
+      let total = after+sst;
+
+      document.getElementById("subtotalTxt").innerText=money(sub);
+      document.getElementById("discountAmtTxt").innerText=money(dAmt);
+      document.getElementById("sstAmtTxt").innerText=money(sst);
+      document.getElementById("grandTotalTxt").innerText=money(total);
+
+      return {sub, dAmt, sst, total};
+    }
+
+    /* ========= save/load ========= */
+    function saveDraft(){
+      const rows=[...document.querySelectorAll("#itemsTable tbody tr")].map(r=>({
+        desc: r.querySelector(".desc").value.trim(),
+        qty:  Number(r.querySelector(".qty").value||0),
+        price:Number(r.querySelector(".price").value||0)
+      }));
+
+      const state={
+        biz:biz.value, bizAddr:bizAddr.value,
+        docNo:docNo.value, docDate:docDate.value,
+        cust:cust.value, custAddr:custAddr.value,
+        discountType:discountType.value,
+        discountVal:discountVal.value,
+        sstOn:sstOn.checked,
+        note:note.value,
+        rows
+      };
+      setState(state);
+    }
+
+    function loadDraft(){
+      const s=getState();
+
+      biz.value = s.biz || "";
+      bizAddr.value = s.bizAddr || "";
+      cust.value = s.cust || "";
+      custAddr.value = s.custAddr || "";
+      note.value = s.note || "";
+
+      discountType.value = s.discountType || "rm";
+      discountVal.value = s.discountVal ?? "0";
+      sstOn.checked = !!s.sstOn;
+
+      docDate.value = s.docDate || today();
+      docNo.value = s.docNo || nextInvoiceNo();
+
+      document.querySelector("#itemsTable tbody").innerHTML="";
+      if(s.rows && s.rows.length){
+        s.rows.forEach(r=>addRow(r));
+      } else {
+        addRow();
+      }
+      calc();
+    }
+
+    function newDoc(){
+      localStorage.removeItem(LS_KEY);
+      docNo.value = nextInvoiceNo();
+      biz.value=""; bizAddr.value="";
+      cust.value=""; custAddr.value="";
+      note.value="";
+      discountType.value="rm";
+      discountVal.value="0";
+      sstOn.checked=false;
+      docDate.value=today();
+      clearItems();
+      saveDraft();
+    }
+
+    /* ========= PDF ========= */
+    function wrapText(doc, text, x, y, maxW, fontSize){
+      doc.setFontSize(fontSize);
+      const lines = doc.splitTextToSize(text, maxW);
+      doc.text(lines, x, y);
+      return y + lines.length * (fontSize + 2);
+    }
+
+    function generatePDF(){
+      const {jsPDF}=window.jspdf;
+      const doc=new jsPDF({ unit:"pt", format:"a4" });
+
+      // ✅ EVENT: download_invoice
+      try{
+        gtag('event','download_invoice',{ event_category:'tools', event_label:'invoice_pdf' });
+      }catch(e){}
+
+      const pageW = doc.internal.pageSize.getWidth();
+      const pageH = doc.internal.pageSize.getHeight();
+      const margin = 42;
+      let y = 54;
+
+      const bizName = (biz.value || "Nama Perniagaan").trim();
+      const bizA = (bizAddr.value || "").trim();
+      const custName = (cust.value || "-").trim();
+      const custA = (custAddr.value || "").trim();
+      const invNo = (docNo.value || "-").trim();
+      const dateVal = (docDate.value || "-").trim();
+      const noteVal = (note.value || "").trim();
+
+      // Header
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(22);
+      doc.text("INVOICE", margin, y);
+
+      doc.setFontSize(11);
+      doc.setFont("helvetica","bold");
+      doc.text("Invoice No:", pageW - margin - 170, y - 10);
+      doc.setFont("helvetica","normal");
+      doc.text(invNo, pageW - margin, y - 10, {align:"right"});
+
+      doc.setFont("helvetica","bold");
+      doc.text("Tarikh:", pageW - margin - 170, y + 8);
+      doc.setFont("helvetica","normal");
+      doc.text(dateVal, pageW - margin, y + 8, {align:"right"});
+
+      y += 22;
+      doc.setDrawColor(220);
+      doc.line(margin, y, pageW - margin, y);
+      y += 18;
+
+      // Blocks
+      const leftX = margin;
+      const rightX = margin + 280;
+
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(11);
+      doc.text("Daripada", leftX, y);
+      doc.text("Bill To", rightX, y);
+      y += 14;
+
+      doc.setFontSize(12);
+      doc.text(bizName, leftX, y);
+      doc.text(custName, rightX, y);
+      y += 14;
+
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(11);
+
+      let yLeft = y, yRight = y;
+      if(bizA) yLeft = wrapText(doc, bizA, leftX, yLeft, 250, 11) + 2;
+      else yLeft += 2;
+
+      if(custA) yRight = wrapText(doc, custA, rightX, yRight, 250, 11) + 2;
+      else yRight += 2;
+
+      y = Math.max(yLeft, yRight) + 14;
+
+      // Table
+      const tableX = margin;
+      const tableW = pageW - margin*2;
+      const colDesc = Math.floor(tableW * 0.52);
+      const colQty  = Math.floor(tableW * 0.12);
+      const colPrice= Math.floor(tableW * 0.18);
+      const colTotal= tableW - (colDesc + colQty + colPrice);
+
+      doc.setFillColor(246, 247, 249);
+      doc.setDrawColor(230);
+      doc.rect(tableX, y, tableW, 26, "FD");
+
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(11);
+      doc.text("Butiran", tableX + 10, y + 17);
+      doc.text("Qty", tableX + colDesc + colQty - 10, y + 17, {align:"right"});
+      doc.text("Harga", tableX + colDesc + colQty + colPrice - 10, y + 17, {align:"right"});
+      doc.text("Jumlah", tableX + tableW - 10, y + 17, {align:"right"});
+
+      y += 34;
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(11);
+
+      const rows = [...document.querySelectorAll("#itemsTable tbody tr")].map(r=>({
+        desc: (r.querySelector(".desc").value||"").trim(),
+        qty: Number(r.querySelector(".qty").value||0),
+        price: Number(r.querySelector(".price").value||0)
+      })).filter(r => r.desc || r.qty || r.price);
+
+      if(rows.length === 0) rows.push({desc:"-", qty:0, price:0});
+
+      rows.forEach(r=>{
+        const lineTotal = (r.qty || 0) * (r.price || 0);
+
+        if(y > pageH - 180){
+          doc.addPage();
+          y = 60;
+        }
+
+        doc.setDrawColor(238);
+        doc.line(tableX, y + 18, tableX + tableW, y + 18);
+
+        const descLines = doc.splitTextToSize(r.desc || "-", colDesc - 20);
+        doc.text(descLines, tableX + 10, y);
+
+        doc.text(String(r.qty || 0), tableX + colDesc + colQty - 10, y, {align:"right"});
+        doc.text("RM " + money(r.price || 0), tableX + colDesc + colQty + colPrice - 10, y, {align:"right"});
+        doc.text("RM " + money(lineTotal || 0), tableX + tableW - 10, y, {align:"right"});
+
+        const rowH = Math.max(20, descLines.length * 14);
+        y += rowH;
+      });
+
+      y += 18;
+
+      // Totals
+      const {sub, dAmt, sst, total} = calc();
+      const boxW = 260;
+      const boxH = 110;
+      const boxX = pageW - margin - boxW;
+
+      if(y > pageH - boxH - 80){
+        doc.addPage();
+        y = 60;
+      }
+
+      doc.setDrawColor(230);
+      doc.setFillColor(250, 251, 252);
+      doc.rect(boxX, y, boxW, boxH, "FD");
+
+      let ty = y + 22;
+      doc.setFont("helvetica","bold");
+      doc.text("Subtotal", boxX + 14, ty);
+      doc.setFont("helvetica","normal");
+      doc.text("RM " + money(sub), boxX + boxW - 14, ty, {align:"right"});
+
+      ty += 22;
+      doc.setFont("helvetica","bold");
+      doc.text("Diskaun", boxX + 14, ty);
+      doc.setFont("helvetica","normal");
+      doc.text("- RM " + money(dAmt), boxX + boxW - 14, ty, {align:"right"});
+
+      ty += 22;
+      doc.setFont("helvetica","bold");
+      doc.text("SST (6%)", boxX + 14, ty);
+      doc.setFont("helvetica","normal");
+      doc.text("RM " + money(sst), boxX + boxW - 14, ty, {align:"right"});
+
+      ty += 26;
+      doc.setDrawColor(220);
+      doc.line(boxX + 14, ty - 16, boxX + boxW - 14, ty - 16);
+
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(13);
+      doc.text("TOTAL", boxX + 14, ty);
+      doc.text("RM " + money(total), boxX + boxW - 14, ty, {align:"right"});
+      doc.setFontSize(11);
+
+      // Note
+      if(noteVal){
+        y = y + boxH + 22;
+        doc.setFont("helvetica","bold");
+        doc.text("Nota:", margin, y);
+        doc.setFont("helvetica","normal");
+        y += 14;
+        wrapText(doc, noteVal, margin, y, pageW - margin*2, 11);
+      }
+
+      // Footer (pro, kecil)
+      doc.setFontSize(9);
+      doc.setTextColor(140);
+      doc.text("Generated by NiagaSenang", margin, pageH - 24);
+
+      const safeNo = (invNo || "invoice").replace(/[^a-z0-9-_]/gi,"_");
+      doc.save(`${safeNo}.pdf`);
+    }
+
+    /* ========= listeners ========= */
+    ["biz","bizAddr","cust","custAddr","discountType","discountVal","note","docDate"].forEach(id=>{
+      document.getElementById(id).addEventListener("input", ()=>{ calc(); saveDraft(); });
+    });
+    document.getElementById("sstOn").addEventListener("change", ()=>{ calc(); saveDraft(); });
+
+    /* init */
+    loadDraft();
+    calc();
+  </script>
+</body>
+</html>

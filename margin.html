@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kira Untung, Margin & Markup | NiagaSenang</title>
+  <meta name="description" content="Kira untung bersih, margin (%) & markup (%) untuk peniaga Malaysia. Masuk kos, harga jual & kos lain — terus dapat hasil. Percuma.">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P81GM8SJWX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-P81GM8SJWX');
+  </script>
+
+  <style>
+    .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .muted { color:#64748b; font-size: 13px; }
+    .box {
+      background:#f8fafc;
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      padding:12px;
+      margin-top:12px;
+    }
+    .row { display:flex; justify-content:space-between; gap:10px; margin:8px 0; }
+    .row strong { font-size:16px; }
+    .pill {
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(15,118,110,0.12);
+      color:#0f766e;
+      border:1px solid rgba(15,118,110,0.25);
+      font-size:12px;
+      margin-left:6px;
+    }
+    .btn-secondary {
+      background: rgba(15,118,110,0.12);
+      color: #0f766e;
+      border: 1px solid rgba(15,118,110,0.25);
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-right: 8px;
+    }
+    .btn-secondary:hover { background: rgba(15,118,110,0.18); }
+    .note {
+      font-size:12px;
+      color:#64748b;
+      margin-top:8px;
+      line-height:1.45;
+    }
+    .ok { color:#0f766e; font-weight:600; }
+    .warn { color:#b45309; font-weight:600; }
+    .bad { color:#b91c1c; font-weight:600; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+
+      <h2>📈 Kira Untung, Margin & Markup</h2>
+      <p class="muted">
+        Masukkan kos & harga jual — terus nampak untung bersih, margin (%) dan markup (%).
+        Data auto simpan dalam browser (local).
+      </p>
+
+      <hr style="margin:16px 0;">
+
+      <div class="grid-2">
+        <div>
+          <label>Kos Barang (RM)</label>
+          <input id="cost" type="number" step="0.01" placeholder="Contoh: 10.00">
+          <div class="note">Kos barang / modal stok.</div>
+        </div>
+
+        <div>
+          <label>Harga Jual (RM)</label>
+          <input id="price" type="number" step="0.01" placeholder="Contoh: 25.00">
+          <div class="note">Harga yang customer bayar (sebelum/selepas diskaun ikut cara jualan kau).</div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;" class="grid-2">
+        <div>
+          <label>Kos Lain (RM) <span class="pill">optional</span></label>
+          <input id="other" type="number" step="0.01" placeholder="Contoh: 3.50">
+          <div class="note">Contoh: packing, delivery, platform fee, ads, komisen.</div>
+        </div>
+
+        <div>
+          <label>Qty (unit) <span class="pill">optional</span></label>
+          <input id="qty" type="number" step="1" min="1" placeholder="Contoh: 1">
+          <div class="note">Kalau jual banyak unit sekali, isi qty untuk kira total.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;">
+        <button class="btn" type="button" onclick="calculate()">Kira Sekarang</button>
+        <button class="btn-secondary" type="button" onclick="resetAll()">Reset</button>
+        <button class="btn-secondary" type="button" onclick="copySummary()">Copy Result</button>
+      </div>
+
+      <div class="box" id="resultBox" style="display:none;">
+        <div class="row">
+          <span>Untung Bersih</span>
+          <strong>RM <span id="profitTxt">0.00</span> <span id="profitBadge"></span></strong>
+        </div>
+
+        <div class="row">
+          <span>Margin</span>
+          <strong><span id="marginTxt">0.00</span>%</strong>
+        </div>
+
+        <div class="row">
+          <span>Markup</span>
+          <strong><span id="markupTxt">0.00</span>%</strong>
+        </div>
+
+        <hr style="margin:12px 0;">
+
+        <div class="row">
+          <span>Breakeven Price (min)</span>
+          <strong>RM <span id="breakevenTxt">0.00</span></strong>
+        </div>
+
+        <div class="row">
+          <span>Total Revenue (ikut qty)</span>
+          <strong>RM <span id="revTxt">0.00</span></strong>
+        </div>
+
+        <div class="row">
+          <span>Total Cost (ikut qty)</span>
+          <strong>RM <span id="totalCostTxt">0.00</span></strong>
+        </div>
+
+        <div class="note">
+          <span class="mono">Margin</span> = (Untung ÷ Harga Jual) × 100<br>
+          <span class="mono">Markup</span> = (Untung ÷ Kos) × 100
+        </div>
+      </div>
+
+      <!-- Soft brand imprint -->
+      <p style="margin-top:12px; font-size:12px; color:#64748b;">
+        Tool ini disediakan percuma oleh <strong>NiagaSenang</strong>.
+      </p>
+
+      <p style="margin-top:18px;">
+        <a href="index.html">← Kembali ke NiagaSenang</a>
+      </p>
+
+    </div>
+  </div>
+
+  <script>
+    const LS_KEY = "ns_margin_v1";
+
+    function num(id) {
+      const v = document.getElementById(id).value;
+      const n = Number(v);
+      return isNaN(n) ? 0 : n;
+    }
+
+    function money(n) {
+      return Number(n || 0).toFixed(2);
+    }
+
+    function pct(n) {
+      return Number(n || 0).toFixed(2);
+    }
+
+    function save() {
+      const data = {
+        cost: document.getElementById("cost").value || "",
+        price: document.getElementById("price").value || "",
+        other: document.getElementById("other").value || "",
+        qty: document.getElementById("qty").value || ""
+      };
+      localStorage.setItem(LS_KEY, JSON.stringify(data));
+    }
+
+    function load() {
+      const raw = localStorage.getItem(LS_KEY);
+      if (!raw) return;
+      try {
+        const d = JSON.parse(raw);
+        document.getElementById("cost").value = d.cost || "";
+        document.getElementById("price").value = d.price || "";
+        document.getElementById("other").value = d.other || "";
+        document.getElementById("qty").value = d.qty || "";
+      } catch(e) {}
+    }
+
+    function badgeForProfit(p) {
+      const el = document.getElementById("profitBadge");
+      if (p > 0) { el.className = "pill ok"; el.textContent = "Untung"; }
+      else if (p === 0) { el.className = "pill warn"; el.textContent = "Break-even"; }
+      else { el.className = "pill bad"; el.textContent = "Rugi"; }
+    }
+
+    function calculate() {
+      const cost = num("cost");
+      const price = num("price");
+      const other = num("other");
+      const qtyRaw = document.getElementById("qty").value;
+      const qty = Math.max(1, Number(qtyRaw || 1));
+
+      // per unit
+      const totalUnitCost = cost + other;
+      const profitUnit = price - totalUnitCost;
+
+      // totals
+      const revenueTotal = price * qty;
+      const costTotal = totalUnitCost * qty;
+      const profitTotal = revenueTotal - costTotal;
+
+      // percentages (per unit)
+      const margin = (price > 0) ? (profitUnit / price) * 100 : 0;
+      const markup = (cost > 0) ? (profitUnit / cost) * 100 : 0;
+
+      // breakeven price (per unit)
+      const breakeven = totalUnitCost;
+
+      // render
+      document.getElementById("profitTxt").textContent = money(profitTotal);
+      badgeForProfit(profitTotal);
+
+      document.getElementById("marginTxt").textContent = pct(margin);
+      document.getElementById("markupTxt").textContent = pct(markup);
+
+      document.getElementById("breakevenTxt").textContent = money(breakeven);
+      document.getElementById("revTxt").textContent = money(revenueTotal);
+      document.getElementById("totalCostTxt").textContent = money(costTotal);
+
+      document.getElementById("resultBox").style.display = "block";
+
+      save();
+
+      // optional: GA event
+      try {
+        gtag('event', 'calculate_margin', { 'event_category': 'tools', 'event_label': 'margin' });
+      } catch(e) {}
+    }
+
+    function resetAll() {
+      localStorage.removeItem(LS_KEY);
+      ["cost","price","other","qty"].forEach(id => document.getElementById(id).value = "");
+      document.getElementById("resultBox").style.display = "none";
+    }
+
+    async function copySummary() {
+      // ensure calculated
+      if (document.getElementById("resultBox").style.display === "none") calculate();
+
+      const cost = document.getElementById("cost").value || "0";
+      const price = document.getElementById("price").value || "0";
+      const other = document.getElementById("other").value || "0";
+      const qty = document.getElementById("qty").value || "1";
+
+      const text =
+`NiagaSenang - Kira Margin
+Kos Barang: RM ${cost}
+Kos Lain: RM ${other}
+Harga Jual: RM ${price}
+Qty: ${qty}
+
+Untung Bersih: RM ${document.getElementById("profitTxt").textContent}
+Margin: ${document.getElementById("marginTxt").textContent}%
+Markup: ${document.getElementById("markupTxt").textContent}%
+Breakeven Price: RM ${document.getElementById("breakevenTxt").textContent}
+
+https://niagasenang.netlify.app/margin.html`;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        alert("✅ Result dah copy!");
+      } catch (e) {
+        // fallback
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        alert("✅ Result dah copy!");
+      }
+
+      try {
+        gtag('event', 'copy_result', { 'event_category': 'tools', 'event_label': 'margin' });
+      } catch(e) {}
+    }
+
+    // live update (optional): auto-calc bila input berubah
+    ["cost","price","other","qty"].forEach(id => {
+      document.addEventListener("input", (e) => {
+        if (e.target && e.target.id === id) {
+          save();
+        }
+      });
+    });
+
+    // init
+    load();
+  </script>
+</body>
+</html>
