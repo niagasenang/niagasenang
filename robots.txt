@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://niagasenang.netlify.app/sitemap.xml
+Sitemap: https://niagasenang.pages.dev/sitemap.xml
