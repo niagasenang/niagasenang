@@ -7,7 +7,7 @@
   <meta name="description" content="NiagaSenang: Invoice, quotation, resit, margin calculator & stock tracker PERCUMA untuk peniaga Malaysia. Tak perlu login. Terus guna. Download PDF.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- ✅ GOOGLE ADSENSE -->
+  <!-- ✅ GOOGLE ADSENSE (INDEX SAHAJA) -->
   <script async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2042278846951839"
     crossorigin="anonymous"></script>
@@ -22,14 +22,93 @@
   </script>
 
   <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* Brand row (logo + title) */
+    .brand-top{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:10px;
+    }
+    .ns-logo{
+      width:44px;
+      height:44px;
+      object-fit:cover;
+      border-radius:12px;
+      border:1px solid #e5e7eb;
+    }
+
+    /* FAQ accordion */
+    .faq-wrap{ margin-top:16px; }
+    .faq-wrap h3{ margin-bottom:10px; }
+
+    details.faq-item{
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      background:#ffffff;
+      padding:12px 14px;
+      margin:10px 0;
+    }
+    details.faq-item summary{
+      cursor:pointer;
+      list-style:none;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      outline:none;
+    }
+    details.faq-item summary::-webkit-details-marker{ display:none; }
+
+    .faq-chevron{
+      width:18px;
+      height:18px;
+      flex:0 0 18px;
+      opacity:.7;
+      transition: transform .18s ease;
+    }
+    details[open] .faq-chevron{ transform: rotate(180deg); }
+
+    .faq-body{
+      margin-top:10px;
+      color:#334155;
+      font-size:14px;
+      line-height:1.55;
+    }
+    .faq-note{
+      margin-top:8px;
+      font-size:12px;
+      color:#64748b;
+    }
+    .pill-warn{
+      display:inline-block;
+      padding:4px 10px;
+      border-radius:999px;
+      background:#fff7ed;
+      border:1px solid #fed7aa;
+      color:#9a3412;
+      font-size:12px;
+      font-weight:700;
+      margin-left:8px;
+      white-space:nowrap;
+    }
+  </style>
 </head>
 
 <body>
   <div class="container">
     <div class="card">
 
-      <h1>NiagaSenang</h1>
-      <p><strong>Tools Percuma Untuk Peniaga Malaysia</strong></p>
+      <!-- Brand row -->
+      <div class="brand-top">
+        <img src="ns-logo.jpg" alt="NiagaSenang Logo" class="ns-logo">
+        <div>
+          <h1 style="margin:0;">NiagaSenang</h1>
+          <p style="margin:2px 0 0;"><strong>Tools Percuma Untuk Peniaga Malaysia</strong></p>
+        </div>
+      </div>
 
       <p>
         Buat invoice, quotation & resit dalam 2 minit.<br>
@@ -64,6 +143,7 @@
         </li>
       </ul>
 
+      <!-- Internal link booster -->
       <p style="margin-top:14px;">
         Paling popular: <a href="invoice.html">Invoice Percuma Pro</a> —
         sesuai untuk SME & peniaga Malaysia.
@@ -71,32 +151,77 @@
 
       <hr style="margin:16px 0;">
 
-      <h3>❓ Soalan Lazim</h3>
+      <!-- FAQ Accordion -->
+      <div class="faq-wrap">
+        <h3>❓ Soalan Lazim</h3>
 
-      <p>
-        <strong>NiagaSenang betul-betul percuma?</strong><br>
-        Ya. Tak perlu daftar akaun atau subscribe.
-      </p>
+        <details class="faq-item">
+          <summary>
+            NiagaSenang betul-betul percuma?
+            <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/>
+            </svg>
+          </summary>
+          <div class="faq-body">
+            Ya. Tak perlu daftar akaun atau subscribe. Terus guna & download PDF.
+          </div>
+        </details>
 
-      <p>
-        <strong>Data aku disimpan dekat mana?</strong><br>
-        Semua data disimpan dalam browser (local). Anda boleh guna fungsi Export Backup untuk simpan fail.
-      </p>
+        <details class="faq-item">
+          <summary>
+            Data aku disimpan dekat mana?
+            <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/>
+            </svg>
+          </summary>
+          <div class="faq-body">
+            Semua data disimpan dalam browser (local). Kami tidak simpan data anda di server.
+            Anda boleh guna fungsi Export/Backup (jika ada) untuk simpan fail sendiri.
+            <div class="faq-note">Tip: Kalau tukar phone/laptop, data tak ikut kecuali anda export/backup.</div>
+          </div>
+        </details>
 
-      <p>
-        <strong>Boleh tambah banyak item & auto kira total?</strong><br>
-        Boleh. Semua tools support multi-item & auto total.
-      </p>
+        <details class="faq-item">
+          <summary>
+            Boleh tambah banyak item & auto kira total?
+            <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/>
+            </svg>
+          </summary>
+          <div class="faq-body">
+            Boleh. Tools NiagaSenang support multi-item & auto total (termasuk diskaun dan SST jika diaktifkan).
+          </div>
+        </details>
 
-      <p>
-        <strong>Macam mana nak kira SST 6%?</strong><br>
-        Tick sahaja “Apply SST” untuk kira SST automatik.
-      </p>
+        <details class="faq-item">
+          <summary>
+            E-Invoice (LHDN) – NiagaSenang dah comply?
+            <span class="pill-warn">Disclaimer</span>
+            <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/>
+            </svg>
+          </summary>
+          <div class="faq-body">
+            Buat masa ini, NiagaSenang menyediakan invoice/quotation/resit dalam format biasa (PDF) untuk kemudahan rekod.
+            Kami <strong>belum</strong> implement integrasi/penyerahan e-Invoice LHDN secara rasmi.
+            <div class="faq-note">
+              Sila rujuk akauntan / penasihat cukai untuk keperluan e-Invoice perniagaan anda.
+            </div>
+          </div>
+        </details>
 
-      <p style="margin-top:16px;">
-        Ada cadangan atau perlukan bantuan?<br>
-        Email kami di <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>
-      </p>
+        <details class="faq-item">
+          <summary>
+            Perlukan bantuan / ada cadangan?
+            <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/>
+            </svg>
+          </summary>
+          <div class="faq-body">
+            Email kami di <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>.
+          </div>
+        </details>
+      </div>
 
       <!-- 💰 IKLAN / PARTNER -->
       <hr style="margin:20px 0;">
@@ -112,7 +237,6 @@
         <a href="https://kitraent.netlify.app/"
            target="_blank"
            rel="noopener"
-           onclick="trackPartnerClick()"
            style="
              display:inline-block;
              padding:12px 18px;
@@ -148,7 +272,6 @@
         <a href="https://sociabuzz.com/niagasenang/donate"
            target="_blank"
            rel="noopener"
-           onclick="trackDonateClick()"
            style="
              display:inline-block;
              padding:12px 18px;
@@ -172,25 +295,5 @@
 
     </div>
   </div>
-
-  <script>
-    function trackDonateClick() {
-      try {
-        gtag('event', 'click_donate', {
-          event_category: 'monetization',
-          event_label: 'sociabuzz_donate'
-        });
-      } catch(e) {}
-    }
-
-    function trackPartnerClick() {
-      try {
-        gtag('event', 'click_partner_kitra', {
-          event_category: 'monetization',
-          event_label: 'kitra_car_rental'
-        });
-      } catch(e) {}
-    }
-  </script>
 </body>
 </html>
