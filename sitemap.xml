@@ -2,43 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://niagasenang.netlify.app/</loc>
-    <lastmod>2026-01-27</lastmod>
+    <loc>https://niagasenang.pages.dev/</loc>
+    <lastmod>2026-02-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://niagasenang.netlify.app/invoice.html</loc>
-    <lastmod>2026-01-27</lastmod>
+    <loc>https://niagasenang.pages.dev/invoice.html</loc>
+    <lastmod>2026-02-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://niagasenang.netlify.app/quotation.html</loc>
-    <lastmod>2026-01-27</lastmod>
+    <loc>https://niagasenang.pages.dev/quotation.html</loc>
+    <lastmod>2026-02-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://niagasenang.netlify.app/resit.html</loc>
-    <lastmod>2026-01-27</lastmod>
+    <loc>https://niagasenang.pages.dev/resit.html</loc>
+    <lastmod>2026-02-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://niagasenang.netlify.app/margin.html</loc>
-    <lastmod>2026-01-27</lastmod>
+    <loc>https://niagasenang.pages.dev/margin.html</loc>
+    <lastmod>2026-02-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <url>
-    <loc>https://niagasenang.netlify.app/stock.html</loc>
-    <lastmod>2026-01-27</lastmod>
+    <loc>https://niagasenang.pages.dev/stock.html</loc>
+    <lastmod>2026-02-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
