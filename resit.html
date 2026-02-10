@@ -42,6 +42,39 @@
     .totals-row { display:flex; justify-content:space-between; margin:6px 0; }
     .muted { color:#64748b; font-size:13px; }
     .small { font-size:12px; color:#64748b; }
+
+    /* ===== Top row (title + language toggle) ===== */
+    .top-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .lang-toggle{
+      display:flex;
+      gap:6px;
+      padding:4px;
+      border:1px solid #e5e7eb;
+      border-radius:999px;
+      background:#ffffff;
+      flex:0 0 auto;
+      margin-top:2px;
+    }
+    .lang-btn{
+      border:0;
+      background:transparent;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:12px;
+      cursor:pointer;
+      color:#334155;
+      line-height:1;
+    }
+    .lang-btn.active{
+      background:#1e293b;
+      color:#ffffff;
+    }
   </style>
 </head>
 
@@ -49,106 +82,117 @@
   <div class="container">
     <div class="card">
 
-      <h2>🧾 Resit Percuma (Pro)</h2>
-      <p class="muted">Multi-item, diskaun, SST 6% & auto numbering. Data auto simpan (draft).</p>
+      <div class="top-row">
+        <div>
+          <h2 data-i18n="h2">🧾 Resit Percuma (Pro)</h2>
+          <p class="muted" data-i18n="subtitle">Multi-item, diskaun, SST 6% & auto numbering. Data auto simpan (draft).</p>
+        </div>
 
-      <label>Nama Perniagaan</label>
+        <!-- Language toggle -->
+        <div class="lang-toggle" aria-label="Language toggle">
+          <button type="button" class="lang-btn" data-lang="ms">BM</button>
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
+        </div>
+      </div>
+
+      <label data-i18n="lblBiz">Nama Perniagaan</label>
       <input id="biz" placeholder="Contoh: Kedai Makan Pak Ali">
 
-      <label>Alamat Perniagaan (optional)</label>
+      <label data-i18n="lblBizAddr">Alamat Perniagaan (optional)</label>
       <input id="bizAddr" placeholder="Contoh: No 12, Jalan ABC, 43000 Kajang">
 
       <div class="grid-2">
         <div>
-          <label>No Resit</label>
+          <label data-i18n="lblDocNo">No Resit</label>
           <input id="docNo" readonly>
         </div>
         <div>
-          <label>Tarikh</label>
+          <label data-i18n="lblDate">Tarikh</label>
           <input id="docDate" type="date">
         </div>
       </div>
 
-      <label>Nama Pelanggan (optional)</label>
+      <label data-i18n="lblCust">Nama Pelanggan (optional)</label>
       <input id="cust" placeholder="Contoh: Ahmad">
 
-      <label>Alamat Pelanggan (optional)</label>
+      <label data-i18n="lblCustAddr">Alamat Pelanggan (optional)</label>
       <input id="custAddr" placeholder="Contoh: Shah Alam, Selangor">
 
       <div class="grid-2" style="margin-top:10px;">
         <div>
-          <label>Kaedah Bayaran (optional)</label>
+          <label data-i18n="lblPayMethod">Kaedah Bayaran (optional)</label>
           <input id="payMethod" placeholder="Contoh: Cash / Transfer / QR">
         </div>
         <div>
-          <label>Rujukan Bayaran (optional)</label>
+          <label data-i18n="lblPayRef">Rujukan Bayaran (optional)</label>
           <input id="payRef" placeholder="Contoh: TXN123 / Maybank2u">
         </div>
       </div>
 
       <hr style="margin:16px 0;">
 
-      <h3>Butiran Item</h3>
+      <h3 data-i18n="itemsTitle">Butiran Item</h3>
       <table id="itemsTable">
         <thead>
           <tr>
-            <th style="width:52%;">Butiran</th>
-            <th style="width:12%;">Qty</th>
-            <th style="width:20%;">Harga (RM)</th>
+            <th style="width:52%;" data-i18n="thDesc">Butiran</th>
+            <th style="width:12%;" data-i18n="thQty">Qty</th>
+            <th style="width:20%;" data-i18n="thPrice">Harga (RM)</th>
             <th style="width:16%;"></th>
           </tr>
         </thead>
         <tbody></tbody>
       </table>
 
-      <button class="btn-secondary" onclick="addRow()">➕ Tambah Item</button>
-      <button class="btn-secondary" onclick="clearItems()">🧹 Clear</button>
+      <button class="btn-secondary" onclick="addRow()" data-i18n="btnAddItem">➕ Tambah Item</button>
+      <button class="btn-secondary" onclick="clearItems()" data-i18n="btnClear">🧹 Clear</button>
 
       <hr style="margin:16px 0;">
 
       <div class="grid-3">
         <div>
-          <label>Diskaun Type</label>
+          <label data-i18n="lblDiscountType">Diskaun Type</label>
           <select id="discountType">
             <option value="rm">RM</option>
             <option value="percent">%</option>
           </select>
         </div>
         <div>
-          <label>Diskaun</label>
+          <label data-i18n="lblDiscount">Diskaun</label>
           <input id="discountVal" type="number" step="0.01" value="0">
         </div>
         <div>
-          <label>SST 6%</label>
+          <label data-i18n="lblSst">SST 6%</label>
           <div style="display:flex; gap:10px; align-items:center; margin-top:6px;">
             <input id="sstOn" type="checkbox">
-            <span>Apply</span>
+            <span data-i18n="sstApply">Apply</span>
           </div>
         </div>
       </div>
 
       <div class="totals-box">
-        <div class="totals-row"><span>Subtotal</span><span>RM <span id="subtotalTxt">0.00</span></span></div>
-        <div class="totals-row"><span>Diskaun</span><span>- RM <span id="discountAmtTxt">0.00</span></span></div>
-        <div class="totals-row"><span>SST (6%)</span><span>RM <span id="sstAmtTxt">0.00</span></span></div>
+        <div class="totals-row"><span data-i18n="subTotal">Subtotal</span><span>RM <span id="subtotalTxt">0.00</span></span></div>
+        <div class="totals-row"><span data-i18n="discountLabel">Diskaun</span><span>- RM <span id="discountAmtTxt">0.00</span></span></div>
+        <div class="totals-row"><span data-i18n="sstLabel">SST (6%)</span><span>RM <span id="sstAmtTxt">0.00</span></span></div>
         <hr>
-        <div class="totals-row"><strong>TOTAL DIBAYAR</strong><strong>RM <span id="grandTotalTxt">0.00</span></strong></div>
+        <div class="totals-row"><strong data-i18n="totalPaid">TOTAL DIBAYAR</strong><strong>RM <span id="grandTotalTxt">0.00</span></strong></div>
       </div>
 
-      <label>Nota (optional)</label>
+      <label data-i18n="lblNote">Nota (optional)</label>
       <input id="note" placeholder="Contoh: Terima kasih kerana membeli.">
 
       <div style="margin-top:14px;">
-        <button class="btn" onclick="generatePDF()">Download PDF</button>
-        <button class="btn-secondary" onclick="newDoc()">🆕 Resit Baru</button>
+        <button class="btn" onclick="generatePDF()" data-i18n="btnDownload">Download PDF</button>
+        <button class="btn-secondary" onclick="newDoc()" data-i18n="btnNew">🆕 Resit Baru</button>
       </div>
 
       <p class="small" style="margin-top:14px;">
-        Ada cadangan / perlukan bantuan? Email <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>
+        <span data-i18n="helpText">Ada cadangan / perlukan bantuan? Email</span>
+        <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>
       </p>
 
       <p style="margin-top:16px;">
-        <a href="index.html">← Kembali ke NiagaSenang</a>
+        <a href="index.html" data-i18n="backLink">← Kembali ke NiagaSenang</a>
       </p>
 
     </div>
@@ -156,6 +200,216 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
+    /* =======================
+       Language (shared key)
+    ======================= */
+    const LANG_KEY = "ns_lang";
+    let CURRENT_LANG = "ms";
+
+    const I18N = {
+      ms: {
+        docTitle: "Resit Percuma Pro Malaysia | NiagaSenang",
+        h2: "🧾 Resit Percuma (Pro)",
+        subtitle: "Multi-item, diskaun, SST 6% & auto numbering. Data auto simpan (draft).",
+
+        lblBiz: "Nama Perniagaan",
+        phBiz: "Contoh: Kedai Makan Pak Ali",
+        lblBizAddr: "Alamat Perniagaan (optional)",
+        phBizAddr: "Contoh: No 12, Jalan ABC, 43000 Kajang",
+
+        lblDocNo: "No Resit",
+        lblDate: "Tarikh",
+
+        lblCust: "Nama Pelanggan (optional)",
+        phCust: "Contoh: Ahmad",
+        lblCustAddr: "Alamat Pelanggan (optional)",
+        phCustAddr: "Contoh: Shah Alam, Selangor",
+
+        lblPayMethod: "Kaedah Bayaran (optional)",
+        phPayMethod: "Contoh: Cash / Transfer / QR",
+        lblPayRef: "Rujukan Bayaran (optional)",
+        phPayRef: "Contoh: TXN123 / Maybank2u",
+
+        itemsTitle: "Butiran Item",
+        thDesc: "Butiran",
+        thQty: "Qty",
+        thPrice: "Harga (RM)",
+
+        btnAddItem: "➕ Tambah Item",
+        btnClear: "🧹 Clear",
+
+        lblDiscountType: "Diskaun Type",
+        lblDiscount: "Diskaun",
+        lblSst: "SST 6%",
+        sstApply: "Apply",
+
+        subTotal: "Subtotal",
+        discountLabel: "Diskaun",
+        sstLabel: "SST (6%)",
+        totalPaid: "TOTAL DIBAYAR",
+
+        lblNote: "Nota (optional)",
+        phNote: "Contoh: Terima kasih kerana membeli.",
+
+        btnDownload: "Download PDF",
+        btnNew: "🆕 Resit Baru",
+
+        helpText: "Ada cadangan / perlukan bantuan? Email",
+        backLink: "← Kembali ke NiagaSenang",
+
+        phItemDesc: "Contoh: Nasi Ayam",
+
+        // PDF labels
+        pdfTitle: "RESIT",
+        pdfDocNo: "No Resit:",
+        pdfDate: "Tarikh:",
+        pdfFrom: "Daripada",
+        pdfTo: "Kepada",
+        pdfPay: "Bayaran:",
+        pdfMethod: "Kaedah",
+        pdfRef: "Rujukan",
+        pdfDesc: "Butiran",
+        pdfQty: "Qty",
+        pdfPrice: "Harga",
+        pdfAmount: "Jumlah",
+        pdfSubtotal: "Subtotal",
+        pdfDiscount: "Diskaun",
+        pdfSst: "SST (6%)",
+        pdfTotalPaid: "TOTAL DIBAYAR",
+        pdfNote: "Nota:",
+        pdfFooter: "Generated by NiagaSenang",
+
+        pdfBizFallback: "Nama Perniagaan"
+      },
+
+      en: {
+        docTitle: "Pro Receipt Generator | NiagaSenang",
+        h2: "🧾 Free Receipt (Pro)",
+        subtitle: "Multi-item, discounts, optional tax & auto numbering. Auto-saves as draft.",
+
+        lblBiz: "Business Name",
+        phBiz: "Example: Pak Ali Restaurant",
+        lblBizAddr: "Business Address (optional)",
+        phBizAddr: "Example: No 12, Jalan ABC, 43000 Kajang",
+
+        lblDocNo: "Receipt No",
+        lblDate: "Date",
+
+        lblCust: "Customer Name (optional)",
+        phCust: "Example: Ahmad",
+        lblCustAddr: "Customer Address (optional)",
+        phCustAddr: "Example: Shah Alam, Selangor",
+
+        lblPayMethod: "Payment Method (optional)",
+        phPayMethod: "Example: Cash / Transfer / QR",
+        lblPayRef: "Payment Reference (optional)",
+        phPayRef: "Example: TXN123 / Bank ref",
+
+        itemsTitle: "Item Details",
+        thDesc: "Description",
+        thQty: "Qty",
+        thPrice: "Price (RM)",
+
+        btnAddItem: "➕ Add Item",
+        btnClear: "🧹 Clear",
+
+        lblDiscountType: "Discount Type",
+        lblDiscount: "Discount",
+        lblSst: "Tax (6%)",
+        sstApply: "Apply",
+
+        subTotal: "Subtotal",
+        discountLabel: "Discount",
+        sstLabel: "Tax (6%)",
+        totalPaid: "TOTAL PAID",
+
+        lblNote: "Note (optional)",
+        phNote: "Example: Thank you for your purchase.",
+
+        btnDownload: "Download PDF",
+        btnNew: "🆕 New Receipt",
+
+        helpText: "Suggestions / need help? Email",
+        backLink: "← Back to NiagaSenang",
+
+        phItemDesc: "Example: Chicken Rice",
+
+        pdfTitle: "RECEIPT",
+        pdfDocNo: "Receipt No:",
+        pdfDate: "Date:",
+        pdfFrom: "From",
+        pdfTo: "To",
+        pdfPay: "Payment:",
+        pdfMethod: "Method",
+        pdfRef: "Reference",
+        pdfDesc: "Description",
+        pdfQty: "Qty",
+        pdfPrice: "Price",
+        pdfAmount: "Amount",
+        pdfSubtotal: "Subtotal",
+        pdfDiscount: "Discount",
+        pdfSst: "Tax (6%)",
+        pdfTotalPaid: "TOTAL PAID",
+        pdfNote: "Note:",
+        pdfFooter: "Generated by NiagaSenang",
+
+        pdfBizFallback: "Business Name"
+      }
+    };
+
+    function detectBrowserLang(){
+      const nav = (navigator.language || "").toLowerCase();
+      return nav.startsWith("en") ? "en" : "ms";
+    }
+
+    function t(key){
+      const pack = I18N[CURRENT_LANG] || I18N.ms;
+      return (pack[key] != null) ? pack[key] : (I18N.ms[key] ?? "");
+    }
+
+    function applyLang(lang){
+      CURRENT_LANG = (lang === "en") ? "en" : "ms";
+      localStorage.setItem(LANG_KEY, CURRENT_LANG);
+
+      document.documentElement.setAttribute("lang", CURRENT_LANG === "en" ? "en" : "ms");
+      document.title = t("docTitle");
+
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === CURRENT_LANG);
+      });
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        const val = t(key);
+        if (val != null && val !== "") el.innerHTML = val;
+      });
+
+      // placeholders
+      biz.placeholder = t("phBiz");
+      bizAddr.placeholder = t("phBizAddr");
+      cust.placeholder = t("phCust");
+      custAddr.placeholder = t("phCustAddr");
+      payMethod.placeholder = t("phPayMethod");
+      payRef.placeholder = t("phPayRef");
+      note.placeholder = t("phNote");
+
+      // update existing item row placeholders
+      document.querySelectorAll("#itemsTable tbody tr .desc").forEach(inp => {
+        inp.placeholder = t("phItemDesc");
+      });
+    }
+
+    // init language
+    (function initLang(){
+      const saved = localStorage.getItem(LANG_KEY);
+      const start = saved || detectBrowserLang();
+      applyLang(start);
+
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.addEventListener("click", () => applyLang(btn.dataset.lang));
+      });
+    })();
+
     /* ========= helpers ========= */
     function money(n){ return (Math.round((Number(n||0) + Number.EPSILON) * 100)/100).toFixed(2); }
     function today(){ return new Date().toISOString().slice(0,10); }
@@ -184,7 +438,7 @@
     function addRow(prefill){
       const tr=document.createElement("tr");
       tr.innerHTML=`
-        <td><input class="desc" placeholder="Contoh: Nasi Ayam"></td>
+        <td><input class="desc" placeholder="${t("phItemDesc")}"></td>
         <td><input class="qty" type="number" min="1" value="1"></td>
         <td><input class="price" type="number" step="0.01" placeholder="0.00"></td>
         <td style="text-align:right;">
@@ -335,7 +589,7 @@
       const margin = 42;
       let y = 54;
 
-      const bizName = (biz.value || "Nama Perniagaan").trim();
+      const bizName = (biz.value || t("pdfBizFallback")).trim();
       const bizA = (bizAddr.value || "").trim();
       const custName = (cust.value || "-").trim();
       const custA = (custAddr.value || "").trim();
@@ -348,16 +602,16 @@
       // Header
       doc.setFont("helvetica","bold");
       doc.setFontSize(22);
-      doc.text("RESIT", margin, y);
+      doc.text(t("pdfTitle"), margin, y);
 
       doc.setFontSize(11);
       doc.setFont("helvetica","bold");
-      doc.text("No Resit:", pageW - margin - 170, y - 10);
+      doc.text(t("pdfDocNo"), pageW - margin - 170, y - 10);
       doc.setFont("helvetica","normal");
       doc.text(rNo, pageW - margin, y - 10, {align:"right"});
 
       doc.setFont("helvetica","bold");
-      doc.text("Tarikh:", pageW - margin - 170, y + 8);
+      doc.text(t("pdfDate"), pageW - margin - 170, y + 8);
       doc.setFont("helvetica","normal");
       doc.text(dateVal, pageW - margin, y + 8, {align:"right"});
 
@@ -372,8 +626,8 @@
 
       doc.setFont("helvetica","bold");
       doc.setFontSize(11);
-      doc.text("Daripada", leftX, y);
-      doc.text("Kepada", rightX, y);
+      doc.text(t("pdfFrom"), leftX, y);
+      doc.text(t("pdfTo"), rightX, y);
       y += 14;
 
       doc.setFontSize(12);
@@ -396,10 +650,13 @@
       // Payment info (optional)
       if(pm || pr){
         doc.setFont("helvetica","bold");
-        doc.text("Bayaran:", leftX, y);
+        doc.text(t("pdfPay"), leftX, y);
         doc.setFont("helvetica","normal");
-        const payLine = [pm ? `Kaedah: ${pm}` : "", pr ? `Rujukan: ${pr}` : ""].filter(Boolean).join("   |   ");
-        doc.text(payLine, leftX + 62, y);
+        const payLine = [
+          pm ? `${t("pdfMethod")}: ${pm}` : "",
+          pr ? `${t("pdfRef")}: ${pr}` : ""
+        ].filter(Boolean).join("   |   ");
+        doc.text(payLine, leftX + 64, y);
         y += 18;
       } else {
         y += 10;
@@ -419,10 +676,10 @@
 
       doc.setFont("helvetica","bold");
       doc.setFontSize(11);
-      doc.text("Butiran", tableX + 10, y + 17);
-      doc.text("Qty", tableX + colDesc + colQty - 10, y + 17, {align:"right"});
-      doc.text("Harga", tableX + colDesc + colQty + colPrice - 10, y + 17, {align:"right"});
-      doc.text("Jumlah", tableX + tableW - 10, y + 17, {align:"right"});
+      doc.text(t("pdfDesc"), tableX + 10, y + 17);
+      doc.text(t("pdfQty"), tableX + colDesc + colQty - 10, y + 17, {align:"right"});
+      doc.text(t("pdfPrice"), tableX + colDesc + colQty + colPrice - 10, y + 17, {align:"right"});
+      doc.text(t("pdfAmount"), tableX + tableW - 10, y + 17, {align:"right"});
 
       y += 34;
       doc.setFont("helvetica","normal");
@@ -477,19 +734,19 @@
 
       let ty = y + 22;
       doc.setFont("helvetica","bold");
-      doc.text("Subtotal", boxX + 14, ty);
+      doc.text(t("pdfSubtotal"), boxX + 14, ty);
       doc.setFont("helvetica","normal");
       doc.text("RM " + money(sub), boxX + boxW - 14, ty, {align:"right"});
 
       ty += 22;
       doc.setFont("helvetica","bold");
-      doc.text("Diskaun", boxX + 14, ty);
+      doc.text(t("pdfDiscount"), boxX + 14, ty);
       doc.setFont("helvetica","normal");
       doc.text("- RM " + money(dAmt), boxX + boxW - 14, ty, {align:"right"});
 
       ty += 22;
       doc.setFont("helvetica","bold");
-      doc.text("SST (6%)", boxX + 14, ty);
+      doc.text(t("pdfSst"), boxX + 14, ty);
       doc.setFont("helvetica","normal");
       doc.text("RM " + money(sst), boxX + boxW - 14, ty, {align:"right"});
 
@@ -499,7 +756,7 @@
 
       doc.setFont("helvetica","bold");
       doc.setFontSize(13);
-      doc.text("TOTAL DIBAYAR", boxX + 14, ty);
+      doc.text(t("pdfTotalPaid"), boxX + 14, ty);
       doc.text("RM " + money(total), boxX + boxW - 14, ty, {align:"right"});
       doc.setFontSize(11);
 
@@ -507,7 +764,7 @@
       if(noteVal){
         y = y + boxH + 22;
         doc.setFont("helvetica","bold");
-        doc.text("Nota:", margin, y);
+        doc.text(t("pdfNote"), margin, y);
         doc.setFont("helvetica","normal");
         y += 14;
         wrapText(doc, noteVal, margin, y, pageW - margin*2, 11);
@@ -516,9 +773,9 @@
       // Footer
       doc.setFontSize(9);
       doc.setTextColor(140);
-      doc.text("Generated by NiagaSenang", margin, pageH - 24);
+      doc.text(t("pdfFooter"), margin, pageH - 24);
 
-      const safeNo = (rNo || "resit").replace(/[^a-z0-9-_]/gi,"_");
+      const safeNo = (rNo || "receipt").replace(/[^a-z0-9-_]/gi,"_");
       doc.save(`${safeNo}.pdf`);
     }
 

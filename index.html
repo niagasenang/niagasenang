@@ -30,6 +30,13 @@
       align-items:center;
       gap:12px;
       margin-bottom:10px;
+      justify-content:space-between;
+    }
+    .brand-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
     }
     .ns-logo{
       width:44px;
@@ -37,6 +44,32 @@
       object-fit:cover;
       border-radius:12px;
       border:1px solid #e5e7eb;
+    }
+
+    /* Language toggle */
+    .lang-toggle{
+      display:flex;
+      gap:6px;
+      padding:4px;
+      border:1px solid #e5e7eb;
+      border-radius:999px;
+      background:#ffffff;
+      flex:0 0 auto;
+    }
+    .lang-btn{
+      border:0;
+      background:transparent;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:12px;
+      cursor:pointer;
+      color:#334155;
+      line-height:1;
+    }
+    .lang-btn.active{
+      background:#1e293b;
+      color:#ffffff;
     }
 
     /* FAQ accordion */
@@ -103,108 +136,125 @@
 
       <!-- Brand row -->
       <div class="brand-top">
-        <img src="ns-logo.jpg" alt="NiagaSenang Logo" class="ns-logo">
-        <div>
-          <h1 style="margin:0;">NiagaSenang</h1>
-          <p style="margin:2px 0 0;"><strong>Tools Percuma Untuk Peniaga Malaysia</strong></p>
+        <div class="brand-left">
+          <img src="ns-logo.jpg" alt="NiagaSenang Logo" class="ns-logo">
+          <div>
+            <h1 style="margin:0;">NiagaSenang</h1>
+            <p style="margin:2px 0 0;">
+              <strong data-i18n="tagline">Tools Percuma Untuk Peniaga Malaysia</strong>
+            </p>
+          </div>
+        </div>
+
+        <!-- Language toggle -->
+        <div class="lang-toggle" aria-label="Language toggle">
+          <button type="button" class="lang-btn" data-lang="ms">BM</button>
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
         </div>
       </div>
 
-      <p>
+      <p data-i18n="intro">
         Buat invoice, quotation & resit dalam 2 minit.<br>
         Tak perlu login. Tak perlu subscribe. Terus guna & download PDF.
       </p>
 
       <hr style="margin:16px 0;">
 
-      <h3>🧾 Tools Percuma</h3>
+      <h3 data-i18n="freeToolsTitle">🧾 Tools Percuma</h3>
       <ul>
         <li>
-          <a href="invoice.html">Invoice Percuma (Pro)</a><br>
-          <small>Multi-item, diskaun & SST 6% (paling popular)</small>
+          <a href="invoice.html" data-i18n="toolInvoiceTitle">Invoice Percuma (Pro)</a><br>
+          <small data-i18n="toolInvoiceDesc">Multi-item, diskaun & SST 6% (paling popular)</small>
         </li>
         <li>
-          <a href="quotation.html">Quotation Percuma (Pro)</a><br>
-          <small>Sesuai untuk sebut harga servis / produk</small>
+          <a href="quotation.html" data-i18n="toolQuotationTitle">Quotation Percuma (Pro)</a><br>
+          <small data-i18n="toolQuotationDesc">Sesuai untuk sebut harga servis / produk</small>
         </li>
         <li>
-          <a href="resit.html">Resit Percuma (Pro)</a><br>
-          <small>Bukti bayaran untuk pelanggan</small>
+          <a href="resit.html" data-i18n="toolReceiptTitle">Resit Percuma (Pro)</a><br>
+          <small data-i18n="toolReceiptDesc">Bukti bayaran untuk pelanggan</small>
         </li>
 
         <li style="margin-top:10px;">
-          <a href="margin.html">Kira Untung, Margin & Markup</a><br>
-          <small>Masuk kos + harga jual → terus nampak margin & untung bersih</small>
+          <a href="margin.html" data-i18n="toolMarginTitle">Kira Untung, Margin & Markup</a><br>
+          <small data-i18n="toolMarginDesc">Masuk kos + harga jual → terus nampak margin & untung bersih</small>
         </li>
 
         <li>
-          <a href="stock.html">Stock Tracker (Percuma)</a><br>
-          <small>Track stok masuk/keluar + low stock alert + export/import backup</small>
+          <a href="stock.html" data-i18n="toolStockTitle">Stock Tracker (Percuma)</a><br>
+          <small data-i18n="toolStockDesc">Track stok masuk/keluar + low stock alert + export/import backup</small>
         </li>
       </ul>
 
       <!-- Internal link booster -->
       <p style="margin-top:14px;">
-        Paling popular: <a href="invoice.html">Invoice Percuma Pro</a> —
-        sesuai untuk SME & peniaga Malaysia.
+        <span data-i18n="popularPrefix">Paling popular:</span>
+        <a href="invoice.html" data-i18n="popularLink">Invoice Percuma Pro</a>
+        <span data-i18n="popularSuffix">— sesuai untuk SME & peniaga Malaysia.</span>
       </p>
 
       <hr style="margin:16px 0;">
 
       <!-- FAQ Accordion -->
       <div class="faq-wrap">
-        <h3>❓ Soalan Lazim</h3>
+        <h3 data-i18n="faqTitle">❓ Soalan Lazim</h3>
 
         <details class="faq-item">
           <summary>
-            NiagaSenang betul-betul percuma?
+            <span data-i18n="faq1q">NiagaSenang betul-betul percuma?</span>
             <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/>
             </svg>
           </summary>
-          <div class="faq-body">
+          <div class="faq-body" data-i18n="faq1a">
             Ya. Tak perlu daftar akaun atau subscribe. Terus guna & download PDF.
           </div>
         </details>
 
         <details class="faq-item">
           <summary>
-            Data aku disimpan dekat mana?
+            <span data-i18n="faq2q">Data aku disimpan dekat mana?</span>
             <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/>
             </svg>
           </summary>
           <div class="faq-body">
-            Semua data disimpan dalam browser (local). Kami tidak simpan data anda di server.
-            Anda boleh guna fungsi Export/Backup (jika ada) untuk simpan fail sendiri.
-            <div class="faq-note">Tip: Kalau tukar phone/laptop, data tak ikut kecuali anda export/backup.</div>
+            <div data-i18n="faq2a1">
+              Semua data disimpan dalam browser (local). Kami tidak simpan data anda di server.
+              Anda boleh guna fungsi Export/Backup (jika ada) untuk simpan fail sendiri.
+            </div>
+            <div class="faq-note" data-i18n="faq2note">
+              Tip: Kalau tukar phone/laptop, data tak ikut kecuali anda export/backup.
+            </div>
           </div>
         </details>
 
         <details class="faq-item">
           <summary>
-            Boleh tambah banyak item & auto kira total?
+            <span data-i18n="faq3q">Boleh tambah banyak item & auto kira total?</span>
             <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/>
             </svg>
           </summary>
-          <div class="faq-body">
+          <div class="faq-body" data-i18n="faq3a">
             Boleh. Tools NiagaSenang support multi-item & auto total (termasuk diskaun dan SST jika diaktifkan).
           </div>
         </details>
 
         <details class="faq-item">
           <summary>
-            E-Invoice (LHDN) – NiagaSenang dah comply?
-            <span class="pill-warn">Disclaimer</span>
+            <span data-i18n="faq4q">E-Invoice (LHDN) – NiagaSenang dah comply?</span>
+            <span class="pill-warn" data-i18n="disclaimerPill">Disclaimer</span>
             <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/>
             </svg>
           </summary>
           <div class="faq-body">
-            Buat masa ini, NiagaSenang menyediakan invoice/quotation/resit dalam format biasa (PDF) untuk kemudahan rekod.
-            Kami <strong>belum</strong> implement integrasi/penyerahan e-Invoice LHDN secara rasmi.
-            <div class="faq-note">
+            <div data-i18n="faq4a1">
+              Buat masa ini, NiagaSenang menyediakan invoice/quotation/resit dalam format biasa (PDF) untuk kemudahan rekod.
+              Kami <strong>belum</strong> implement integrasi/penyerahan e-Invoice LHDN secara rasmi.
+            </div>
+            <div class="faq-note" data-i18n="faq4note">
               Sila rujuk akauntan / penasihat cukai untuk keperluan e-Invoice perniagaan anda.
             </div>
           </div>
@@ -212,13 +262,14 @@
 
         <details class="faq-item">
           <summary>
-            Perlukan bantuan / ada cadangan?
+            <span data-i18n="faq5q">Perlukan bantuan / ada cadangan?</span>
             <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/>
             </svg>
           </summary>
           <div class="faq-body">
-            Email kami di <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>.
+            <span data-i18n="faq5aPrefix">Email kami di</span>
+            <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>.
           </div>
         </details>
       </div>
@@ -226,9 +277,9 @@
       <!-- 💰 IKLAN / PARTNER -->
       <hr style="margin:20px 0;">
 
-      <h3>🚗 Perlu Kereta Sewa?</h3>
+      <h3 data-i18n="partnerTitle">🚗 Perlu Kereta Sewa?</h3>
 
-      <p>
+      <p data-i18n="partnerIntro">
         Cari kereta sewa harian / mingguan dengan harga berpatutan?<br>
         Partner kami menyediakan perkhidmatan kereta sewa untuk kegunaan peribadi & bisnes.
       </p>
@@ -245,26 +296,27 @@
              border-radius:10px;
              text-decoration:none;
              font-weight:600;
-           ">
+           "
+           data-i18n="partnerCta">
           🚗 Kitra Car Rental – Lihat Pakej
         </a>
       </div>
 
-      <p style="margin-top:8px; font-size:12px; color:#64748b;">
+      <p style="margin-top:8px; font-size:12px; color:#64748b;" data-i18n="partnerNote">
         (Iklan rakan niaga • Bukan endorsement berbayar)
       </p>
 
       <!-- DONATION -->
       <hr style="margin:20px 0;">
 
-      <h3>☕ Sokong NiagaSenang</h3>
+      <h3 data-i18n="donateTitle">☕ Sokong NiagaSenang</h3>
 
-      <p>
+      <p data-i18n="donateP1">
         NiagaSenang dibina untuk bantu peniaga Malaysia menyediakan
         tools penting <strong>secara percuma</strong>.
       </p>
 
-      <p>
+      <p data-i18n="donateP2">
         Jika tool ini membantu bisnes anda, anda boleh menyokong kami melalui sumbangan kecil (one-time).
       </p>
 
@@ -280,12 +332,13 @@
              border-radius:10px;
              text-decoration:none;
              font-weight:600;
-           ">
+           "
+           data-i18n="donateCta">
           ☕ Support NiagaSenang
         </a>
       </div>
 
-      <p style="margin-top:8px; font-size:12px; color:#64748b;">
+      <p style="margin-top:8px; font-size:12px; color:#64748b;" data-i18n="donateNote">
         (Sumbangan adalah sukarela & bukan bayaran perkhidmatan)
       </p>
 
@@ -295,5 +348,141 @@
 
     </div>
   </div>
+
+  <!-- Language logic -->
+  <script>
+    (function () {
+      const supported = ["ms", "en"];
+      const storageKey = "ns_lang";
+
+      const dict = {
+        ms: {
+          tagline: "Tools Percuma Untuk Peniaga Malaysia",
+          intro: "Buat invoice, quotation & resit dalam 2 minit.<br>Tak perlu login. Tak perlu subscribe. Terus guna & download PDF.",
+
+          freeToolsTitle: "🧾 Tools Percuma",
+          toolInvoiceTitle: "Invoice Percuma (Pro)",
+          toolInvoiceDesc: "Multi-item, diskaun & SST 6% (paling popular)",
+          toolQuotationTitle: "Quotation Percuma (Pro)",
+          toolQuotationDesc: "Sesuai untuk sebut harga servis / produk",
+          toolReceiptTitle: "Resit Percuma (Pro)",
+          toolReceiptDesc: "Bukti bayaran untuk pelanggan",
+          toolMarginTitle: "Kira Untung, Margin & Markup",
+          toolMarginDesc: "Masuk kos + harga jual → terus nampak margin & untung bersih",
+          toolStockTitle: "Stock Tracker (Percuma)",
+          toolStockDesc: "Track stok masuk/keluar + low stock alert + export/import backup",
+
+          popularPrefix: "Paling popular:",
+          popularLink: "Invoice Percuma Pro",
+          popularSuffix: "— sesuai untuk SME & peniaga Malaysia.",
+
+          faqTitle: "❓ Soalan Lazim",
+          faq1q: "NiagaSenang betul-betul percuma?",
+          faq1a: "Ya. Tak perlu daftar akaun atau subscribe. Terus guna & download PDF.",
+          faq2q: "Data aku disimpan dekat mana?",
+          faq2a1: "Semua data disimpan dalam browser (local). Kami tidak simpan data anda di server. Anda boleh guna fungsi Export/Backup (jika ada) untuk simpan fail sendiri.",
+          faq2note: "Tip: Kalau tukar phone/laptop, data tak ikut kecuali anda export/backup.",
+          faq3q: "Boleh tambah banyak item & auto kira total?",
+          faq3a: "Boleh. Tools NiagaSenang support multi-item & auto total (termasuk diskaun dan SST jika diaktifkan).",
+          faq4q: "E-Invoice (LHDN) – NiagaSenang dah comply?",
+          disclaimerPill: "Disclaimer",
+          faq4a1: "Buat masa ini, NiagaSenang menyediakan invoice/quotation/resit dalam format biasa (PDF) untuk kemudahan rekod. Kami <strong>belum</strong> implement integrasi/penyerahan e-Invoice LHDN secara rasmi.",
+          faq4note: "Sila rujuk akauntan / penasihat cukai untuk keperluan e-Invoice perniagaan anda.",
+          faq5q: "Perlukan bantuan / ada cadangan?",
+          faq5aPrefix: "Email kami di",
+
+          partnerTitle: "🚗 Perlu Kereta Sewa?",
+          partnerIntro: "Cari kereta sewa harian / mingguan dengan harga berpatutan?<br>Partner kami menyediakan perkhidmatan kereta sewa untuk kegunaan peribadi & bisnes.",
+          partnerCta: "🚗 Kitra Car Rental – Lihat Pakej",
+          partnerNote: "(Iklan rakan niaga • Bukan endorsement berbayar)",
+
+          donateTitle: "☕ Sokong NiagaSenang",
+          donateP1: "NiagaSenang dibina untuk bantu peniaga Malaysia menyediakan tools penting <strong>secara percuma</strong>.",
+          donateP2: "Jika tool ini membantu bisnes anda, anda boleh menyokong kami melalui sumbangan kecil (one-time).",
+          donateCta: "☕ Support NiagaSenang",
+          donateNote: "(Sumbangan adalah sukarela & bukan bayaran perkhidmatan)"
+        },
+
+        en: {
+          tagline: "Free Tools for Small Businesses",
+          intro: "Create invoices, quotations & receipts in 2 minutes.<br>No login. No subscription. Use instantly & download PDF.",
+
+          freeToolsTitle: "🧾 Free Tools",
+          toolInvoiceTitle: "Free Invoice (Pro)",
+          toolInvoiceDesc: "Multi-item, discounts & optional tax field",
+          toolQuotationTitle: "Free Quotation (Pro)",
+          toolQuotationDesc: "Great for service or product quotes",
+          toolReceiptTitle: "Free Receipt (Pro)",
+          toolReceiptDesc: "Payment proof for customers",
+          toolMarginTitle: "Profit, Margin & Markup Calculator",
+          toolMarginDesc: "Enter cost + selling price → see profit & margin instantly",
+          toolStockTitle: "Stock Tracker (Free)",
+          toolStockDesc: "Track stock in/out + low stock alert + export/import backup",
+
+          popularPrefix: "Most popular:",
+          popularLink: "Pro Invoice",
+          popularSuffix: "— built for SMEs, easy to use.",
+
+          faqTitle: "❓ FAQ",
+          faq1q: "Is NiagaSenang really free?",
+          faq1a: "Yes. No account needed and no subscription. Use instantly & download PDF.",
+          faq2q: "Where is my data stored?",
+          faq2a1: "All data is stored locally in your browser. We do not store your data on our servers. Use Export/Backup (if available) to save a copy.",
+          faq2note: "Tip: If you switch devices, your data won’t transfer unless you export/backup.",
+          faq3q: "Can I add multiple items and auto-calculate totals?",
+          faq3a: "Yes. NiagaSenang supports multi-item and auto totals (including discounts and optional tax fields).",
+          faq4q: "Malaysia e-Invoice (LHDN) — is NiagaSenang compliant?",
+          disclaimerPill: "Disclaimer",
+          faq4a1: "At the moment, NiagaSenang provides standard invoice/quotation/receipt PDFs for record-keeping. We have <strong>not</strong> implemented official LHDN e-Invoice submission/integration.",
+          faq4note: "Please consult your accountant or tax advisor for your e-Invoice requirements.",
+          faq5q: "Need help or want to suggest improvements?",
+          faq5aPrefix: "Email us at",
+
+          partnerTitle: "🚗 Need a Rental Car?",
+          partnerIntro: "Looking for daily/weekly car rentals at a reasonable price?<br>Our partner provides car rental services for personal & business use.",
+          partnerCta: "🚗 Kitra Car Rental – View Packages",
+          partnerNote: "(Partner ad • Not a paid endorsement)",
+
+          donateTitle: "☕ Support NiagaSenang",
+          donateP1: "NiagaSenang is built to help small businesses access essential tools <strong>for free</strong>.",
+          donateP2: "If this tool helps your business, you can support us with a small one-time donation.",
+          donateCta: "☕ Support NiagaSenang",
+          donateNote: "(Donations are optional and not a service fee)"
+        }
+      };
+
+      function applyLang(lang) {
+        if (!supported.includes(lang)) lang = "ms";
+        localStorage.setItem(storageKey, lang);
+
+        // update active state
+        document.querySelectorAll(".lang-btn").forEach(btn => {
+          btn.classList.toggle("active", btn.dataset.lang === lang);
+        });
+
+        // apply translations
+        document.querySelectorAll("[data-i18n]").forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          const val = (dict[lang] && dict[lang][key]) || (dict.ms && dict.ms[key]);
+          if (val != null) el.innerHTML = val;
+        });
+
+        // update html lang attribute
+        document.documentElement.setAttribute("lang", lang === "ms" ? "ms" : "en");
+      }
+
+      // init language:
+      // - Use saved preference if exists
+      // - Else pick EN if browser language starts with "en", otherwise BM
+      const saved = localStorage.getItem(storageKey);
+      const browserLang = (navigator.language || "").toLowerCase().startsWith("en") ? "en" : "ms";
+      applyLang(saved || browserLang);
+
+      // bind buttons
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.addEventListener("click", () => applyLang(btn.dataset.lang));
+      });
+    })();
+  </script>
 </body>
 </html>

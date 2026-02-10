@@ -7,7 +7,7 @@
   <meta name="description" content="Kira untung bersih, margin (%) & markup (%) untuk peniaga Malaysia. Masuk kos, harga jual & kos lain — terus dapat hasil. Percuma.">
   <link rel="stylesheet" href="css/style.css">
 
-    <!-- Google Analytics -->
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-P81GM8SJWX"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -58,6 +58,39 @@
     .warn { color:#b45309; font-weight:600; }
     .bad { color:#b91c1c; font-weight:600; }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+    /* ===== Top row (title + language toggle) ===== */
+    .top-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .lang-toggle{
+      display:flex;
+      gap:6px;
+      padding:4px;
+      border:1px solid #e5e7eb;
+      border-radius:999px;
+      background:#ffffff;
+      flex:0 0 auto;
+      margin-top:2px;
+    }
+    .lang-btn{
+      border:0;
+      background:transparent;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:12px;
+      cursor:pointer;
+      color:#334155;
+      line-height:1;
+    }
+    .lang-btn.active{
+      background:#1e293b;
+      color:#ffffff;
+    }
   </style>
 </head>
 
@@ -65,82 +98,92 @@
   <div class="container">
     <div class="card">
 
-      <h2>📈 Kira Untung, Margin & Markup</h2>
-      <p class="muted">
-        Masukkan kos & harga jual — terus nampak untung bersih, margin (%) dan markup (%).
-        Data auto simpan dalam browser (local).
-      </p>
+      <div class="top-row">
+        <div>
+          <h2 data-i18n="h2">📈 Kira Untung, Margin & Markup</h2>
+          <p class="muted" data-i18n="subtitle">
+            Masukkan kos & harga jual — terus nampak untung bersih, margin (%) dan markup (%).
+            Data auto simpan dalam browser (local).
+          </p>
+        </div>
+
+        <!-- Language toggle -->
+        <div class="lang-toggle" aria-label="Language toggle">
+          <button type="button" class="lang-btn" data-lang="ms">BM</button>
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
+        </div>
+      </div>
 
       <hr style="margin:16px 0;">
 
       <div class="grid-2">
         <div>
-          <label>Kos Barang (RM)</label>
+          <label data-i18n="lblCost">Kos Barang (RM)</label>
           <input id="cost" type="number" step="0.01" placeholder="Contoh: 10.00">
-          <div class="note">Kos barang / modal stok.</div>
+          <div class="note" data-i18n="noteCost">Kos barang / modal stok.</div>
         </div>
 
         <div>
-          <label>Harga Jual (RM)</label>
+          <label data-i18n="lblPrice">Harga Jual (RM)</label>
           <input id="price" type="number" step="0.01" placeholder="Contoh: 25.00">
-          <div class="note">Harga yang customer bayar (sebelum/selepas diskaun ikut cara jualan kau).</div>
+          <div class="note" data-i18n="notePrice">Harga yang customer bayar (sebelum/selepas diskaun ikut cara jualan kau).</div>
         </div>
       </div>
 
       <div style="margin-top:12px;" class="grid-2">
         <div>
-          <label>Kos Lain (RM) <span class="pill">optional</span></label>
+          <label data-i18n="lblOther">Kos Lain (RM) <span class="pill" data-i18n="optPill">optional</span></label>
           <input id="other" type="number" step="0.01" placeholder="Contoh: 3.50">
-          <div class="note">Contoh: packing, delivery, platform fee, ads, komisen.</div>
+          <div class="note" data-i18n="noteOther">Contoh: packing, delivery, platform fee, ads, komisen.</div>
         </div>
 
         <div>
-          <label>Qty (unit) <span class="pill">optional</span></label>
+          <label data-i18n="lblQty">Qty (unit) <span class="pill" data-i18n="optPill">optional</span></label>
           <input id="qty" type="number" step="1" min="1" placeholder="Contoh: 1">
-          <div class="note">Kalau jual banyak unit sekali, isi qty untuk kira total.</div>
+          <div class="note" data-i18n="noteQty">Kalau jual banyak unit sekali, isi qty untuk kira total.</div>
         </div>
       </div>
 
       <div style="margin-top:14px;">
-        <button class="btn" type="button" onclick="calculate()">Kira Sekarang</button>
-        <button class="btn-secondary" type="button" onclick="resetAll()">Reset</button>
-        <button class="btn-secondary" type="button" onclick="copySummary()">Copy Result</button>
+        <button class="btn" type="button" onclick="calculate()" data-i18n="btnCalc">Kira Sekarang</button>
+        <button class="btn-secondary" type="button" onclick="resetAll()" data-i18n="btnReset">Reset</button>
+        <button class="btn-secondary" type="button" onclick="copySummary()" data-i18n="btnCopy">Copy Result</button>
       </div>
 
       <div class="box" id="resultBox" style="display:none;">
         <div class="row">
-          <span>Untung Bersih</span>
+          <span data-i18n="rProfit">Untung Bersih</span>
           <strong>RM <span id="profitTxt">0.00</span> <span id="profitBadge"></span></strong>
         </div>
 
         <div class="row">
-          <span>Margin</span>
+          <span data-i18n="rMargin">Margin</span>
           <strong><span id="marginTxt">0.00</span>%</strong>
         </div>
 
         <div class="row">
-          <span>Markup</span>
+          <span data-i18n="rMarkup">Markup</span>
           <strong><span id="markupTxt">0.00</span>%</strong>
         </div>
 
         <hr style="margin:12px 0;">
 
         <div class="row">
-          <span>Breakeven Price (min)</span>
+          <span data-i18n="rBreakeven">Breakeven Price (min)</span>
           <strong>RM <span id="breakevenTxt">0.00</span></strong>
         </div>
 
         <div class="row">
-          <span>Total Revenue (ikut qty)</span>
+          <span data-i18n="rRev">Total Revenue (ikut qty)</span>
           <strong>RM <span id="revTxt">0.00</span></strong>
         </div>
 
         <div class="row">
-          <span>Total Cost (ikut qty)</span>
+          <span data-i18n="rTotalCost">Total Cost (ikut qty)</span>
           <strong>RM <span id="totalCostTxt">0.00</span></strong>
         </div>
 
-        <div class="note">
+        <div class="note" data-i18n="formulaNote">
           <span class="mono">Margin</span> = (Untung ÷ Harga Jual) × 100<br>
           <span class="mono">Markup</span> = (Untung ÷ Kos) × 100
         </div>
@@ -148,17 +191,190 @@
 
       <!-- Soft brand imprint -->
       <p style="margin-top:12px; font-size:12px; color:#64748b;">
-        Tool ini disediakan percuma oleh <strong>NiagaSenang</strong>.
+        <span data-i18n="brandNote">Tool ini disediakan percuma oleh</span> <strong>NiagaSenang</strong>.
       </p>
 
       <p style="margin-top:18px;">
-        <a href="index.html">← Kembali ke NiagaSenang</a>
+        <a href="index.html" data-i18n="backLink">← Kembali ke NiagaSenang</a>
       </p>
 
     </div>
   </div>
 
   <script>
+    /* =======================
+       Language (shared key)
+    ======================= */
+    const LANG_KEY = "ns_lang";
+    let CURRENT_LANG = "ms";
+
+    const I18N = {
+      ms: {
+        docTitle: "Kira Untung, Margin & Markup | NiagaSenang",
+        h2: "📈 Kira Untung, Margin & Markup",
+        subtitle: "Masukkan kos & harga jual — terus nampak untung bersih, margin (%) dan markup (%). Data auto simpan dalam browser (local).",
+
+        lblCost: "Kos Barang (RM)",
+        phCost: "Contoh: 10.00",
+        noteCost: "Kos barang / modal stok.",
+
+        lblPrice: "Harga Jual (RM)",
+        phPrice: "Contoh: 25.00",
+        notePrice: "Harga yang customer bayar (sebelum/selepas diskaun ikut cara jualan kau).",
+
+        lblOther: "Kos Lain (RM) <span class=\"pill\">optional</span>",
+        phOther: "Contoh: 3.50",
+        noteOther: "Contoh: packing, delivery, platform fee, ads, komisen.",
+
+        lblQty: "Qty (unit) <span class=\"pill\">optional</span>",
+        phQty: "Contoh: 1",
+        noteQty: "Kalau jual banyak unit sekali, isi qty untuk kira total.",
+
+        optPill: "optional",
+
+        btnCalc: "Kira Sekarang",
+        btnReset: "Reset",
+        btnCopy: "Copy Result",
+
+        rProfit: "Untung Bersih",
+        rMargin: "Margin",
+        rMarkup: "Markup",
+        rBreakeven: "Breakeven Price (min)",
+        rRev: "Total Revenue (ikut qty)",
+        rTotalCost: "Total Cost (ikut qty)",
+
+        formulaNote: "<span class=\"mono\">Margin</span> = (Untung ÷ Harga Jual) × 100<br><span class=\"mono\">Markup</span> = (Untung ÷ Kos) × 100",
+
+        brandNote: "Tool ini disediakan percuma oleh",
+        backLink: "← Kembali ke NiagaSenang",
+
+        badgeProfit: "Untung",
+        badgeBreakeven: "Break-even",
+        badgeLoss: "Rugi",
+
+        copiedOk: "✅ Result dah copy!",
+
+        copyTitle: "NiagaSenang - Kira Margin",
+        copyCost: "Kos Barang",
+        copyOther: "Kos Lain",
+        copyPrice: "Harga Jual",
+        copyQty: "Qty",
+        copyProfit: "Untung Bersih",
+        copyMargin: "Margin",
+        copyMarkup: "Markup",
+        copyBreakeven: "Breakeven Price",
+
+        // update URL if needed
+        shareUrl: "https://niagasenang.pages.dev/margin.html"
+      },
+
+      en: {
+        docTitle: "Profit, Margin & Markup Calculator | NiagaSenang",
+        h2: "📈 Profit, Margin & Markup",
+        subtitle: "Enter cost & selling price — instantly see net profit, margin (%) and markup (%). Data is saved locally in your browser.",
+
+        lblCost: "Cost of Goods (RM)",
+        phCost: "Example: 10.00",
+        noteCost: "Your product cost / stock cost.",
+
+        lblPrice: "Selling Price (RM)",
+        phPrice: "Example: 25.00",
+        notePrice: "What the customer pays (before/after discounts depending on your sales flow).",
+
+        lblOther: "Other Costs (RM) <span class=\"pill\">optional</span>",
+        phOther: "Example: 3.50",
+        noteOther: "Examples: packaging, delivery, platform fees, ads, commissions.",
+
+        lblQty: "Qty (units) <span class=\"pill\">optional</span>",
+        phQty: "Example: 1",
+        noteQty: "If you sell multiple units, enter qty to calculate totals.",
+
+        optPill: "optional",
+
+        btnCalc: "Calculate",
+        btnReset: "Reset",
+        btnCopy: "Copy Result",
+
+        rProfit: "Net Profit",
+        rMargin: "Margin",
+        rMarkup: "Markup",
+        rBreakeven: "Breakeven Price (min)",
+        rRev: "Total Revenue (qty)",
+        rTotalCost: "Total Cost (qty)",
+
+        formulaNote: "<span class=\"mono\">Margin</span> = (Profit ÷ Price) × 100<br><span class=\"mono\">Markup</span> = (Profit ÷ Cost) × 100",
+
+        brandNote: "This tool is provided for free by",
+        backLink: "← Back to NiagaSenang",
+
+        badgeProfit: "Profit",
+        badgeBreakeven: "Break-even",
+        badgeLoss: "Loss",
+
+        copiedOk: "✅ Result copied!",
+
+        copyTitle: "NiagaSenang - Margin Calculator",
+        copyCost: "Cost",
+        copyOther: "Other Costs",
+        copyPrice: "Selling Price",
+        copyQty: "Qty",
+        copyProfit: "Net Profit",
+        copyMargin: "Margin",
+        copyMarkup: "Markup",
+        copyBreakeven: "Breakeven Price",
+
+        shareUrl: "https://niagasenang.pages.dev/margin.html"
+      }
+    };
+
+    function detectBrowserLang(){
+      const nav = (navigator.language || "").toLowerCase();
+      return nav.startsWith("en") ? "en" : "ms";
+    }
+
+    function t(key){
+      const pack = I18N[CURRENT_LANG] || I18N.ms;
+      return (pack[key] != null) ? pack[key] : (I18N.ms[key] ?? "");
+    }
+
+    function applyLang(lang){
+      CURRENT_LANG = (lang === "en") ? "en" : "ms";
+      localStorage.setItem(LANG_KEY, CURRENT_LANG);
+
+      document.documentElement.setAttribute("lang", CURRENT_LANG === "en" ? "en" : "ms");
+      document.title = t("docTitle");
+
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === CURRENT_LANG);
+      });
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        const val = t(key);
+        if (val != null && val !== "") el.innerHTML = val;
+      });
+
+      // placeholders
+      document.getElementById("cost").placeholder  = t("phCost");
+      document.getElementById("price").placeholder = t("phPrice");
+      document.getElementById("other").placeholder = t("phOther");
+      document.getElementById("qty").placeholder   = t("phQty");
+    }
+
+    // init language
+    (function initLang(){
+      const saved = localStorage.getItem(LANG_KEY);
+      const start = saved || detectBrowserLang();
+      applyLang(start);
+
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.addEventListener("click", () => applyLang(btn.dataset.lang));
+      });
+    })();
+
+    /* =======================
+       Original logic (kept)
+    ======================= */
     const LS_KEY = "ns_margin_v1";
 
     function num(id) {
@@ -199,9 +415,9 @@
 
     function badgeForProfit(p) {
       const el = document.getElementById("profitBadge");
-      if (p > 0) { el.className = "pill ok"; el.textContent = "Untung"; }
-      else if (p === 0) { el.className = "pill warn"; el.textContent = "Break-even"; }
-      else { el.className = "pill bad"; el.textContent = "Rugi"; }
+      if (p > 0) { el.className = "pill ok"; el.textContent = t("badgeProfit"); }
+      else if (p === 0) { el.className = "pill warn"; el.textContent = t("badgeBreakeven"); }
+      else { el.className = "pill bad"; el.textContent = t("badgeLoss"); }
     }
 
     function calculate() {
@@ -264,22 +480,22 @@
       const qty = document.getElementById("qty").value || "1";
 
       const text =
-`NiagaSenang - Kira Margin
-Kos Barang: RM ${cost}
-Kos Lain: RM ${other}
-Harga Jual: RM ${price}
-Qty: ${qty}
+`${t("copyTitle")}
+${t("copyCost")}: RM ${cost}
+${t("copyOther")}: RM ${other}
+${t("copyPrice")}: RM ${price}
+${t("copyQty")}: ${qty}
 
-Untung Bersih: RM ${document.getElementById("profitTxt").textContent}
-Margin: ${document.getElementById("marginTxt").textContent}%
-Markup: ${document.getElementById("markupTxt").textContent}%
-Breakeven Price: RM ${document.getElementById("breakevenTxt").textContent}
+${t("copyProfit")}: RM ${document.getElementById("profitTxt").textContent}
+${t("copyMargin")}: ${document.getElementById("marginTxt").textContent}%
+${t("copyMarkup")}: ${document.getElementById("markupTxt").textContent}%
+${t("copyBreakeven")}: RM ${document.getElementById("breakevenTxt").textContent}
 
-https://niagasenang.netlify.app/margin.html`;
+${t("shareUrl")}`;
 
       try {
         await navigator.clipboard.writeText(text);
-        alert("✅ Result dah copy!");
+        alert(t("copiedOk"));
       } catch (e) {
         // fallback
         const ta = document.createElement("textarea");
@@ -288,7 +504,7 @@ https://niagasenang.netlify.app/margin.html`;
         ta.select();
         document.execCommand("copy");
         ta.remove();
-        alert("✅ Result dah copy!");
+        alert(t("copiedOk"));
       }
 
       try {
@@ -296,7 +512,7 @@ https://niagasenang.netlify.app/margin.html`;
       } catch(e) {}
     }
 
-    // live update (optional): auto-calc bila input berubah
+    // live update (optional): auto-save bila input berubah
     ["cost","price","other","qty"].forEach(id => {
       document.addEventListener("input", (e) => {
         if (e.target && e.target.id === id) {
