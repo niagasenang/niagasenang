@@ -127,6 +127,73 @@
       margin-left:8px;
       white-space:nowrap;
     }
+
+    /* ✅ Start Here box */
+    .start-box{
+      background:#f8fafc;
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      padding:12px 14px;
+      margin-top:14px;
+    }
+    .start-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin:0 0 8px 0;
+    }
+    .start-title h3{ margin:0; }
+    .pill{
+      display:inline-block;
+      padding:4px 10px;
+      border-radius:999px;
+      background: rgba(15,118,110,0.12);
+      border:1px solid rgba(15,118,110,0.25);
+      color:#0f766e;
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+    .start-steps{
+      margin:0;
+      padding-left:18px;
+      color:#334155;
+      line-height:1.55;
+      font-size:14px;
+    }
+    .start-steps li{ margin:8px 0; }
+    .start-links{
+      margin-top:10px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .mini-cta{
+      display:inline-block;
+      padding:10px 14px;
+      border-radius:10px;
+      border:1px solid #e5e7eb;
+      background:#ffffff;
+      text-decoration:none;
+      font-weight:700;
+      color:#0f172a;
+    }
+    .mini-cta:hover{ background:#f8fafc; }
+    .mini-cta.primary{
+      background:#1e293b;
+      color:#ffffff;
+      border-color:#1e293b;
+    }
+    .mini-cta.primary:hover{ opacity:.92; }
+
+    .tiny{
+      font-size:12px;
+      color:#64748b;
+      margin-top:8px;
+      line-height:1.45;
+    }
   </style>
 </head>
 
@@ -157,6 +224,38 @@
         Buat invoice, quotation & resit dalam 2 minit.<br>
         Tak perlu login. Tak perlu subscribe. Terus guna & download PDF.
       </p>
+
+      <!-- ✅ START HERE (NEW USER) -->
+      <div class="start-box" id="startHere">
+        <div class="start-title">
+          <h3 data-i18n="startTitle">🧭 Start Here (untuk pengguna baru)</h3>
+          <span class="pill" data-i18n="startPill">1 minit je</span>
+        </div>
+
+        <ol class="start-steps">
+          <li data-i18n="startStep1">
+            <strong>Kalau nak bagi dokumen pada customer:</strong> guna
+            <a href="invoice.html">Invoice</a> / <a href="quotation.html">Quotation</a> / <a href="resit.html">Resit</a>.
+          </li>
+          <li data-i18n="startStep2">
+            <strong>Kalau nak kira untung cepat:</strong> guna <a href="margin.html">Margin &amp; Markup</a>.
+          </li>
+          <li data-i18n="startStep3">
+            <strong>Kalau nak buat “akaun ringkas”:</strong> mula rekod duit masuk/keluar di
+            <a href="ledger.html">Ledger</a> → lepas tu tengok report <a href="pl.html">P&amp;L</a> dan <a href="cashflow.html">Cashflow</a>.
+          </li>
+        </ol>
+
+        <div class="start-links">
+          <a class="mini-cta primary" href="invoice.html" data-i18n="startCta1">Buat Invoice Sekarang</a>
+          <a class="mini-cta" href="ledger.html" data-i18n="startCta2">Mula Ledger</a>
+          <a class="mini-cta" href="pl.html" data-i18n="startCta3">Lihat P&amp;L</a>
+        </div>
+
+        <div class="tiny" data-i18n="startNote">
+          Tip: Semua data simpan dalam browser (local). Kalau tukar phone/laptop, guna Export/Backup pada tool berkaitan.
+        </div>
+      </div>
 
       <hr style="margin:16px 0;">
 
@@ -360,6 +459,16 @@
           tagline: "Tools Percuma Untuk Peniaga Malaysia",
           intro: "Buat invoice, quotation & resit dalam 2 minit.<br>Tak perlu login. Tak perlu subscribe. Terus guna & download PDF.",
 
+          startTitle: "🧭 Start Here (untuk pengguna baru)",
+          startPill: "1 minit je",
+          startStep1: "<strong>Kalau nak bagi dokumen pada customer:</strong> guna <a href='invoice.html'>Invoice</a> / <a href='quotation.html'>Quotation</a> / <a href='resit.html'>Resit</a>.",
+          startStep2: "<strong>Kalau nak kira untung cepat:</strong> guna <a href='margin.html'>Margin &amp; Markup</a>.",
+          startStep3: "<strong>Kalau nak buat “akaun ringkas”:</strong> mula rekod duit masuk/keluar di <a href='ledger.html'>Ledger</a> → lepas tu tengok report <a href='pl.html'>P&amp;L</a> dan <a href='cashflow.html'>Cashflow</a>.",
+          startCta1: "Buat Invoice Sekarang",
+          startCta2: "Mula Ledger",
+          startCta3: "Lihat P&amp;L",
+          startNote: "Tip: Semua data simpan dalam browser (local). Kalau tukar phone/laptop, guna Export/Backup pada tool berkaitan.",
+
           freeToolsTitle: "🧾 Tools Percuma",
           toolInvoiceTitle: "Invoice Percuma (Pro)",
           toolInvoiceDesc: "Multi-item, diskaun & SST 6% (paling popular)",
@@ -406,6 +515,16 @@
         en: {
           tagline: "Free Tools for Small Businesses",
           intro: "Create invoices, quotations & receipts in 2 minutes.<br>No login. No subscription. Use instantly & download PDF.",
+
+          startTitle: "🧭 Start Here (new users)",
+          startPill: "1 minute",
+          startStep1: "<strong>If you need a document for customers:</strong> use <a href='invoice.html'>Invoice</a> / <a href='quotation.html'>Quotation</a> / <a href='resit.html'>Receipt</a>.",
+          startStep2: "<strong>If you want quick profit math:</strong> use <a href='margin.html'>Margin &amp; Markup</a>.",
+          startStep3: "<strong>If you want simple bookkeeping:</strong> start with <a href='ledger.html'>Ledger</a> → then view reports: <a href='pl.html'>P&amp;L</a> and <a href='cashflow.html'>Cashflow</a>.",
+          startCta1: "Create an Invoice",
+          startCta2: "Start Ledger",
+          startCta3: "View P&amp;L",
+          startNote: "Tip: All data is stored locally in your browser. If you switch devices, use Export/Backup inside each tool.",
 
           freeToolsTitle: "🧾 Free Tools",
           toolInvoiceTitle: "Free Invoice (Pro)",
@@ -481,6 +600,15 @@
       // bind buttons
       document.querySelectorAll(".lang-btn").forEach(btn => {
         btn.addEventListener("click", () => applyLang(btn.dataset.lang));
+      });
+
+      // Optional GA event for Start Here click tracking (safe)
+      document.getElementById("startHere").addEventListener("click", function(e){
+        const a = e.target.closest("a");
+        if(!a) return;
+        try{
+          gtag('event','start_here_click',{ event_category:'onboarding', event_label: a.getAttribute('href') || 'link' });
+        }catch(err){}
       });
     })();
   </script>

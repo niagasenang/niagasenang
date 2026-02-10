@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>P&amp;L (Cash Basis) | NiagaSenang</title>
+  <meta name="description" content="Profit & Loss (cash basis) percuma untuk peniaga Malaysia. Auto kira Income, Expense & untung rugi dari Ledger. Offline-first.">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P81GM8SJWX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-P81GM8SJWX');
+  </script>
+
+  <style>
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+    .small { font-size:12px; color:#64748b; }
+    .muted { color:#64748b; font-size:13px; }
+
+    .box{
+      background:#f8fafc;
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      padding:12px;
+      margin-top:12px;
+    }
+
+    table { width:100%; border-collapse:collapse; margin-top:10px; }
+    th, td { padding:8px; border-bottom:1px solid #e5e7eb; font-size:14px; vertical-align:top; }
+    th { text-align:left; background:#f8fafc; font-size:13px; }
+    .right { text-align:right; }
+
+    .pill{
+      display:inline-block;
+      padding:4px 8px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid #e5e7eb;
+      background:#f8fafc;
+      line-height:1.2;
+    }
+
+    .incomeTxt { color:#047857; font-weight:800; }
+    .expenseTxt { color:#b91c1c; font-weight:800; }
+
+    .pill.ok{
+      background: rgba(4,120,87,.10);
+      border-color: rgba(4,120,87,.25);
+      color:#047857;
+      font-weight:800;
+    }
+    .pill.bad{
+      background: rgba(185,28,28,.10);
+      border-color: rgba(185,28,28,.25);
+      color:#b91c1c;
+      font-weight:800;
+    }
+    .pill.neutral{
+      background: rgba(100,116,139,.10);
+      border-color: rgba(100,116,139,.25);
+      color:#475569;
+      font-weight:800;
+    }
+
+    /* ===== Top header row (title + language toggle) ===== */
+    .top-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .lang-toggle{
+      display:flex;
+      gap:6px;
+      padding:4px;
+      border:1px solid #e5e7eb;
+      border-radius:999px;
+      background:#ffffff;
+      flex:0 0 auto;
+      margin-top:2px;
+    }
+    .lang-btn{
+      border:0;
+      background:transparent;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:12px;
+      cursor:pointer;
+      color:#334155;
+      line-height:1;
+    }
+    .lang-btn.active{
+      background:#1e293b;
+      color:#ffffff;
+    }
+
+    /* Filter UI */
+    .filter-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:end;
+      margin-top:10px;
+    }
+    .filter-row > div{ min-width: 160px; }
+    .hint { font-size:12px; color:#64748b; margin-top:6px; }
+
+    /* Print */
+    .print-header{
+      display:none;
+      margin-bottom:12px;
+      padding-bottom:10px;
+      border-bottom:1px solid #e5e7eb;
+    }
+    .print-header h1{
+      margin:0;
+      font-size:18px;
+      letter-spacing:.2px;
+    }
+    .print-meta{
+      margin-top:6px;
+      font-size:12px;
+      color:#334155;
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+    }
+    .print-meta span{
+      display:inline-block;
+      padding:4px 8px;
+      border:1px solid #e5e7eb;
+      border-radius:999px;
+      background:#f8fafc;
+    }
+
+    @media print{
+      .btn, .btn-secondary, button, input, select, textarea, a[href="index.html"], .lang-toggle { display:none !important; }
+      body { background:#fff !important; }
+      .card { box-shadow:none !important; border:0 !important; }
+      .print-header { display:block !important; }
+      th, td { font-size:12px; padding:6px; }
+      thead { display: table-header-group; }
+      tr { page-break-inside: avoid; }
+      .container { max-width: 100% !important; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+<div class="card">
+
+  <!-- PRINT ONLY HEADER -->
+  <div class="print-header">
+    <h1 id="phTitle">NiagaSenang — Profit &amp; Loss (Cash Basis)</h1>
+    <div class="print-meta">
+      <span id="phBiz">Bisnes: -</span>
+      <span id="phPeriod">Tempoh: Semua</span>
+      <span id="phPrinted">Dicetak: -</span>
+    </div>
+  </div>
+
+  <!-- Top row: title + lang toggle -->
+  <div class="top-row">
+    <div>
+      <h2 data-i18n="pageH2">📊 P&amp;L (Profit &amp; Loss) — Cash Basis</h2>
+      <p class="small" data-i18n="pageIntro">
+        Report ini auto kira daripada <strong>Ledger</strong> berdasarkan <strong>cash basis</strong> (duit masuk/keluar).
+        Data disimpan dalam browser sahaja.
+      </p>
+    </div>
+
+    <div class="lang-toggle" aria-label="Language toggle">
+      <button type="button" class="lang-btn" data-lang="ms">BM</button>
+      <button type="button" class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </div>
+
+  <hr style="margin:14px 0;">
+
+  <!-- FILTER -->
+  <div class="box">
+    <h3 style="margin:0;" data-i18n="filterTitle">🗓️ Filter Tarikh (paparan &amp; print)</h3>
+
+    <div class="filter-row">
+      <div>
+        <label data-i18n="labelRange">Range</label>
+        <select id="rangePreset">
+          <option value="all" id="rngAll">Semua</option>
+          <option value="week" id="rngWeek">Minggu Ini</option>
+          <option value="month" id="rngMonth">Bulan Ini</option>
+          <option value="custom" id="rngCustom">Custom</option>
+        </select>
+      </div>
+
+      <div>
+        <label data-i18n="labelFrom">Dari</label>
+        <input type="date" id="fromDate" disabled>
+      </div>
+
+      <div>
+        <label data-i18n="labelTo">Hingga</label>
+        <input type="date" id="toDate" disabled>
+      </div>
+
+      <div>
+        <button class="btn-secondary" onclick="applyFilter()" data-i18n="btnApply">Apply</button>
+        <button class="btn-secondary" onclick="resetFilter()" data-i18n="btnReset">Reset</button>
+      </div>
+    </div>
+
+    <div class="hint" id="filterHint">Menunjukkan: Semua transaksi</div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="box">
+    <h3 style="margin:0 0 10px 0;" data-i18n="summaryTitle">📌 Ringkasan</h3>
+    <div class="grid-3">
+      <div>
+        <div class="small" data-i18n="sumIncomeLabel">Total Income</div>
+        <strong class="incomeTxt">RM <span id="sumIncome">0.00</span></strong>
+      </div>
+      <div>
+        <div class="small" data-i18n="sumExpenseLabel">Total Expense</div>
+        <strong class="expenseTxt">RM <span id="sumExpense">0.00</span></strong>
+      </div>
+      <div>
+        <div class="small" data-i18n="sumProfitLabel">Net Profit / Loss</div>
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <strong>RM <span id="sumProfit">0.00</span></strong>
+          <span class="pill neutral" id="profitPill">Break-even</span>
+        </div>
+        <div class="small" style="margin-top:6px;">
+          <span data-i18n="marginLabel">Profit Margin</span>:
+          <strong><span id="marginPct">0.00</span>%</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BREAKDOWN -->
+  <div class="box">
+    <h3 style="margin:0 0 10px 0;" data-i18n="breakdownTitle">🧾 Breakdown (ikut kategori)</h3>
+
+    <div class="grid-2">
+      <div>
+        <h4 style="margin:0 0 6px 0;" data-i18n="incomeTitle">Income</h4>
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="thCategory">Kategori</th>
+              <th class="right" data-i18n="thAmountRM">Jumlah (RM)</th>
+            </tr>
+          </thead>
+          <tbody id="incomeRows"></tbody>
+          <tfoot>
+            <tr>
+              <th data-i18n="footIncome">Total Income</th>
+              <th class="right incomeTxt">RM <span id="incomeTotalFoot">0.00</span></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div>
+        <h4 style="margin:0 0 6px 0;" data-i18n="expenseTitle">Expense</h4>
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="thCategory">Kategori</th>
+              <th class="right" data-i18n="thAmountRM">Jumlah (RM)</th>
+            </tr>
+          </thead>
+          <tbody id="expenseRows"></tbody>
+          <tfoot>
+            <tr>
+              <th data-i18n="footExpense">Total Expense</th>
+              <th class="right expenseTxt">RM <span id="expenseTotalFoot">0.00</span></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <p class="small" style="margin-top:10px;" data-i18n="disclaimerText">
+      Nota: Ini adalah report dalaman berdasarkan transaksi cash basis.
+      Untuk compliance cukai/e-Invoice, sila rujuk akauntan / penasihat cukai.
+    </p>
+  </div>
+
+  <div style="margin-top:14px;">
+    <button class="btn-secondary" onclick="printPL()" data-i18n="btnPrint">🖨 Print P&amp;L (ikut filter)</button>
+    <a class="btn-secondary" href="ledger.html" style="text-decoration:none; display:inline-block;" data-i18n="btnLedger">← Pergi Ledger</a>
+  </div>
+
+  <p style="margin-top:16px;">
+    <a href="index.html" data-i18n="backLink">← Kembali ke NiagaSenang</a>
+  </p>
+
+</div>
+</div>
+
+<script>
+/* =======================
+   Storage Keys
+======================= */
+const LEDGER_KEY = "ns_ledger_v3";
+const FILTER_KEY = "ns_pl_filter_v1"; // separate so ledger filter tak kacau P&L
+const LANG_KEY = "ns_lang"; // shared with ledger
+
+let CURRENT_LANG = "ms";
+
+/* =======================
+   i18n dictionary
+======================= */
+const I18N = {
+  ms: {
+    docTitle: "P&L (Cash Basis) | NiagaSenang",
+
+    pageH2: "📊 P&L (Profit & Loss) — Cash Basis",
+    pageIntro: "Report ini auto kira daripada <strong>Ledger</strong> berdasarkan <strong>cash basis</strong> (duit masuk/keluar). Data disimpan dalam browser sahaja.",
+
+    filterTitle: "🗓️ Filter Tarikh (paparan & print)",
+    labelRange: "Range",
+    labelFrom: "Dari",
+    labelTo: "Hingga",
+    btnApply: "Apply",
+    btnReset: "Reset",
+    rngAll: "Semua",
+    rngWeek: "Minggu Ini",
+    rngMonth: "Bulan Ini",
+    rngCustom: "Custom",
+
+    summaryTitle: "📌 Ringkasan",
+    sumIncomeLabel: "Total Income",
+    sumExpenseLabel: "Total Expense",
+    sumProfitLabel: "Net Profit / Loss",
+    marginLabel: "Profit Margin",
+
+    breakdownTitle: "🧾 Breakdown (ikut kategori)",
+    incomeTitle: "Income",
+    expenseTitle: "Expense",
+    thCategory: "Kategori",
+    thAmountRM: "Jumlah (RM)",
+    footIncome: "Total Income",
+    footExpense: "Total Expense",
+
+    btnPrint: "🖨 Print P&L (ikut filter)",
+    btnLedger: "← Pergi Ledger",
+    backLink: "← Kembali ke NiagaSenang",
+
+    disclaimerText: "Nota: Ini adalah report dalaman berdasarkan transaksi cash basis. Untuk compliance cukai/e-Invoice, sila rujuk akauntan / penasihat cukai.",
+
+    // dynamic strings
+    showPrefix: "Menunjukkan: ",
+    allTxns: "Semua transaksi",
+    weekLabel: "Minggu ini",
+    monthLabel: "Bulan ini",
+    customLabel: "Custom",
+    customFrom: "dari",
+    customTo: "hingga",
+
+    bizLabel: "Bisnes: ",
+    periodLabel: "Tempoh: ",
+    printedLabel: "Dicetak: ",
+
+    // profit pill
+    pillProfit: "Untung",
+    pillLoss: "Rugi",
+    pillEven: "Break-even",
+
+    // empty rows
+    noIncome: "Tiada income dalam tempoh ini.",
+    noExpense: "Tiada expense dalam tempoh ini.",
+
+    alertCustomNeedDate: "Untuk Custom, sila pilih tarikh Dari / Hingga (sekurang-kurangnya satu).",
+
+    phTitle: "NiagaSenang — Profit & Loss (Cash Basis)"
+  },
+
+  en: {
+    docTitle: "P&L (Cash Basis) | NiagaSenang",
+
+    pageH2: "📊 P&L (Profit & Loss) — Cash Basis",
+    pageIntro: "This report is calculated from the <strong>Ledger</strong> using <strong>cash basis</strong> (money in/out). Data is stored locally in your browser only.",
+
+    filterTitle: "🗓️ Date Filter (view & print)",
+    labelRange: "Range",
+    labelFrom: "From",
+    labelTo: "To",
+    btnApply: "Apply",
+    btnReset: "Reset",
+    rngAll: "All",
+    rngWeek: "This Week",
+    rngMonth: "This Month",
+    rngCustom: "Custom",
+
+    summaryTitle: "📌 Summary",
+    sumIncomeLabel: "Total Income",
+    sumExpenseLabel: "Total Expense",
+    sumProfitLabel: "Net Profit / Loss",
+    marginLabel: "Profit Margin",
+
+    breakdownTitle: "🧾 Breakdown (by category)",
+    incomeTitle: "Income",
+    expenseTitle: "Expense",
+    thCategory: "Category",
+    thAmountRM: "Amount (RM)",
+    footIncome: "Total Income",
+    footExpense: "Total Expense",
+
+    btnPrint: "🖨 Print P&L (filtered)",
+    btnLedger: "← Go to Ledger",
+    backLink: "← Back to NiagaSenang",
+
+    disclaimerText: "Note: This is an internal cash-basis report. For tax/e-Invoice compliance, please consult your accountant or tax advisor.",
+
+    // dynamic strings
+    showPrefix: "Showing: ",
+    allTxns: "All transactions",
+    weekLabel: "This week",
+    monthLabel: "This month",
+    customLabel: "Custom",
+    customFrom: "from",
+    customTo: "to",
+
+    bizLabel: "Business: ",
+    periodLabel: "Period: ",
+    printedLabel: "Printed: ",
+
+    // profit pill
+    pillProfit: "Profit",
+    pillLoss: "Loss",
+    pillEven: "Break-even",
+
+    // empty rows
+    noIncome: "No income in this period.",
+    noExpense: "No expense in this period.",
+
+    alertCustomNeedDate: "For Custom, choose From/To dates (at least one).",
+
+    phTitle: "NiagaSenang — Profit & Loss (Cash Basis)"
+  }
+};
+
+/* =======================
+   Helpers
+======================= */
+function today(){ return new Date().toISOString().slice(0,10); }
+function money(n){ return Number(n || 0).toFixed(2); }
+
+function nowReadable(){
+  const d = new Date();
+  const locale = (CURRENT_LANG === "en") ? "en-US" : "ms-MY";
+  return d.toLocaleString(locale, { year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+}
+
+function escapeHtml(s){
+  return String(s ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function t(key){
+  const pack = I18N[CURRENT_LANG] || I18N.ms;
+  return (pack[key] != null) ? pack[key] : (I18N.ms[key] ?? "");
+}
+
+/* =======================
+   Language
+======================= */
+function detectBrowserLang(){
+  const nav = (navigator.language || "").toLowerCase();
+  return nav.startsWith("en") ? "en" : "ms";
+}
+
+function applyLang(lang){
+  CURRENT_LANG = (lang === "en") ? "en" : "ms";
+  localStorage.setItem(LANG_KEY, CURRENT_LANG);
+
+  // active state
+  document.querySelectorAll(".lang-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.lang === CURRENT_LANG);
+  });
+
+  // html lang + title
+  document.documentElement.setAttribute("lang", CURRENT_LANG === "en" ? "en" : "ms");
+  document.title = t("docTitle");
+
+  // static text via data-i18n
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    const val = t(key);
+    if (val != null && val !== "") el.innerHTML = val;
+  });
+
+  // range option labels (ids)
+  const rngAll = document.getElementById("rngAll");
+  const rngWeek = document.getElementById("rngWeek");
+  const rngMonth = document.getElementById("rngMonth");
+  const rngCustom = document.getElementById("rngCustom");
+  if(rngAll) rngAll.textContent = t("rngAll");
+  if(rngWeek) rngWeek.textContent = t("rngWeek");
+  if(rngMonth) rngMonth.textContent = t("rngMonth");
+  if(rngCustom) rngCustom.textContent = t("rngCustom");
+
+  // print header title
+  const phTitle = document.getElementById("phTitle");
+  if(phTitle) phTitle.textContent = t("phTitle");
+
+  // re-render dynamic strings
+  render();
+}
+
+// init lang: saved > browser
+(function initLang(){
+  const saved = localStorage.getItem(LANG_KEY);
+  const start = saved || detectBrowserLang();
+  applyLang(start);
+
+  document.querySelectorAll(".lang-btn").forEach(btn => {
+    btn.addEventListener("click", () => applyLang(btn.dataset.lang));
+  });
+})();
+
+/* =======================
+   Ledger load
+======================= */
+function loadLedger(){
+  try{
+    const v = JSON.parse(localStorage.getItem(LEDGER_KEY) || "[]");
+    return Array.isArray(v) ? v : [];
+  }catch(e){
+    return [];
+  }
+}
+
+/* =======================
+   Filter state
+======================= */
+function getFilter(){
+  try{
+    const f = JSON.parse(localStorage.getItem(FILTER_KEY) || "{}");
+    return { preset: f.preset || "all", from: f.from || "", to: f.to || "" };
+  }catch(e){
+    return { preset:"all", from:"", to:"" };
+  }
+}
+function setFilter(f){ localStorage.setItem(FILTER_KEY, JSON.stringify(f)); }
+
+function startOfWeekISO(d){
+  const date = new Date(d);
+  const day = date.getDay(); // 0 Sun..6 Sat
+  const diff = (day === 0 ? -6 : 1 - day); // Monday start
+  date.setDate(date.getDate() + diff);
+  return date.toISOString().slice(0,10);
+}
+function endOfWeekISO(d){
+  const start = new Date(startOfWeekISO(d));
+  start.setDate(start.getDate() + 6);
+  return start.toISOString().slice(0,10);
+}
+function startOfMonthISO(d){
+  const date = new Date(d);
+  date.setDate(1);
+  return date.toISOString().slice(0,10);
+}
+function endOfMonthISO(d){
+  const date = new Date(d);
+  date.setMonth(date.getMonth() + 1);
+  date.setDate(0);
+  return date.toISOString().slice(0,10);
+}
+
+function normalizeFilterFromUI(){
+  const preset = rangePreset.value;
+  let from = "", to = "";
+  const tt = today();
+
+  if(preset === "week"){
+    from = startOfWeekISO(tt);
+    to = endOfWeekISO(tt);
+  } else if(preset === "month"){
+    from = startOfMonthISO(tt);
+    to = endOfMonthISO(tt);
+  } else if(preset === "custom"){
+    from = (fromDate.value || "").trim();
+    to = (toDate.value || "").trim();
+  }
+
+  if(from && to && from > to){
+    const tmp = from; from = to; to = tmp;
+  }
+  return { preset, from, to };
+}
+
+function filterData(data, f){
+  if(!f || f.preset === "all") return data;
+  if(!f.from && !f.to) return data;
+
+  return data.filter(tnx => {
+    const dt = String(tnx.date || "");
+    if(!dt) return false;
+    if(f.from && dt < f.from) return false;
+    if(f.to && dt > f.to) return false;
+    return true;
+  });
+}
+
+function filterLabel(f){
+  if(!f || f.preset === "all") return t("allTxns");
+  if(f.preset === "week") return `${t("weekLabel")} (${f.from} → ${f.to})`;
+  if(f.preset === "month") return `${t("monthLabel")} (${f.from} → ${f.to})`;
+  if(f.preset === "custom"){
+    if(f.from && f.to) return `${t("customLabel")} (${f.from} → ${f.to})`;
+    if(f.from && !f.to) return `${t("customLabel")} (${t("customFrom")} ${f.from})`;
+    if(!f.from && f.to) return `${t("customLabel")} (${t("customTo")} ${f.to})`;
+    return `${t("customLabel")} (select date)`;
+  }
+  return t("allTxns");
+}
+
+/* =======================
+   Aggregation
+======================= */
+function sumByCategory(txns, type){
+  const map = new Map();
+  txns
+    .filter(x => x.type === type)
+    .forEach(x => {
+      const cat = String(x.category || "Misc");
+      const amt = Number(x.amount || 0);
+      if(!amt || amt <= 0) return;
+      map.set(cat, (map.get(cat) || 0) + amt);
+    });
+
+  return [...map.entries()]
+    .map(([category, amount]) => ({ category, amount }))
+    .sort((a,b) => b.amount - a.amount);
+}
+
+function totalFor(list){
+  return list.reduce((s, x) => s + Number(x.amount || 0), 0);
+}
+
+/* =======================
+   Render
+======================= */
+function profitPill(profit){
+  const el = document.getElementById("profitPill");
+  if(profit > 0){
+    el.className = "pill ok";
+    el.textContent = t("pillProfit");
+  } else if(profit < 0){
+    el.className = "pill bad";
+    el.textContent = t("pillLoss");
+  } else {
+    el.className = "pill neutral";
+    el.textContent = t("pillEven");
+  }
+}
+
+function render(){
+  const all = loadLedger()
+    .slice()
+    .sort((a,b) => String(a.date).localeCompare(String(b.date)) || (a.id - b.id));
+
+  const f = getFilter();
+  const shown = filterData(all, f);
+
+  const incomeList = sumByCategory(shown, "income");
+  const expenseList = sumByCategory(shown, "expense");
+
+  const incomeTotal = totalFor(incomeList);
+  const expenseTotal = totalFor(expenseList);
+  const profit = incomeTotal - expenseTotal;
+  const margin = (incomeTotal > 0) ? (profit / incomeTotal) * 100 : 0;
+
+  // Summary
+  sumIncome.textContent = money(incomeTotal);
+  sumExpense.textContent = money(expenseTotal);
+  sumProfit.textContent = money(profit);
+  marginPct.textContent = Number(margin || 0).toFixed(2);
+  profitPill(profit);
+
+  // Breakdown tables
+  incomeRows.innerHTML = incomeList.length
+    ? incomeList.map(x => `
+      <tr>
+        <td>${escapeHtml(x.category)}</td>
+        <td class="right incomeTxt">${money(x.amount)}</td>
+      </tr>
+    `).join("")
+    : `<tr><td colspan="2" class="muted" style="padding:12px;">${escapeHtml(t("noIncome"))}</td></tr>`;
+
+  expenseRows.innerHTML = expenseList.length
+    ? expenseList.map(x => `
+      <tr>
+        <td>${escapeHtml(x.category)}</td>
+        <td class="right expenseTxt">${money(x.amount)}</td>
+      </tr>
+    `).join("")
+    : `<tr><td colspan="2" class="muted" style="padding:12px;">${escapeHtml(t("noExpense"))}</td></tr>`;
+
+  incomeTotalFoot.textContent = money(incomeTotal);
+  expenseTotalFoot.textContent = money(expenseTotal);
+
+  // Filter hint + print header meta
+  const label = filterLabel(f);
+  filterHint.textContent = t("showPrefix") + label;
+
+  document.getElementById("phBiz").textContent = t("bizLabel") + "NiagaSenang (Local)";
+  document.getElementById("phPeriod").textContent = t("periodLabel") + label;
+  document.getElementById("phPrinted").textContent = t("printedLabel") + nowReadable();
+}
+
+/* =======================
+   Filter UI
+======================= */
+function syncFilterUIFromState(){
+  const f = getFilter();
+  rangePreset.value = f.preset || "all";
+
+  if(f.preset === "custom"){
+    fromDate.disabled = false;
+    toDate.disabled = false;
+    fromDate.value = f.from || "";
+    toDate.value = f.to || "";
+  } else {
+    fromDate.disabled = true;
+    toDate.disabled = true;
+
+    if(f.preset === "week" || f.preset === "month"){
+      fromDate.value = f.from || "";
+      toDate.value = f.to || "";
+    } else {
+      fromDate.value = "";
+      toDate.value = "";
+    }
+  }
+}
+
+rangePreset.addEventListener("change", () => {
+  const preset = rangePreset.value;
+
+  if(preset === "custom"){
+    fromDate.disabled = false;
+    toDate.disabled = false;
+    if(!fromDate.value && !toDate.value){
+      const tt = today();
+      fromDate.value = startOfMonthISO(tt);
+      toDate.value = endOfMonthISO(tt);
+    }
+  } else {
+    fromDate.disabled = true;
+    toDate.disabled = true;
+    const f = normalizeFilterFromUI();
+    fromDate.value = f.from || "";
+    toDate.value = f.to || "";
+  }
+});
+
+function applyFilter(){
+  const f = normalizeFilterFromUI();
+
+  if(f.preset === "custom"){
+    if(!f.from && !f.to){
+      return alert(t("alertCustomNeedDate"));
+    }
+  }
+
+  setFilter(f);
+  try { gtag('event', 'filter_pl', { event_category:'accounting', event_label: f.preset }); } catch(e){}
+  render();
+}
+
+function resetFilter(){
+  setFilter({ preset:"all", from:"", to:"" });
+  syncFilterUIFromState();
+  render();
+}
+
+/* =======================
+   Print
+======================= */
+function printPL(){
+  try { gtag('event', 'print_pl', { event_category:'accounting' }); } catch(e){}
+  render();
+  window.print();
+}
+
+/* =======================
+   Init
+======================= */
+(function initFilter(){
+  const f = getFilter();
+  if((f.preset === "week" || f.preset === "month") && (!f.from || !f.to)){
+    const tt = today();
+    if(f.preset === "week"){
+      f.from = startOfWeekISO(tt);
+      f.to = endOfWeekISO(tt);
+    } else {
+      f.from = startOfMonthISO(tt);
+      f.to = endOfMonthISO(tt);
+    }
+    setFilter(f);
+  }
+  syncFilterUIFromState();
+})();
+
+render();
+</script>
+
+</body>
+</html>
