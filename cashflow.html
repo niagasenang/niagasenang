@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cashflow (MVP) | NiagaSenang</title>
-  <meta name="description" content="Cashflow (MVP) cash basis percuma untuk peniaga Malaysia. Auto kira cash in/out & baki tunai dari Ledger. Offline-first.">
+  <title>Cashflow (Cash Basis) | NiagaSenang</title>
+  <meta name="description" content="Cashflow cash basis percuma untuk peniaga Malaysia. Auto kira Net Cash In/Out, bulan/range, survival pill. Offline-first.">
 
   <link rel="stylesheet" href="css/style.css">
 
@@ -38,35 +38,37 @@
 
     .pill{
       display:inline-block;
-      padding:4px 8px;
+      padding:4px 10px;
       border-radius:999px;
       font-size:12px;
       border:1px solid #e5e7eb;
       background:#f8fafc;
       line-height:1.2;
+      font-weight:800;
     }
-
-    .inTxt { color:#047857; font-weight:800; }
-    .outTxt { color:#b91c1c; font-weight:800; }
-
     .pill.ok{
       background: rgba(4,120,87,.10);
       border-color: rgba(4,120,87,.25);
       color:#047857;
-      font-weight:800;
+    }
+    .pill.warn{
+      background: rgba(245,158,11,.12);
+      border-color: rgba(245,158,11,.25);
+      color:#b45309;
     }
     .pill.bad{
       background: rgba(185,28,28,.10);
       border-color: rgba(185,28,28,.25);
       color:#b91c1c;
-      font-weight:800;
     }
     .pill.neutral{
       background: rgba(100,116,139,.10);
       border-color: rgba(100,116,139,.25);
       color:#475569;
-      font-weight:800;
     }
+
+    .incomeTxt { color:#047857; font-weight:800; }
+    .expenseTxt { color:#b91c1c; font-weight:800; }
 
     /* ===== Top header row (title + language toggle) ===== */
     .top-row{
@@ -90,7 +92,7 @@
       background:transparent;
       padding:6px 10px;
       border-radius:999px;
-      font-weight:700;
+      font-weight:800;
       font-size:12px;
       cursor:pointer;
       color:#334155;
@@ -111,6 +113,16 @@
     }
     .filter-row > div{ min-width: 160px; }
     .hint { font-size:12px; color:#64748b; margin-top:6px; }
+
+    /* Month filter UI */
+    .month-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:end;
+      margin-top:10px;
+    }
+    .month-row > div{ min-width: 160px; }
 
     /* Print */
     .print-header{
@@ -140,24 +152,9 @@
       background:#f8fafc;
     }
 
-    .kpi-row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:stretch;
-    }
-    .kpi{
-      flex:1 1 200px;
-      background:#ffffff;
-      border:1px solid #e5e7eb;
-      border-radius:12px;
-      padding:12px;
-    }
-    .kpi .label{ font-size:12px; color:#64748b; }
-    .kpi .value{ font-size:18px; font-weight:900; margin-top:4px; }
-
     @media print{
-      .btn, .btn-secondary, button, input, select, textarea, a[href="index.html"], .lang-toggle { display:none !important; }
+      .btn, .btn-secondary, button, input, select, textarea,
+      a[href="index.html"], .lang-toggle { display:none !important; }
       body { background:#fff !important; }
       .card { box-shadow:none !important; border:0 !important; }
       .print-header { display:block !important; }
@@ -175,10 +172,10 @@
 
   <!-- PRINT ONLY HEADER -->
   <div class="print-header">
-    <h1 id="phTitle">NiagaSenang — Cashflow (MVP, Cash Basis)</h1>
+    <h1 id="phTitle">NiagaSenang — Cashflow (Cash Basis)</h1>
     <div class="print-meta">
       <span id="phBiz">Bisnes: -</span>
-      <span id="phPeriod">Tempoh: Semua</span>
+      <span id="phPeriod">Tempoh: -</span>
       <span id="phPrinted">Dicetak: -</span>
     </div>
   </div>
@@ -186,10 +183,10 @@
   <!-- Top row: title + lang toggle -->
   <div class="top-row">
     <div>
-      <h2 data-i18n="pageH2">💧 Cashflow (MVP) — Cash Basis</h2>
+      <h2 data-i18n="pageH2">💸 Cashflow — Cash Basis</h2>
       <p class="small" data-i18n="pageIntro">
-        Ini report cashflow ringkas (cash basis) berdasarkan <strong>Ledger</strong>.
-        Fokus: berapa duit masuk, duit keluar, dan baki tunai dalam tempoh dipilih.
+        Ringkasan aliran tunai dari <strong>Ledger</strong> (duit masuk/keluar).
+        Fokus: “bisnes hidup ke mati” ikut cash.
       </p>
     </div>
 
@@ -201,7 +198,27 @@
 
   <hr style="margin:14px 0;">
 
-  <!-- FILTER -->
+  <!-- MONTH FILTER -->
+  <div class="box">
+    <h3 style="margin:0;" data-i18n="monthTitle">🗓️ Filter Bulan (cepat)</h3>
+
+    <div class="month-row">
+      <div>
+        <label data-i18n="labelMonth">Bulan</label>
+        <input type="month" id="monthPick">
+        <div class="hint" data-i18n="monthHint">Tip: Pilih bulan untuk ringkas view cashflow.</div>
+      </div>
+
+      <div>
+        <button class="btn-secondary" onclick="applyMonth()" data-i18n="btnApplyMonth">Apply Bulan</button>
+        <button class="btn-secondary" onclick="resetMonth()" data-i18n="btnResetMonth">Reset Bulan</button>
+      </div>
+    </div>
+
+    <div class="hint" id="monthHintTxt">Menunjukkan: Semua transaksi</div>
+  </div>
+
+  <!-- RANGE FILTER -->
   <div class="box">
     <h3 style="margin:0;" data-i18n="filterTitle">🗓️ Filter Tarikh (paparan &amp; print)</h3>
 
@@ -235,33 +252,35 @@
     <div class="hint" id="filterHint">Menunjukkan: Semua transaksi</div>
   </div>
 
-  <!-- KPI SUMMARY -->
+  <!-- SUMMARY -->
   <div class="box">
-    <h3 style="margin:0 0 10px 0;" data-i18n="kpiTitle">📌 Ringkasan Cashflow (ikut filter)</h3>
+    <h3 style="margin:0 0 10px 0;" data-i18n="summaryTitle">📌 Ringkasan Cashflow</h3>
 
-    <div class="kpi-row">
-      <div class="kpi">
-        <div class="label" data-i18n="kpiIn">Total Cash In</div>
-        <div class="value inTxt">RM <span id="sumIn">0.00</span></div>
+    <div class="grid-3">
+      <div>
+        <div class="small" data-i18n="sumInLabel">Cash In</div>
+        <strong class="incomeTxt">RM <span id="sumIn">0.00</span></strong>
       </div>
-      <div class="kpi">
-        <div class="label" data-i18n="kpiOut">Total Cash Out</div>
-        <div class="value outTxt">RM <span id="sumOut">0.00</span></div>
+      <div>
+        <div class="small" data-i18n="sumOutLabel">Cash Out</div>
+        <strong class="expenseTxt">RM <span id="sumOut">0.00</span></strong>
       </div>
-      <div class="kpi">
-        <div class="label" data-i18n="kpiNet">Net Cashflow</div>
-        <div class="value">RM <span id="sumNet">0.00</span> <span class="pill neutral" id="netPill">Neutral</span></div>
+      <div>
+        <div class="small" data-i18n="sumNetLabel">Net Cashflow</div>
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <strong>RM <span id="sumNet">0.00</span></strong>
+          <span class="pill neutral" id="survivalPill">-</span>
+        </div>
         <div class="small" style="margin-top:6px;">
-          <span data-i18n="kpiRatio">Cashflow Ratio</span>:
-          <strong><span id="ratioPct">0.00</span>%</strong>
-          <span class="small muted" data-i18n="ratioHint"> (Net ÷ In)</span>
+          <span data-i18n="burnLabel">Burn / Day (avg):</span>
+          <strong>RM <span id="burnPerDay">0.00</span></strong>
         </div>
       </div>
     </div>
 
-    <p class="small" style="margin-top:10px;" data-i18n="kpiNote">
-      Nota: Ini bukan “statement of cash flows” standard (operating/investing/financing).
-      Ini MVP untuk peniaga kecil—based on duit masuk/keluar dalam Ledger.
+    <p class="small" style="margin-top:10px;" data-i18n="summaryNote">
+      Nota: “Burn/Day” dikira dari total cash out ÷ bilangan hari dalam tempoh filter.
+      Ini bukan GAAP—ini survival view.
     </p>
   </div>
 
@@ -271,38 +290,38 @@
 
     <div class="grid-2">
       <div>
-        <h4 style="margin:0 0 6px 0;" data-i18n="inTitle">Cash In (Income)</h4>
+        <h4 style="margin:0 0 6px 0;" data-i18n="incomeTitle">Cash In</h4>
         <table>
           <thead>
             <tr>
               <th data-i18n="thCategory">Kategori</th>
-              <th class="right" data-i18n="thAmountRM">Jumlah (RM)</th>
+              <th class="right" data-i18n="thAmount">Jumlah (RM)</th>
             </tr>
           </thead>
           <tbody id="inRows"></tbody>
           <tfoot>
             <tr>
               <th data-i18n="footIn">Total Cash In</th>
-              <th class="right inTxt">RM <span id="inTotalFoot">0.00</span></th>
+              <th class="right incomeTxt">RM <span id="inTotalFoot">0.00</span></th>
             </tr>
           </tfoot>
         </table>
       </div>
 
       <div>
-        <h4 style="margin:0 0 6px 0;" data-i18n="outTitle">Cash Out (Expense)</h4>
+        <h4 style="margin:0 0 6px 0;" data-i18n="expenseTitle">Cash Out</h4>
         <table>
           <thead>
             <tr>
-              <th data-i18n="thCategory">Kategori</th>
-              <th class="right" data-i18n="thAmountRM">Jumlah (RM)</th>
+              <th data-i18n="thCategory2">Kategori</th>
+              <th class="right" data-i18n="thAmount2">Jumlah (RM)</th>
             </tr>
           </thead>
           <tbody id="outRows"></tbody>
           <tfoot>
             <tr>
               <th data-i18n="footOut">Total Cash Out</th>
-              <th class="right outTxt">RM <span id="outTotalFoot">0.00</span></th>
+              <th class="right expenseTxt">RM <span id="outTotalFoot">0.00</span></th>
             </tr>
           </tfoot>
         </table>
@@ -310,34 +329,24 @@
     </div>
 
     <p class="small" style="margin-top:10px;" data-i18n="disclaimerText">
-      Nota: Report ini berdasarkan cash basis. Untuk compliance cukai/e-Invoice, sila rujuk akauntan / penasihat cukai.
+      Tool ini adalah cash basis survival view untuk kegunaan dalaman. Untuk compliance cukai, rujuk akauntan.
     </p>
   </div>
 
-  <!-- OPTIONAL: quick view of transactions (latest) -->
-  <div class="box">
-    <h3 style="margin:0 0 10px 0;" data-i18n="latestTitle">🧾 Transaksi Terbaru (ikut filter)</h3>
-    <table>
-      <thead>
-        <tr>
-          <th data-i18n="thDate">Tarikh</th>
-          <th data-i18n="thType">Jenis</th>
-          <th data-i18n="thCategory">Kategori</th>
-          <th data-i18n="thNote">Nota</th>
-          <th class="right" data-i18n="thAmountRM">Jumlah (RM)</th>
-        </tr>
-      </thead>
-      <tbody id="txnRows"></tbody>
-    </table>
-    <div class="small muted" style="margin-top:8px;" data-i18n="latestHint">
-      Paparan ini ringkas (maks 30 transaksi) supaya ringan.
-    </div>
-  </div>
-
   <div style="margin-top:14px;">
-    <button class="btn-secondary" onclick="printCashflow()" data-i18n="btnPrint">🖨 Print Cashflow (ikut filter)</button>
-    <a class="btn-secondary" href="ledger.html" style="text-decoration:none; display:inline-block;" data-i18n="btnLedger">← Pergi Ledger</a>
-    <a class="btn-secondary" href="pl.html" style="text-decoration:none; display:inline-block;" data-i18n="btnPL">← Pergi P&amp;L</a>
+    <button class="btn-secondary" onclick="printCF()" data-i18n="btnPrint">🖨 Print Cashflow (ikut filter)</button>
+
+    <a class="btn-secondary" href="ledger.html" style="text-decoration:none; display:inline-block;" data-i18n="btnLedger">
+      ← Pergi Ledger
+    </a>
+
+    <a class="btn-secondary" href="pl.html" style="text-decoration:none; display:inline-block;" data-i18n="btnPL">
+      📊 Pergi P&amp;L
+    </a>
+
+    <a class="btn-secondary" href="commitment.html" style="text-decoration:none; display:inline-block;" data-i18n="btnCommitment">
+      📌 Komitmen
+    </a>
   </div>
 
   <p style="margin-top:16px;">
@@ -348,24 +357,28 @@
 </div>
 
 <script>
-/* =======================
-   Storage Keys
-======================= */
+/* ===== storage keys ===== */
 const LEDGER_KEY = "ns_ledger_v3";
-const FILTER_KEY = "ns_cashflow_filter_v1"; // separate
-const LANG_KEY = "ns_lang"; // shared with ledger/pl
+const RANGE_FILTER_KEY = "ns_cashflow_filter_v1";   // date range filter
+const MONTH_FILTER_KEY = "ns_cashflow_month_v1";    // month quick filter
+const LANG_KEY = "ns_lang";
 
 let CURRENT_LANG = "ms";
 
-/* =======================
-   i18n dictionary
-======================= */
+/* ===== i18n ===== */
 const I18N = {
   ms: {
-    docTitle: "Cashflow (MVP) | NiagaSenang",
+    docTitle: "Cashflow (Cash Basis) | NiagaSenang",
+    phTitle: "NiagaSenang — Cashflow (Cash Basis)",
 
-    pageH2: "💧 Cashflow (MVP) — Cash Basis",
-    pageIntro: "Ini report cashflow ringkas (cash basis) berdasarkan <strong>Ledger</strong>. Fokus: berapa duit masuk, duit keluar, dan baki tunai dalam tempoh dipilih.",
+    pageH2: "💸 Cashflow — Cash Basis",
+    pageIntro: "Ringkasan aliran tunai dari <strong>Ledger</strong> (duit masuk/keluar). Fokus: “bisnes hidup ke mati” ikut cash.",
+
+    monthTitle: "🗓️ Filter Bulan (cepat)",
+    labelMonth: "Bulan",
+    monthHint: "Tip: Pilih bulan untuk ringkas view cashflow.",
+    btnApplyMonth: "Apply Bulan",
+    btnResetMonth: "Reset Bulan",
 
     filterTitle: "🗓️ Filter Tarikh (paparan & print)",
     labelRange: "Range",
@@ -378,36 +391,32 @@ const I18N = {
     rngMonth: "Bulan Ini",
     rngCustom: "Custom",
 
-    kpiTitle: "📌 Ringkasan Cashflow (ikut filter)",
-    kpiIn: "Total Cash In",
-    kpiOut: "Total Cash Out",
-    kpiNet: "Net Cashflow",
-    kpiRatio: "Cashflow Ratio",
-    ratioHint: " (Net ÷ In)",
-    kpiNote: "Nota: Ini bukan “statement of cash flows” standard (operating/investing/financing). Ini MVP untuk peniaga kecil—based on duit masuk/keluar dalam Ledger.",
+    summaryTitle: "📌 Ringkasan Cashflow",
+    sumInLabel: "Cash In",
+    sumOutLabel: "Cash Out",
+    sumNetLabel: "Net Cashflow",
+    burnLabel: "Burn / Day (avg):",
+    summaryNote: "Nota: “Burn/Day” dikira dari total cash out ÷ bilangan hari dalam tempoh filter. Ini bukan GAAP—ini survival view.",
 
     breakdownTitle: "🧾 Breakdown (ikut kategori)",
-    inTitle: "Cash In (Income)",
-    outTitle: "Cash Out (Expense)",
+    incomeTitle: "Cash In",
+    expenseTitle: "Cash Out",
     thCategory: "Kategori",
-    thAmountRM: "Jumlah (RM)",
+    thAmount: "Jumlah (RM)",
+    thCategory2: "Kategori",
+    thAmount2: "Jumlah (RM)",
     footIn: "Total Cash In",
     footOut: "Total Cash Out",
 
-    latestTitle: "🧾 Transaksi Terbaru (ikut filter)",
-    thDate: "Tarikh",
-    thType: "Jenis",
-    thNote: "Nota",
-    latestHint: "Paparan ini ringkas (maks 30 transaksi) supaya ringan.",
+    disclaimerText: "Tool ini adalah cash basis survival view untuk kegunaan dalaman. Untuk compliance cukai, rujuk akauntan.",
 
     btnPrint: "🖨 Print Cashflow (ikut filter)",
     btnLedger: "← Pergi Ledger",
-    btnPL: "← Pergi P&L",
+    btnPL: "📊 Pergi P&L",
+    btnCommitment: "📌 Komitmen",
     backLink: "← Kembali ke NiagaSenang",
 
-    disclaimerText: "Nota: Report ini berdasarkan cash basis. Untuk compliance cukai/e-Invoice, sila rujuk akauntan / penasihat cukai.",
-
-    // dynamic strings
+    // dynamic
     showPrefix: "Menunjukkan: ",
     allTxns: "Semua transaksi",
     weekLabel: "Minggu ini",
@@ -415,35 +424,34 @@ const I18N = {
     customLabel: "Custom",
     customFrom: "dari",
     customTo: "hingga",
+    monthQuick: "Bulan dipilih",
 
     bizLabel: "Bisnes: ",
     periodLabel: "Tempoh: ",
     printedLabel: "Dicetak: ",
 
-    // pills
-    pillPos: "Positif",
-    pillNeg: "Negatif",
-    pillZero: "Neutral",
-
-    // type labels (from ledger)
-    typeIncome: "Duit Masuk",
-    typeExpense: "Duit Keluar",
-
-    // empty states
-    noIn: "Tiada cash in dalam tempoh ini.",
-    noOut: "Tiada cash out dalam tempoh ini.",
-    noTxn: "Tiada transaksi dalam tempoh ini.",
-
     alertCustomNeedDate: "Untuk Custom, sila pilih tarikh Dari / Hingga (sekurang-kurangnya satu).",
 
-    phTitle: "NiagaSenang — Cashflow (MVP, Cash Basis)"
+    // survival pills
+    survHealthy: "Sihat",
+    survOk: "OK",
+    survWarning: "Warning",
+    survCritical: "Kritikal",
+    survNeutral: "Neutral"
   },
 
   en: {
-    docTitle: "Cashflow (MVP) | NiagaSenang",
+    docTitle: "Cashflow (Cash Basis) | NiagaSenang",
+    phTitle: "NiagaSenang — Cashflow (Cash Basis)",
 
-    pageH2: "💧 Cashflow (MVP) — Cash Basis",
-    pageIntro: "This is a simple cashflow MVP (cash basis) based on your <strong>Ledger</strong>. Focus: money in, money out, and net cashflow for the selected period.",
+    pageH2: "💸 Cashflow — Cash Basis",
+    pageIntro: "Cashflow summary from your <strong>Ledger</strong> (money in/out). Focus: “is the business alive?” in cash terms.",
+
+    monthTitle: "🗓️ Monthly Filter (quick)",
+    labelMonth: "Month",
+    monthHint: "Tip: Pick a month for a quick cashflow view.",
+    btnApplyMonth: "Apply Month",
+    btnResetMonth: "Reset Month",
 
     filterTitle: "🗓️ Date Filter (view & print)",
     labelRange: "Range",
@@ -456,36 +464,32 @@ const I18N = {
     rngMonth: "This Month",
     rngCustom: "Custom",
 
-    kpiTitle: "📌 Cashflow Summary (filtered)",
-    kpiIn: "Total Cash In",
-    kpiOut: "Total Cash Out",
-    kpiNet: "Net Cashflow",
-    kpiRatio: "Cashflow Ratio",
-    ratioHint: " (Net ÷ In)",
-    kpiNote: "Note: This is not a standard “statement of cash flows” (operating/investing/financing). This is an MVP for small businesses—based on money in/out in your Ledger.",
+    summaryTitle: "📌 Cashflow Summary",
+    sumInLabel: "Cash In",
+    sumOutLabel: "Cash Out",
+    sumNetLabel: "Net Cashflow",
+    burnLabel: "Burn / Day (avg):",
+    summaryNote: "Note: “Burn/Day” is calculated as total cash out ÷ number of days in the filtered period. This is a survival view, not GAAP.",
 
     breakdownTitle: "🧾 Breakdown (by category)",
-    inTitle: "Cash In (Income)",
-    outTitle: "Cash Out (Expense)",
+    incomeTitle: "Cash In",
+    expenseTitle: "Cash Out",
     thCategory: "Category",
-    thAmountRM: "Amount (RM)",
+    thAmount: "Amount (RM)",
+    thCategory2: "Category",
+    thAmount2: "Amount (RM)",
     footIn: "Total Cash In",
     footOut: "Total Cash Out",
 
-    latestTitle: "🧾 Latest Transactions (filtered)",
-    thDate: "Date",
-    thType: "Type",
-    thNote: "Note",
-    latestHint: "This is a lightweight view (max 30 transactions).",
+    disclaimerText: "This is a cash-basis survival view for internal use. For tax compliance, consult an accountant.",
 
     btnPrint: "🖨 Print Cashflow (filtered)",
     btnLedger: "← Go to Ledger",
-    btnPL: "← Go to P&L",
+    btnPL: "📊 Go to P&L",
+    btnCommitment: "📌 Commitments",
     backLink: "← Back to NiagaSenang",
 
-    disclaimerText: "Note: This report is cash basis. For tax/e-Invoice compliance, please consult your accountant or tax advisor.",
-
-    // dynamic strings
+    // dynamic
     showPrefix: "Showing: ",
     allTxns: "All transactions",
     weekLabel: "This week",
@@ -493,34 +497,29 @@ const I18N = {
     customLabel: "Custom",
     customFrom: "from",
     customTo: "to",
+    monthQuick: "Selected month",
 
     bizLabel: "Business: ",
     periodLabel: "Period: ",
     printedLabel: "Printed: ",
 
-    // pills
-    pillPos: "Positive",
-    pillNeg: "Negative",
-    pillZero: "Neutral",
-
-    // type labels (from ledger)
-    typeIncome: "Money In",
-    typeExpense: "Money Out",
-
-    // empty states
-    noIn: "No cash in for this period.",
-    noOut: "No cash out for this period.",
-    noTxn: "No transactions for this period.",
-
     alertCustomNeedDate: "For Custom, choose From/To dates (at least one).",
 
-    phTitle: "NiagaSenang — Cashflow (MVP, Cash Basis)"
+    // survival pills
+    survHealthy: "Healthy",
+    survOk: "OK",
+    survWarning: "Warning",
+    survCritical: "Critical",
+    survNeutral: "Neutral"
   }
 };
 
-/* =======================
-   Helpers
-======================= */
+function t(key){
+  const pack = I18N[CURRENT_LANG] || I18N.ms;
+  return (pack[key] != null) ? pack[key] : (I18N.ms[key] ?? "");
+}
+
+/* ===== helpers ===== */
 function today(){ return new Date().toISOString().slice(0,10); }
 function money(n){ return Number(n || 0).toFixed(2); }
 
@@ -539,14 +538,7 @@ function escapeHtml(s){
     .replaceAll("'","&#039;");
 }
 
-function t(key){
-  const pack = I18N[CURRENT_LANG] || I18N.ms;
-  return (pack[key] != null) ? pack[key] : (I18N.ms[key] ?? "");
-}
-
-/* =======================
-   Language
-======================= */
+/* ===== language ===== */
 function detectBrowserLang(){
   const nav = (navigator.language || "").toLowerCase();
   return nav.startsWith("en") ? "en" : "ms";
@@ -569,7 +561,10 @@ function applyLang(lang){
     if (val != null && val !== "") el.innerHTML = val;
   });
 
-  // range option labels
+  const phTitle = document.getElementById("phTitle");
+  if(phTitle) phTitle.textContent = t("phTitle");
+
+  // update dropdown option labels
   const rngAll = document.getElementById("rngAll");
   const rngWeek = document.getElementById("rngWeek");
   const rngMonth = document.getElementById("rngMonth");
@@ -579,26 +574,19 @@ function applyLang(lang){
   if(rngMonth) rngMonth.textContent = t("rngMonth");
   if(rngCustom) rngCustom.textContent = t("rngCustom");
 
-  // print header title
-  const phTitle = document.getElementById("phTitle");
-  if(phTitle) phTitle.textContent = t("phTitle");
-
   render();
 }
 
 (function initLang(){
   const saved = localStorage.getItem(LANG_KEY);
-  const start = saved || detectBrowserLang();
-  applyLang(start);
+  applyLang(saved || detectBrowserLang());
 
   document.querySelectorAll(".lang-btn").forEach(btn => {
     btn.addEventListener("click", () => applyLang(btn.dataset.lang));
   });
 })();
 
-/* =======================
-   Ledger Load
-======================= */
+/* ===== ledger load ===== */
 function loadLedger(){
   try{
     const v = JSON.parse(localStorage.getItem(LEDGER_KEY) || "[]");
@@ -608,19 +596,7 @@ function loadLedger(){
   }
 }
 
-/* =======================
-   Filter State
-======================= */
-function getFilter(){
-  try{
-    const f = JSON.parse(localStorage.getItem(FILTER_KEY) || "{}");
-    return { preset: f.preset || "all", from: f.from || "", to: f.to || "" };
-  }catch(e){
-    return { preset:"all", from:"", to:"" };
-  }
-}
-function setFilter(f){ localStorage.setItem(FILTER_KEY, JSON.stringify(f)); }
-
+/* ===== date helpers ===== */
 function startOfWeekISO(d){
   const date = new Date(d);
   const day = date.getDay(); // 0 Sun..6 Sat
@@ -644,18 +620,47 @@ function endOfMonthISO(d){
   date.setDate(0);
   return date.toISOString().slice(0,10);
 }
+function daysBetweenISO(a, b){
+  // inclusive days count
+  const da = new Date(a + "T00:00:00");
+  const db = new Date(b + "T00:00:00");
+  const diff = Math.floor((db - da) / (1000*60*60*24));
+  return Math.max(1, diff + 1);
+}
+
+/* ===== month filter state ===== */
+function getMonthFilter(){
+  try{
+    const m = JSON.parse(localStorage.getItem(MONTH_FILTER_KEY) || "{}");
+    return { month: m.month || "" }; // YYYY-MM
+  }catch(e){
+    return { month:"" };
+  }
+}
+function setMonthFilter(m){ localStorage.setItem(MONTH_FILTER_KEY, JSON.stringify(m)); }
+
+/* ===== range filter state ===== */
+function getRangeFilter(){
+  try{
+    const f = JSON.parse(localStorage.getItem(RANGE_FILTER_KEY) || "{}");
+    return { preset: f.preset || "all", from: f.from || "", to: f.to || "" };
+  }catch(e){
+    return { preset:"all", from:"", to:"" };
+  }
+}
+function setRangeFilter(f){ localStorage.setItem(RANGE_FILTER_KEY, JSON.stringify(f)); }
 
 function normalizeFilterFromUI(){
   const preset = rangePreset.value;
   let from = "", to = "";
-  const tt = today();
+  const tdy = today();
 
   if(preset === "week"){
-    from = startOfWeekISO(tt);
-    to = endOfWeekISO(tt);
+    from = startOfWeekISO(tdy);
+    to = endOfWeekISO(tdy);
   } else if(preset === "month"){
-    from = startOfMonthISO(tt);
-    to = endOfMonthISO(tt);
+    from = startOfMonthISO(tdy);
+    to = endOfMonthISO(tdy);
   } else if(preset === "custom"){
     from = (fromDate.value || "").trim();
     to = (toDate.value || "").trim();
@@ -667,12 +672,12 @@ function normalizeFilterFromUI(){
   return { preset, from, to };
 }
 
-function filterData(data, f){
+function filterDataByRange(data, f){
   if(!f || f.preset === "all") return data;
   if(!f.from && !f.to) return data;
 
-  return data.filter(tnx => {
-    const dt = String(tnx.date || "");
+  return data.filter(t => {
+    const dt = String(t.date || "");
     if(!dt) return false;
     if(f.from && dt < f.from) return false;
     if(f.to && dt > f.to) return false;
@@ -693,16 +698,14 @@ function filterLabel(f){
   return t("allTxns");
 }
 
-/* =======================
-   Aggregation
-======================= */
+/* ===== aggregation ===== */
 function sumByCategory(txns, type){
   const map = new Map();
   txns
-    .filter(x => x.type === type)
-    .forEach(x => {
-      const cat = String(x.category || "Misc");
-      const amt = Number(x.amount || 0);
+    .filter(t => t.type === type)
+    .forEach(t => {
+      const cat = String(t.category || "Misc");
+      const amt = Number(t.amount || 0);
       if(!amt || amt <= 0) return;
       map.set(cat, (map.get(cat) || 0) + amt);
     });
@@ -716,104 +719,155 @@ function totalFor(list){
   return list.reduce((s, x) => s + Number(x.amount || 0), 0);
 }
 
-function calcNetPill(net){
-  const el = document.getElementById("netPill");
+/* ===== survival pill ===== */
+function setSurvivalPill(net, burnPerDay){
+  const el = document.getElementById("survivalPill");
+
+  // if no activity at all
+  if(net === 0 && burnPerDay === 0){
+    el.className = "pill neutral";
+    el.textContent = t("survNeutral");
+    return;
+  }
+
+  // if net positive => healthy
   if(net > 0){
     el.className = "pill ok";
-    el.textContent = t("pillPos");
-  } else if(net < 0){
-    el.className = "pill bad";
-    el.textContent = t("pillNeg");
+    el.textContent = t("survHealthy");
+    return;
+  }
+
+  // net negative: grade by burn/day
+  if(burnPerDay <= 20){
+    el.className = "pill warn";
+    el.textContent = t("survOk");
+  } else if(burnPerDay <= 80){
+    el.className = "pill warn";
+    el.textContent = t("survWarning");
   } else {
-    el.className = "pill neutral";
-    el.textContent = t("pillZero");
+    el.className = "pill bad";
+    el.textContent = t("survCritical");
   }
 }
 
-/* =======================
-   Render
-======================= */
+/* ===== render ===== */
 function render(){
   const all = loadLedger()
     .slice()
     .sort((a,b) => String(a.date).localeCompare(String(b.date)) || (a.id - b.id));
 
-  const f = getFilter();
-  const shown = filterData(all, f);
+  // Apply month quick filter first (if set), then range filter
+  const mf = getMonthFilter();
+  let monthFiltered = all;
+
+  if(mf.month){
+    const from = mf.month + "-01";
+    const to = endOfMonthISO(from);
+    monthFiltered = all.filter(t => {
+      const dt = String(t.date || "");
+      return dt && dt >= from && dt <= to;
+    });
+  }
+
+  const rf = getRangeFilter();
+  const shown = filterDataByRange(monthFiltered, rf);
 
   const inList = sumByCategory(shown, "income");
   const outList = sumByCategory(shown, "expense");
 
-  const totalIn = totalFor(inList);
-  const totalOut = totalFor(outList);
-  const net = totalIn - totalOut;
-  const ratio = (totalIn > 0) ? (net / totalIn) * 100 : 0;
+  const inTotal = totalFor(inList);
+  const outTotal = totalFor(outList);
+  const net = inTotal - outTotal;
 
-  // KPI
-  sumIn.textContent = money(totalIn);
-  sumOut.textContent = money(totalOut);
+  // compute burn/day based on period boundaries
+  let periodDays = 1;
+  let periodLabelText = "";
+
+  if(mf.month){
+    const from = mf.month + "-01";
+    const to = endOfMonthISO(from);
+    periodDays = daysBetweenISO(from, to);
+    periodLabelText = `${t("monthQuick")} (${from} → ${to})`;
+  } else if(rf && rf.preset !== "all" && (rf.from || rf.to)){
+    const fFrom = rf.from || (shown[0] ? shown[0].date : today());
+    const fTo = rf.to || (shown[shown.length-1] ? shown[shown.length-1].date : today());
+    if(fFrom && fTo) periodDays = daysBetweenISO(fFrom, fTo);
+    periodLabelText = filterLabel(rf);
+  } else {
+    // default: infer from shown date range if possible
+    if(shown.length){
+      const fFrom = shown[0].date;
+      const fTo = shown[shown.length-1].date;
+      if(fFrom && fTo) periodDays = daysBetweenISO(fFrom, fTo);
+    }
+    periodLabelText = t("allTxns");
+  }
+
+  const burn = (outTotal > 0) ? (outTotal / periodDays) : 0;
+
+  // Summary
+  sumIn.textContent = money(inTotal);
+  sumOut.textContent = money(outTotal);
   sumNet.textContent = money(net);
-  ratioPct.textContent = Number(ratio || 0).toFixed(2);
-  calcNetPill(net);
+  burnPerDay.textContent = money(burn);
+  setSurvivalPill(net, burn);
 
-  // breakdown tables
+  // Tables
   inRows.innerHTML = inList.length
     ? inList.map(x => `
       <tr>
         <td>${escapeHtml(x.category)}</td>
-        <td class="right inTxt">${money(x.amount)}</td>
+        <td class="right incomeTxt">${money(x.amount)}</td>
       </tr>
     `).join("")
-    : `<tr><td colspan="2" class="muted" style="padding:12px;">${escapeHtml(t("noIn"))}</td></tr>`;
+    : `<tr><td colspan="2" class="muted" style="padding:12px;">-</td></tr>`;
 
   outRows.innerHTML = outList.length
     ? outList.map(x => `
       <tr>
         <td>${escapeHtml(x.category)}</td>
-        <td class="right outTxt">${money(x.amount)}</td>
+        <td class="right expenseTxt">${money(x.amount)}</td>
       </tr>
     `).join("")
-    : `<tr><td colspan="2" class="muted" style="padding:12px;">${escapeHtml(t("noOut"))}</td></tr>`;
+    : `<tr><td colspan="2" class="muted" style="padding:12px;">-</td></tr>`;
 
-  inTotalFoot.textContent = money(totalIn);
-  outTotalFoot.textContent = money(totalOut);
+  inTotalFoot.textContent = money(inTotal);
+  outTotalFoot.textContent = money(outTotal);
 
-  // latest txns (max 30, desc by date then id)
-  const latest = shown
-    .slice()
-    .sort((a,b) => String(b.date).localeCompare(String(a.date)) || (b.id - a.id))
-    .slice(0, 30);
+  // hints
+  const monthHint = mf.month ? `${t("monthQuick")}: ${mf.month}` : t("allTxns");
+  monthHintTxt.textContent = t("showPrefix") + monthHint;
 
-  txnRows.innerHTML = latest.length
-    ? latest.map(tt => {
-        const typeText = (tt.type === "income") ? t("typeIncome") : t("typeExpense");
-        const cls = (tt.type === "income") ? "inTxt" : "outTxt";
-        return `
-          <tr>
-            <td>${escapeHtml(tt.date || "-")}</td>
-            <td><span class="pill ${tt.type === "income" ? "ok" : "bad"}">${escapeHtml(typeText)}</span></td>
-            <td>${escapeHtml(tt.category || "-")}</td>
-            <td>${escapeHtml(tt.note || "-")}</td>
-            <td class="right ${cls}">${money(tt.amount)}</td>
-          </tr>
-        `;
-      }).join("")
-    : `<tr><td colspan="5" class="muted" style="padding:12px;">${escapeHtml(t("noTxn"))}</td></tr>`;
+  filterHint.textContent = t("showPrefix") + filterLabel(rf);
 
-  // filter hint + print meta
-  const label = filterLabel(f);
-  filterHint.textContent = t("showPrefix") + label;
-
+  // print meta
   document.getElementById("phBiz").textContent = t("bizLabel") + "NiagaSenang (Local)";
-  document.getElementById("phPeriod").textContent = t("periodLabel") + label;
+  document.getElementById("phPeriod").textContent = t("periodLabel") + periodLabelText;
   document.getElementById("phPrinted").textContent = t("printedLabel") + nowReadable();
 }
 
-/* =======================
-   Filter UI
-======================= */
-function syncFilterUIFromState(){
-  const f = getFilter();
+/* ===== month filter handlers ===== */
+function syncMonthUI(){
+  const mf = getMonthFilter();
+  monthPick.value = mf.month || "";
+}
+
+function applyMonth(){
+  const m = (monthPick.value || "").trim(); // YYYY-MM
+  setMonthFilter({ month: m });
+  try { gtag('event', 'filter_cashflow_month', { event_category:'accounting', event_label: m || 'none' }); } catch(e){}
+  render();
+}
+
+function resetMonth(){
+  setMonthFilter({ month:"" });
+  syncMonthUI();
+  render();
+}
+
+/* ===== range filter UI ===== */
+function syncRangeUIFromState(){
+  const f = getRangeFilter();
   rangePreset.value = f.preset || "all";
 
   if(f.preset === "custom"){
@@ -842,9 +896,9 @@ rangePreset.addEventListener("change", () => {
     fromDate.disabled = false;
     toDate.disabled = false;
     if(!fromDate.value && !toDate.value){
-      const tt = today();
-      fromDate.value = startOfMonthISO(tt);
-      toDate.value = endOfMonthISO(tt);
+      const tdy = today();
+      fromDate.value = startOfMonthISO(tdy);
+      toDate.value = endOfMonthISO(tdy);
     }
   } else {
     fromDate.disabled = true;
@@ -857,53 +911,51 @@ rangePreset.addEventListener("change", () => {
 
 function applyFilter(){
   const f = normalizeFilterFromUI();
-
   if(f.preset === "custom"){
     if(!f.from && !f.to){
       return alert(t("alertCustomNeedDate"));
     }
   }
-
-  setFilter(f);
+  setRangeFilter(f);
   try { gtag('event', 'filter_cashflow', { event_category:'accounting', event_label: f.preset }); } catch(e){}
   render();
 }
 
 function resetFilter(){
-  setFilter({ preset:"all", from:"", to:"" });
-  syncFilterUIFromState();
+  setRangeFilter({ preset:"all", from:"", to:"" });
+  syncRangeUIFromState();
   render();
 }
 
-/* =======================
-   Print
-======================= */
-function printCashflow(){
+/* ===== print ===== */
+function printCF(){
   try { gtag('event', 'print_cashflow', { event_category:'accounting' }); } catch(e){}
   render();
   window.print();
 }
 
-/* =======================
-   Init
-======================= */
-(function initFilter(){
-  const f = getFilter();
-  if((f.preset === "week" || f.preset === "month") && (!f.from || !f.to)){
-    const tt = today();
-    if(f.preset === "week"){
-      f.from = startOfWeekISO(tt);
-      f.to = endOfWeekISO(tt);
-    } else {
-      f.from = startOfMonthISO(tt);
-      f.to = endOfMonthISO(tt);
-    }
-    setFilter(f);
-  }
-  syncFilterUIFromState();
-})();
+/* ===== init ===== */
+(function init(){
+  // init month UI
+  syncMonthUI();
 
-render();
+  // init range filter defaults
+  const f = getRangeFilter();
+  if((f.preset === "week" || f.preset === "month") && (!f.from || !f.to)){
+    const tdy = today();
+    if(f.preset === "week"){
+      f.from = startOfWeekISO(tdy);
+      f.to = endOfWeekISO(tdy);
+    } else {
+      f.from = startOfMonthISO(tdy);
+      f.to = endOfMonthISO(tdy);
+    }
+    setRangeFilter(f);
+  }
+  syncRangeUIFromState();
+
+  render();
+})();
 </script>
 
 </body>
