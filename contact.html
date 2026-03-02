@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | NiagaSenang</title>
+  <meta name="description" content="Hubungi NiagaSenang untuk pertanyaan, feedback, atau isu bug. Kami bina tools rekod kewangan percuma untuk peniaga Malaysia.">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .muted { color:#64748b; font-size:13px; }
+    .box{
+      margin-top:12px;
+      background:#f8fafc;
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      padding:12px;
+    }
+    .top-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .lang-toggle{
+      display:flex;
+      gap:6px;
+      padding:4px;
+      border:1px solid #e5e7eb;
+      border-radius:999px;
+      background:#ffffff;
+      flex:0 0 auto;
+      margin-top:2px;
+    }
+    .lang-btn{
+      border:0;
+      background:transparent;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:12px;
+      cursor:pointer;
+      color:#334155;
+      line-height:1;
+    }
+    .lang-btn.active{
+      background:#1e293b;
+      color:#ffffff;
+    }
+    .pill{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid #e5e7eb;
+      background:#fff;
+      font-weight:800;
+      color:#334155;
+    }
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-size:12px;
+      color:#64748b;
+      word-break: break-word;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+
+      <div class="top-row">
+        <div>
+          <h2 data-i18n="h2">📩 Contact</h2>
+          <p class="muted" data-i18n="subtitle">
+            Ada soalan, nak bagi feedback, atau jumpa bug? Boleh contact kami.
+          </p>
+        </div>
+
+        <div class="lang-toggle" aria-label="Language toggle">
+          <button type="button" class="lang-btn" data-lang="ms">BM</button>
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
+        </div>
+      </div>
+
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="howTitle">Cara paling cepat</h3>
+        <p class="muted" style="margin:0;" data-i18n="howP1">
+          Email kami dan bagi detail ringkas: tool mana, apa masalah, dan screenshot kalau ada.
+        </p>
+
+        <div style="margin-top:10px;">
+          <span class="pill" data-i18n="emailLabel">Email</span>
+          <div class="mono" style="margin-top:8px;" id="emailTxt">niagasenang@gmail.com</div>
+          <p class="muted" style="margin-top:10px;" data-i18n="noteEmail">
+            (Kalau domain belum ada, tukar email ni kepada email sebenar kau. AdSense suka contact yang jelas.)
+          </p>
+        </div>
+      </div>
+
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="whyTitle">Kenapa kami fokus rekod kewangan?</h3>
+        <p class="muted" style="margin:0;" data-i18n="whyP1">
+          Peniaga yang simpan rekod kewangan biasanya lebih cepat stabil sebab boleh nampak margin, cashflow, dan komitmen.
+          Bila nombor jelas, peniaga boleh buat keputusan yang lebih tepat—bukan main agak.
+        </p>
+      </div>
+
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="linksTitle">Link penting</h3>
+        <ul class="muted">
+          <li><a href="about.html" data-i18n="lAbout">About NiagaSenang</a></li>
+          <li><a href="terms.html" data-i18n="lTerms">Terms of Use</a></li>
+          <li><a href="privacy.html" data-i18n="lPrivacy">Privacy Policy</a></li>
+        </ul>
+      </div>
+
+      <p style="margin-top:18px;">
+        <a href="index.html" data-i18n="backLink">← Kembali ke NiagaSenang</a>
+      </p>
+
+    </div>
+  </div>
+
+  <script>
+    const LANG_KEY = "ns_lang";
+    let CURRENT_LANG = "ms";
+
+    const I18N = {
+      ms: {
+        h2: "📩 Contact",
+        subtitle: "Ada soalan, nak bagi feedback, atau jumpa bug? Boleh contact kami.",
+
+        howTitle: "Cara paling cepat",
+        howP1: "Email kami dan bagi detail ringkas: tool mana, apa masalah, dan screenshot kalau ada.",
+        emailLabel: "Email",
+        noteEmail: "(Kalau domain belum ada, tukar email ni kepada email sebenar kau. AdSense suka contact yang jelas.)",
+
+        whyTitle: "Kenapa kami fokus rekod kewangan?",
+        whyP1: "Peniaga yang simpan rekod kewangan biasanya lebih cepat stabil sebab boleh nampak margin, cashflow, dan komitmen. Bila nombor jelas, peniaga boleh buat keputusan yang lebih tepat—bukan main agak.",
+
+        linksTitle: "Link penting",
+        lAbout: "About NiagaSenang",
+        lTerms: "Terms of Use",
+        lPrivacy: "Privacy Policy",
+
+        backLink: "← Kembali ke NiagaSenang"
+      },
+
+      en: {
+        h2: "📩 Contact",
+        subtitle: "Questions, feedback, or bugs? You can reach us here.",
+
+        howTitle: "Fastest way",
+        howP1: "Email us with simple details: which tool, what happened, and a screenshot if possible.",
+        emailLabel: "Email",
+        noteEmail: "(If you don’t have a domain email yet, replace this with your real email. AdSense prefers clear contact info.)",
+
+        whyTitle: "Why we focus on financial records",
+        whyP1: "Sellers who keep financial records usually stabilize faster because they can see margin, cashflow, and fixed commitments. When numbers are clear, decisions become more accurate—less guessing.",
+
+        linksTitle: "Important links",
+        lAbout: "About NiagaSenang",
+        lTerms: "Terms of Use",
+        lPrivacy: "Privacy Policy",
+
+        backLink: "← Back to NiagaSenang"
+      }
+    };
+
+    function detectBrowserLang(){
+      const nav = (navigator.language || "").toLowerCase();
+      return nav.startsWith("en") ? "en" : "ms";
+    }
+    function t(key){
+      const pack = I18N[CURRENT_LANG] || I18N.ms;
+      return (pack[key] != null) ? pack[key] : (I18N.ms[key] ?? "");
+    }
+    function applyLang(lang){
+      CURRENT_LANG = (lang === "en") ? "en" : "ms";
+      localStorage.setItem(LANG_KEY, CURRENT_LANG);
+
+      document.documentElement.setAttribute("lang", CURRENT_LANG === "en" ? "en" : "ms");
+      document.title = "Contact | NiagaSenang";
+
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === CURRENT_LANG);
+      });
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        el.innerHTML = t(key);
+      });
+    }
+
+    (function initLang(){
+      const saved = localStorage.getItem(LANG_KEY);
+      applyLang(saved || detectBrowserLang());
+
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.addEventListener("click", () => applyLang(btn.dataset.lang));
+      });
+    })();
+  </script>
+
+  <div style="text-align:center;margin-top:40px;padding:20px 0;font-size:14px;color:#777;">
+    <a href="privacy.html">Privacy Policy</a>
+  </div>
+</body>
+</html>

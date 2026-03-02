@@ -2,17 +2,13 @@
 <html lang="ms">
 <head>
   <meta charset="UTF-8" />
-  <title>Invoice, Quotation, Resit & Tools Peniaga Malaysia | NiagaSenang</title>
-
-  <meta name="description" content="NiagaSenang: Invoice, quotation, resit, margin calculator & stock tracker PERCUMA untuk peniaga Malaysia. Tak perlu login. Terus guna. Download PDF.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NiagaSenang | Tool Percuma Untuk Rekod Kewangan Peniaga Malaysia</title>
+  <meta name="description" content="NiagaSenang ialah toolkit percuma untuk peniaga Malaysia: Invoice, Quotation, Resit, Ledger cash basis, P&L, Cashflow, Stock & Komitmen. Offline-first, data kekal dalam browser.">
 
-  <!-- ✅ GOOGLE ADSENSE (INDEX SAHAJA) -->
-  <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2042278846951839"
-    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/style.css">
 
-  <!-- ✅ GOOGLE ANALYTICS -->
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-P81GM8SJWX"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -21,32 +17,45 @@
     gtag('config', 'G-P81GM8SJWX');
   </script>
 
-  <link rel="stylesheet" href="css/style.css">
-
   <style>
-    /* Brand row (logo + title) */
-    .brand-top{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin-bottom:10px;
-      justify-content:space-between;
-    }
-    .brand-left{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:0;
-    }
-    .ns-logo{
-      width:44px;
-      height:44px;
-      object-fit:cover;
-      border-radius:12px;
+    .muted { color:#64748b; font-size:13px; }
+    .small { color:#64748b; font-size:12px; }
+    .box{
+      background:#f8fafc;
       border:1px solid #e5e7eb;
+      border-radius:12px;
+      padding:12px;
+      margin-top:12px;
     }
-
-    /* Language toggle */
+    .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .grid-3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+    .pill{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid #e5e7eb;
+      background:#ffffff;
+      font-weight:800;
+      color:#334155;
+      line-height:1.2;
+    }
+    .pill.ok{
+      background: rgba(4,120,87,.10);
+      border-color: rgba(4,120,87,.25);
+      color:#047857;
+    }
+    .pill.neutral{
+      background: rgba(100,116,139,.10);
+      border-color: rgba(100,116,139,.25);
+      color:#475569;
+    }
+    .top-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
     .lang-toggle{
       display:flex;
       gap:6px;
@@ -55,13 +64,14 @@
       border-radius:999px;
       background:#ffffff;
       flex:0 0 auto;
+      margin-top:2px;
     }
     .lang-btn{
       border:0;
       background:transparent;
       padding:6px 10px;
       border-radius:999px;
-      font-weight:700;
+      font-weight:800;
       font-size:12px;
       cursor:pointer;
       color:#334155;
@@ -71,166 +81,32 @@
       background:#1e293b;
       color:#ffffff;
     }
-
-    /* FAQ accordion */
-    .faq-wrap{ margin-top:16px; }
-    .faq-wrap h3{ margin-bottom:10px; }
-
-    details.faq-item{
+    .link-grid a{
+      display:block;
+      text-decoration:none;
       border:1px solid #e5e7eb;
-      border-radius:12px;
       background:#ffffff;
-      padding:12px 14px;
-      margin:10px 0;
+      padding:12px;
+      border-radius:12px;
+      transition:transform .06s ease;
     }
-    details.faq-item summary{
-      cursor:pointer;
-      list-style:none;
-      font-weight:700;
+    .link-grid a:hover{ transform: translateY(-1px); }
+    .link-title{ font-weight:900; color:#0f172a; }
+    .link-desc{ margin-top:6px; color:#64748b; font-size:13px; }
+    .footer-links{
       display:flex;
-      align-items:center;
-      justify-content:space-between;
       gap:12px;
-      outline:none;
-    }
-    details.faq-item summary::-webkit-details-marker{ display:none; }
-
-    .faq-chevron{
-      width:18px;
-      height:18px;
-      flex:0 0 18px;
-      opacity:.7;
-      transition: transform .18s ease;
-    }
-    details[open] .faq-chevron{ transform: rotate(180deg); }
-
-    .faq-body{
-      margin-top:10px;
-      color:#334155;
-      font-size:14px;
-      line-height:1.55;
-    }
-    .faq-note{
-      margin-top:8px;
-      font-size:12px;
-      color:#64748b;
-    }
-    .pill-warn{
-      display:inline-block;
-      padding:4px 10px;
-      border-radius:999px;
-      background:#fff7ed;
-      border:1px solid #fed7aa;
-      color:#9a3412;
-      font-size:12px;
-      font-weight:700;
-      margin-left:8px;
-      white-space:nowrap;
-    }
-
-    /* ✅ Start Here box */
-    .start-box{
-      background:#f8fafc;
-      border:1px solid #e5e7eb;
-      border-radius:12px;
-      padding:12px 14px;
-      margin-top:14px;
-    }
-    .start-title{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin:0 0 8px 0;
-    }
-    .start-title h3{ margin:0; }
-    .pill{
-      display:inline-block;
-      padding:4px 10px;
-      border-radius:999px;
-      background: rgba(15,118,110,0.12);
-      border:1px solid rgba(15,118,110,0.25);
-      color:#0f766e;
-      font-size:12px;
-      font-weight:800;
-      white-space:nowrap;
-    }
-    .start-steps{
-      margin:0;
-      padding-left:18px;
-      color:#334155;
-      line-height:1.55;
-      font-size:14px;
-    }
-    .start-steps li{ margin:8px 0; }
-    .start-links{
-      margin-top:10px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .mini-cta{
-      display:inline-block;
-      padding:10px 14px;
-      border-radius:10px;
-      border:1px solid #e5e7eb;
-      background:#ffffff;
-      text-decoration:none;
-      font-weight:700;
-      color:#0f172a;
-    }
-    .mini-cta:hover{ background:#f8fafc; }
-    .mini-cta.primary{
-      background:#1e293b;
-      color:#ffffff;
-      border-color:#1e293b;
-    }
-    .mini-cta.primary:hover{ opacity:.92; }
-
-    .tiny{
-      font-size:12px;
-      color:#64748b;
-      margin-top:8px;
-      line-height:1.45;
-    }
-
-    /* ✅ NiagaSenang Standard Footer */
-    .ns-footer{
-      margin-top: 18px;
-      padding-top: 14px;
-      border-top: 1px solid #e5e7eb;
-    }
-    .ns-footer-inner{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      align-items:center;
-      text-align:center;
-    }
-    .ns-footer-links{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      align-items:center;
       justify-content:center;
-      font-size:13px;
-    }
-    .ns-footer-links a{
-      text-decoration:none;
-      font-weight:700;
-    }
-    .ns-footer-links a:hover{
-      text-decoration:underline;
-    }
-    .ns-dot{
-      opacity:.45;
-      user-select:none;
-    }
-    .ns-footer-meta{
-      font-size:12px;
+      flex-wrap:wrap;
+      margin-top:12px;
+      font-size:14px;
       color:#64748b;
     }
+    .footer-links a{ color:#64748b; text-decoration:none; }
+    .footer-links a:hover{ text-decoration:underline; }
+    ul { margin: 8px 0 0 18px; }
+    li { margin: 6px 0; }
+    hr{ border:0; border-top:1px solid #e5e7eb; margin:14px 0; }
   </style>
 </head>
 
@@ -238,435 +114,351 @@
   <div class="container">
     <div class="card">
 
-      <!-- Brand row -->
-      <div class="brand-top">
-        <div class="brand-left">
-          <img src="ns-logo.jpg" alt="NiagaSenang Logo" class="ns-logo">
-          <div>
-            <h1 style="margin:0;">NiagaSenang</h1>
-            <p style="margin:2px 0 0;">
-              <strong data-i18n="tagline">Tools Percuma Untuk Peniaga Malaysia</strong>
-            </p>
+      <div class="top-row">
+        <div>
+          <h2 data-i18n="heroTitle">🚀 NiagaSenang — Tool Percuma Untuk Peniaga Malaysia</h2>
+          <p class="muted" data-i18n="heroSubtitle">
+            Buat invoice/resit, rekod duit masuk-keluar, tengok untung rugi & cashflow — semua dalam satu tempat.
+            <strong>Offline-first</strong>, data simpan dalam browser.
+          </p>
+          <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+            <span class="pill ok" data-i18n="pill1">Cash Basis</span>
+            <span class="pill neutral" data-i18n="pill2">Offline-first</span>
+            <span class="pill neutral" data-i18n="pill3">Local Storage</span>
           </div>
         </div>
 
-        <!-- Language toggle -->
         <div class="lang-toggle" aria-label="Language toggle">
           <button type="button" class="lang-btn" data-lang="ms">BM</button>
           <button type="button" class="lang-btn" data-lang="en">EN</button>
         </div>
       </div>
 
-      <p data-i18n="intro">
-        Buat invoice, quotation & resit dalam 2 minit.<br>
-        Tak perlu login. Tak perlu subscribe. Terus guna & download PDF.
-      </p>
+      <hr>
 
-      <!-- ✅ START HERE (NEW USER) -->
-      <div class="start-box" id="startHere">
-        <div class="start-title">
-          <h3 data-i18n="startTitle">🧭 Start Here (untuk pengguna baru)</h3>
-          <span class="pill" data-i18n="startPill">1 minit je</span>
+      <!-- MAIN NAV -->
+      <div class="box">
+        <h3 style="margin:0 0 10px 0;" data-i18n="toolsTitle">🧰 Tools</h3>
+
+        <div class="grid-3 link-grid">
+          <a href="invoice.html">
+            <div class="link-title" data-i18n="tInvoice">📄 Invoice</div>
+            <div class="link-desc" data-i18n="dInvoice">Buat invoice cepat, kemas, siap print.</div>
+          </a>
+
+          <a href="quotation.html">
+            <div class="link-title" data-i18n="tQuotation">🧾 Quotation</div>
+            <div class="link-desc" data-i18n="dQuotation">Quotation profesional untuk pelanggan.</div>
+          </a>
+
+          <a href="resit.html">
+            <div class="link-title" data-i18n="tReceipt">🧾 Resit</div>
+            <div class="link-desc" data-i18n="dReceipt">Resit ringkas untuk rekod jualan.</div>
+          </a>
         </div>
 
-        <ol class="start-steps">
-          <li data-i18n="startStep1">
-            <strong>Kalau nak bagi dokumen pada customer:</strong> guna
-            <a href="invoice.html">Invoice</a> / <a href="quotation.html">Quotation</a> / <a href="resit.html">Resit</a>.
-          </li>
-          <li data-i18n="startStep2">
-            <strong>Kalau nak kira untung cepat:</strong> guna <a href="margin.html">Margin &amp; Markup</a>.
-          </li>
-          <li data-i18n="startStep3">
-            <strong>Kalau nak buat “akaun ringkas”:</strong> mula rekod duit masuk/keluar di
-            <a href="ledger.html">Ledger</a> → lepas tu tengok report <a href="pl.html">P&amp;L</a> dan <a href="cashflow.html">Cashflow</a>.
-          </li>
+        <div class="grid-3 link-grid" style="margin-top:12px;">
+          <a href="ledger.html">
+            <div class="link-title" data-i18n="tLedger">📒 Ledger (Cash Basis)</div>
+            <div class="link-desc" data-i18n="dLedger">Rekod duit masuk & keluar. Ini “engine” untuk report lain.</div>
+          </a>
+
+          <a href="pl.html">
+            <div class="link-title" data-i18n="tPL">📊 P&amp;L (Cash Basis)</div>
+            <div class="link-desc" data-i18n="dPL">Auto kira untung/rugi ikut kategori & tempoh.</div>
+          </a>
+
+          <a href="cashflow.html">
+            <div class="link-title" data-i18n="tCashflow">💸 Cashflow</div>
+            <div class="link-desc" data-i18n="dCashflow">Survival view: net cash in/out + burn per day.</div>
+          </a>
+        </div>
+
+        <div class="grid-3 link-grid" style="margin-top:12px;">
+          <a href="stock.html">
+            <div class="link-title" data-i18n="tStock">📦 Stock</div>
+            <div class="link-desc" data-i18n="dStock">Track stok masuk/keluar, elak out-of-stock.</div>
+          </a>
+
+          <a href="margin.html">
+            <div class="link-title" data-i18n="tMargin">📈 Margin</div>
+            <div class="link-desc" data-i18n="dMargin">Kira margin supaya harga tak “makan modal”.</div>
+          </a>
+
+          <a href="commitment.html">
+            <div class="link-title" data-i18n="tCommitment">🧷 Komitmen Bulanan</div>
+            <div class="link-desc" data-i18n="dCommitment">List duit wajib bayar bulanan (fixed costs).</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- LONG SEO CONTENT -->
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="seoH1">Kenapa NiagaSenang wujud?</h3>
+        <p class="muted" data-i18n="seoP1">
+          Ramai peniaga micro dan small business di Malaysia rajin berniaga, rajin buat sales, tapi bila sampai hujung bulan —
+          terasa macam duit “hilang entah ke mana”. Kadang-kadang bukan sebab bisnes tak jalan. Sering kali sebab
+          <strong>rekod kewangan tak cukup jelas</strong>. Bila nombor tak nampak, peniaga akan buat keputusan ikut rasa:
+          beli stok ikut gerak hati, letak harga ikut pesaing, atau potong kos ikut tekaan.
+        </p>
+
+        <p class="muted" data-i18n="seoP2">
+          NiagaSenang dibina untuk jadikan rekod kewangan sesuatu yang <strong>mudah</strong> dan <strong>boleh mula hari ini</strong>.
+          Kau tak perlu setup sistem rumit, tak perlu login, dan tak perlu “jadi akauntan”.
+          Kau cuma perlukan satu habit: <strong>rekod duit masuk dan duit keluar (cash basis)</strong>.
+          Dari situ, report macam P&amp;L dan Cashflow boleh automatik kira dan bantu kau nampak keadaan bisnes sebenar.
+        </p>
+
+        <h3 style="margin:14px 0 8px 0;" data-i18n="seoH2">Apa maksud cash basis untuk peniaga?</h3>
+        <p class="muted" data-i18n="seoP3">
+          Cash basis maksudnya: kita kira bila duit betul-betul masuk atau keluar. Ini paling sesuai untuk peniaga kecil,
+          sebab senang nak faham dan senang nak track. Contoh: kau jual barang hari ini, pelanggan bayar hari ini —
+          itu income. Kau bayar supplier hari ini — itu expense. Bila rekod konsisten, kau boleh jawab soalan penting:
+          “Aku sebenarnya untung ke rugi?” dan “Cash aku cukup ke untuk survive bulan ni?”
+        </p>
+
+        <h3 style="margin:14px 0 8px 0;" data-i18n="seoH3">Masalah biasa peniaga bila tak ada rekod</h3>
+        <ul class="muted" data-i18n="seoList1">
+          <li>Harga jual tak cover kos sebenar (margin bocor).</li>
+          <li>Nampak sales tinggi tapi cash selalu ketat (cashflow problem).</li>
+          <li>Stok cepat habis atau rosak, tapi tak sedar “leak”.</li>
+          <li>Komitmen bulanan (sewa, bil, loan) makan cash tanpa plan.</li>
+          <li>Susah nak buat keputusan: nak tambah produk, nak stop ads, nak upah staff.</li>
+        </ul>
+
+        <h3 style="margin:14px 0 8px 0;" data-i18n="seoH4">Cara paling cepat untuk guna NiagaSenang</h3>
+        <ol class="muted" data-i18n="seoList2" style="margin-left:18px;">
+          <li><strong>Start dengan Ledger:</strong> rekod semua duit masuk & keluar. Buat simple dulu.</li>
+          <li><strong>Buka P&amp;L:</strong> tengok kategori mana buat duit, kategori mana bocor.</li>
+          <li><strong>Buka Cashflow:</strong> tengok net cash, burn per day, dan “survival view”.</li>
+          <li><strong>Set komitmen bulanan:</strong> supaya kau tahu minimum cash yang mesti ada.</li>
+          <li><strong>Track stok:</strong> elak out-of-stock dan elak beli stok berlebihan.</li>
         </ol>
 
-        <div class="start-links">
-          <a class="mini-cta primary" href="invoice.html" data-i18n="startCta1">Buat Invoice Sekarang</a>
-          <a class="mini-cta" href="ledger.html" data-i18n="startCta2">Mula Ledger</a>
-          <a class="mini-cta" href="pl.html" data-i18n="startCta3">Lihat P&amp;L</a>
+        <p class="muted" data-i18n="seoP4">
+          Bila nombor jelas, keputusan jadi mudah. Kau boleh adjust harga dengan yakin, potong kos yang tak perlu,
+          dan fokus pada produk/servis yang betul-betul bagi untung. Itu matlamat NiagaSenang — bagi peniaga tool yang ringkas,
+          tapi cukup power untuk bantu bisnes jadi stabil.
+        </p>
+
+        <h3 style="margin:14px 0 8px 0;" data-i18n="seoH5">Privasi & backup</h3>
+        <p class="muted" data-i18n="seoP5">
+          NiagaSenang bersifat offline-first: data disimpan di browser (localStorage). Ini bagus untuk peniaga yang nak cepat dan tak nak setup rumit.
+          Tapi ingat: kalau kau clear browser data atau tukar device, data boleh hilang.
+          Sebab tu NiagaSenang sediakan fungsi Export/Import backup pada tools tertentu (contohnya Ledger dan Komitmen).
+          Untuk detail, rujuk <a href="privacy.html">Privacy Policy</a>.
+        </p>
+
+        <p class="muted" data-i18n="seoP6">
+          Nota: Tool ini untuk kegunaan dalaman. Untuk compliance cukai/e-Invoice dan laporan rasmi, rujuk akauntan atau penasihat cukai.
+        </p>
+      </div>
+
+      <!-- TRUST PAGES CTA -->
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="trustTitle">📌 Info penting</h3>
+        <p class="muted" style="margin:0;" data-i18n="trustDesc">
+          Untuk kelulusan AdSense dan kepercayaan pengguna, pastikan halaman ini wujud dan mudah dicari.
+        </p>
+        <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+          <a class="pill" href="about.html" style="text-decoration:none;" data-i18n="trustAbout">About</a>
+          <a class="pill" href="terms.html" style="text-decoration:none;" data-i18n="trustTerms">Terms</a>
+          <a class="pill" href="contact.html" style="text-decoration:none;" data-i18n="trustContact">Contact</a>
+          <a class="pill" href="privacy.html" style="text-decoration:none;" data-i18n="trustPrivacy">Privacy</a>
         </div>
+      </div>
 
-        <div class="tiny" data-i18n="startNote">
-          Tip: Semua data simpan dalam browser (local). Kalau tukar phone/laptop, guna Export/Backup pada tool berkaitan.
+      <!-- FOOTER NAV -->
+      <div style="text-align:center;margin-top:22px;padding-top:16px;border-top:1px solid #e5e7eb;">
+        <div class="footer-links">
+          <a href="about.html" data-i18n="fAbout">About</a>
+          <span>•</span>
+          <a href="terms.html" data-i18n="fTerms">Terms</a>
+          <span>•</span>
+          <a href="contact.html" data-i18n="fContact">Contact</a>
+          <span>•</span>
+          <a href="privacy.html" data-i18n="fPrivacy">Privacy Policy</a>
+        </div>
+        <div class="small" style="margin-top:10px;" data-i18n="fNote">
+          © NiagaSenang — Tool percuma untuk peniaga Malaysia (offline-first).
         </div>
       </div>
-
-      <hr style="margin:16px 0;">
-
-      <h3 data-i18n="freeToolsTitle">🧾 Tools Percuma</h3>
-      <ul>
-        <li>
-          <a href="invoice.html" data-i18n="toolInvoiceTitle">Invoice Percuma (Pro)</a><br>
-          <small data-i18n="toolInvoiceDesc">Multi-item, diskaun & SST 6% (paling popular)</small>
-        </li>
-        <li>
-          <a href="quotation.html" data-i18n="toolQuotationTitle">Quotation Percuma (Pro)</a><br>
-          <small data-i18n="toolQuotationDesc">Sesuai untuk sebut harga servis / produk</small>
-        </li>
-        <li>
-          <a href="resit.html" data-i18n="toolReceiptTitle">Resit Percuma (Pro)</a><br>
-          <small data-i18n="toolReceiptDesc">Bukti bayaran untuk pelanggan</small>
-        </li>
-
-        <li style="margin-top:10px;">
-          <a href="margin.html" data-i18n="toolMarginTitle">Kira Untung, Margin & Markup</a><br>
-          <small data-i18n="toolMarginDesc">Masuk kos + harga jual → terus nampak margin & untung bersih</small>
-        </li>
-
-        <li>
-          <a href="stock.html" data-i18n="toolStockTitle">Stock Tracker (Percuma)</a><br>
-          <small data-i18n="toolStockDesc">Track stok masuk/keluar + low stock alert + export/import backup</small>
-        </li>
-      </ul>
-
-      <!-- Internal link booster -->
-      <p style="margin-top:14px;">
-        <span data-i18n="popularPrefix">Paling popular:</span>
-        <a href="invoice.html" data-i18n="popularLink">Invoice Percuma Pro</a>
-        <span data-i18n="popularSuffix">— sesuai untuk SME & peniaga Malaysia.</span>
-      </p>
-
-      <hr style="margin:16px 0;">
-
-      <!-- FAQ Accordion -->
-      <div class="faq-wrap">
-        <h3 data-i18n="faqTitle">❓ Soalan Lazim</h3>
-
-        <details class="faq-item">
-          <summary>
-            <span data-i18n="faq1q">NiagaSenang betul-betul percuma?</span>
-            <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/>
-            </svg>
-          </summary>
-          <div class="faq-body" data-i18n="faq1a">
-            Ya. Tak perlu daftar akaun atau subscribe. Terus guna & download PDF.
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>
-            <span data-i18n="faq2q">Data aku disimpan dekat mana?</span>
-            <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/>
-            </svg>
-          </summary>
-          <div class="faq-body">
-            <div data-i18n="faq2a1">
-              Semua data disimpan dalam browser (local). Kami tidak simpan data anda di server.
-              Anda boleh guna fungsi Export/Backup (jika ada) untuk simpan fail sendiri.
-            </div>
-            <div class="faq-note" data-i18n="faq2note">
-              Tip: Kalau tukar phone/laptop, data tak ikut kecuali anda export/backup.
-            </div>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>
-            <span data-i18n="faq3q">Boleh tambah banyak item & auto kira total?</span>
-            <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/>
-            </svg>
-          </summary>
-          <div class="faq-body" data-i18n="faq3a">
-            Boleh. Tools NiagaSenang support multi-item & auto total (termasuk diskaun dan SST jika diaktifkan).
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>
-            <span data-i18n="faq4q">E-Invoice (LHDN) – NiagaSenang dah comply?</span>
-            <span class="pill-warn" data-i18n="disclaimerPill">Disclaimer</span>
-            <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/>
-            </svg>
-          </summary>
-          <div class="faq-body">
-            <div data-i18n="faq4a1">
-              Buat masa ini, NiagaSenang menyediakan invoice/quotation/resit dalam format biasa (PDF) untuk kemudahan rekod.
-              Kami <strong>belum</strong> implement integrasi/penyerahan e-Invoice LHDN secara rasmi.
-            </div>
-            <div class="faq-note" data-i18n="faq4note">
-              Sila rujuk akauntan / penasihat cukai untuk keperluan e-Invoice perniagaan anda.
-            </div>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary>
-            <span data-i18n="faq5q">Perlukan bantuan / ada cadangan?</span>
-            <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/>
-            </svg>
-          </summary>
-          <div class="faq-body">
-            <span data-i18n="faq5aPrefix">Email kami di</span>
-            <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>.
-          </div>
-        </details>
-      </div>
-
-      <!-- 💰 IKLAN / PARTNER -->
-      <hr style="margin:20px 0;">
-
-      <h3 data-i18n="partnerTitle">🚗 Perlu Kereta Sewa?</h3>
-
-      <p data-i18n="partnerIntro">
-        Cari kereta sewa harian / mingguan dengan harga berpatutan?<br>
-        Partner kami menyediakan perkhidmatan kereta sewa untuk kegunaan peribadi & bisnes.
-      </p>
-
-      <div style="margin-top:12px;">
-        <a href="https://kitraent.netlify.app/"
-           target="_blank"
-           rel="noopener"
-           style="
-             display:inline-block;
-             padding:12px 18px;
-             background:#1e293b;
-             color:#ffffff;
-             border-radius:10px;
-             text-decoration:none;
-             font-weight:600;
-           "
-           data-i18n="partnerCta">
-          🚗 Kitra Car Rental – Lihat Pakej
-        </a>
-      </div>
-
-      <p style="margin-top:8px; font-size:12px; color:#64748b;" data-i18n="partnerNote">
-        (Iklan rakan niaga • Bukan endorsement berbayar)
-      </p>
-
-      <!-- DONATION -->
-      <hr style="margin:20px 0;">
-
-      <h3 data-i18n="donateTitle">☕ Sokong NiagaSenang</h3>
-
-      <p data-i18n="donateP1">
-        NiagaSenang dibina untuk bantu peniaga Malaysia menyediakan
-        tools penting <strong>secara percuma</strong>.
-      </p>
-
-      <p data-i18n="donateP2">
-        Jika tool ini membantu bisnes anda, anda boleh menyokong kami melalui sumbangan kecil (one-time).
-      </p>
-
-      <div style="margin-top:12px;">
-        <a href="https://sociabuzz.com/niagasenang/donate"
-           target="_blank"
-           rel="noopener"
-           style="
-             display:inline-block;
-             padding:12px 18px;
-             background:#0f766e;
-             color:#ffffff;
-             border-radius:10px;
-             text-decoration:none;
-             font-weight:600;
-           "
-           data-i18n="donateCta">
-          ☕ Support NiagaSenang
-        </a>
-      </div>
-
-      <p style="margin-top:8px; font-size:12px; color:#64748b;" data-i18n="donateNote">
-        (Sumbangan adalah sukarela & bukan bayaran perkhidmatan)
-      </p>
-
-      <!-- ✅ STANDARD FOOTER (DALAM KOTAK) -->
-      <footer class="ns-footer">
-        <div class="ns-footer-inner">
-          <div class="ns-footer-links">
-            <a href="privacy.html">Privacy Policy</a>
-            <span class="ns-dot">•</span>
-            <a href="terms.html">Terms</a>
-            <span class="ns-dot">•</span>
-            <a href="mailto:niagasenang@gmail.com">Contact</a>
-          </div>
-
-          <div class="ns-footer-meta">
-            <span>© <span id="nsYear"></span> NiagaSenang</span>
-          </div>
-        </div>
-      </footer>
 
     </div>
   </div>
 
-  <!-- Language logic -->
   <script>
-    (function () {
-      const supported = ["ms", "en"];
-      const storageKey = "ns_lang";
+    const LANG_KEY = "ns_lang";
+    let CURRENT_LANG = "ms";
 
-      const dict = {
-        ms: {
-          tagline: "Tools Percuma Untuk Peniaga Malaysia",
-          intro: "Buat invoice, quotation & resit dalam 2 minit.<br>Tak perlu login. Tak perlu subscribe. Terus guna & download PDF.",
+    const I18N = {
+      ms: {
+        heroTitle: "🚀 NiagaSenang — Tool Percuma Untuk Peniaga Malaysia",
+        heroSubtitle: "Buat invoice/resit, rekod duit masuk-keluar, tengok untung rugi & cashflow — semua dalam satu tempat. <strong>Offline-first</strong>, data simpan dalam browser.",
+        pill1: "Cash Basis",
+        pill2: "Offline-first",
+        pill3: "Local Storage",
 
-          startTitle: "🧭 Start Here (untuk pengguna baru)",
-          startPill: "1 minit je",
-          startStep1: "<strong>Kalau nak bagi dokumen pada customer:</strong> guna <a href='invoice.html'>Invoice</a> / <a href='quotation.html'>Quotation</a> / <a href='resit.html'>Resit</a>.",
-          startStep2: "<strong>Kalau nak kira untung cepat:</strong> guna <a href='margin.html'>Margin &amp; Markup</a>.",
-          startStep3: "<strong>Kalau nak buat “akaun ringkas”:</strong> mula rekod duit masuk/keluar di <a href='ledger.html'>Ledger</a> → lepas tu tengok report <a href='pl.html'>P&amp;L</a> dan <a href='cashflow.html'>Cashflow</a>.",
-          startCta1: "Buat Invoice Sekarang",
-          startCta2: "Mula Ledger",
-          startCta3: "Lihat P&amp;L",
-          startNote: "Tip: Semua data simpan dalam browser (local). Kalau tukar phone/laptop, guna Export/Backup pada tool berkaitan.",
+        toolsTitle: "🧰 Tools",
+        tInvoice: "📄 Invoice",
+        dInvoice: "Buat invoice cepat, kemas, siap print.",
+        tQuotation: "🧾 Quotation",
+        dQuotation: "Quotation profesional untuk pelanggan.",
+        tReceipt: "🧾 Resit",
+        dReceipt: "Resit ringkas untuk rekod jualan.",
 
-          freeToolsTitle: "🧾 Tools Percuma",
-          toolInvoiceTitle: "Invoice Percuma (Pro)",
-          toolInvoiceDesc: "Multi-item, diskaun & SST 6% (paling popular)",
-          toolQuotationTitle: "Quotation Percuma (Pro)",
-          toolQuotationDesc: "Sesuai untuk sebut harga servis / produk",
-          toolReceiptTitle: "Resit Percuma (Pro)",
-          toolReceiptDesc: "Bukti bayaran untuk pelanggan",
-          toolMarginTitle: "Kira Untung, Margin & Markup",
-          toolMarginDesc: "Masuk kos + harga jual → terus nampak margin & untung bersih",
-          toolStockTitle: "Stock Tracker (Percuma)",
-          toolStockDesc: "Track stok masuk/keluar + low stock alert + export/import backup",
+        tLedger: "📒 Ledger (Cash Basis)",
+        dLedger: "Rekod duit masuk & keluar. Ini “engine” untuk report lain.",
+        tPL: "📊 P&L (Cash Basis)",
+        dPL: "Auto kira untung/rugi ikut kategori & tempoh.",
+        tCashflow: "💸 Cashflow",
+        dCashflow: "Survival view: net cash in/out + burn per day.",
 
-          popularPrefix: "Paling popular:",
-          popularLink: "Invoice Percuma Pro",
-          popularSuffix: "— sesuai untuk SME & peniaga Malaysia.",
+        tStock: "📦 Stock",
+        dStock: "Track stok masuk/keluar, elak out-of-stock.",
+        tMargin: "📈 Margin",
+        dMargin: "Kira margin supaya harga tak “makan modal”.",
+        tCommitment: "🧷 Komitmen Bulanan",
+        dCommitment: "List duit wajib bayar bulanan (fixed costs).",
 
-          faqTitle: "❓ Soalan Lazim",
-          faq1q: "NiagaSenang betul-betul percuma?",
-          faq1a: "Ya. Tak perlu daftar akaun atau subscribe. Terus guna & download PDF.",
-          faq2q: "Data aku disimpan dekat mana?",
-          faq2a1: "Semua data disimpan dalam browser (local). Kami tidak simpan data anda di server. Anda boleh guna fungsi Export/Backup (jika ada) untuk simpan fail sendiri.",
-          faq2note: "Tip: Kalau tukar phone/laptop, data tak ikut kecuali anda export/backup.",
-          faq3q: "Boleh tambah banyak item & auto kira total?",
-          faq3a: "Boleh. Tools NiagaSenang support multi-item & auto total (termasuk diskaun dan SST jika diaktifkan).",
-          faq4q: "E-Invoice (LHDN) – NiagaSenang dah comply?",
-          disclaimerPill: "Disclaimer",
-          faq4a1: "Buat masa ini, NiagaSenang menyediakan invoice/quotation/resit dalam format biasa (PDF) untuk kemudahan rekod. Kami <strong>belum</strong> implement integrasi/penyerahan e-Invoice LHDN secara rasmi.",
-          faq4note: "Sila rujuk akauntan / penasihat cukai untuk keperluan e-Invoice perniagaan anda.",
-          faq5q: "Perlukan bantuan / ada cadangan?",
-          faq5aPrefix: "Email kami di",
+        seoH1: "Kenapa NiagaSenang wujud?",
+        seoP1: "Ramai peniaga micro dan small business di Malaysia rajin berniaga, rajin buat sales, tapi bila sampai hujung bulan — terasa macam duit “hilang entah ke mana”. Kadang-kadang bukan sebab bisnes tak jalan. Sering kali sebab <strong>rekod kewangan tak cukup jelas</strong>. Bila nombor tak nampak, peniaga akan buat keputusan ikut rasa: beli stok ikut gerak hati, letak harga ikut pesaing, atau potong kos ikut tekaan.",
+        seoP2: "NiagaSenang dibina untuk jadikan rekod kewangan sesuatu yang <strong>mudah</strong> dan <strong>boleh mula hari ini</strong>. Kau tak perlu setup sistem rumit, tak perlu login, dan tak perlu “jadi akauntan”. Kau cuma perlukan satu habit: <strong>rekod duit masuk dan duit keluar (cash basis)</strong>. Dari situ, report macam P&amp;L dan Cashflow boleh automatik kira dan bantu kau nampak keadaan bisnes sebenar.",
 
-          partnerTitle: "🚗 Perlu Kereta Sewa?",
-          partnerIntro: "Cari kereta sewa harian / mingguan dengan harga berpatutan?<br>Partner kami menyediakan perkhidmatan kereta sewa untuk kegunaan peribadi & bisnes.",
-          partnerCta: "🚗 Kitra Car Rental – Lihat Pakej",
-          partnerNote: "(Iklan rakan niaga • Bukan endorsement berbayar)",
+        seoH2: "Apa maksud cash basis untuk peniaga?",
+        seoP3: "Cash basis maksudnya: kita kira bila duit betul-betul masuk atau keluar. Ini paling sesuai untuk peniaga kecil, sebab senang nak faham dan senang nak track. Contoh: kau jual barang hari ini, pelanggan bayar hari ini — itu income. Kau bayar supplier hari ini — itu expense. Bila rekod konsisten, kau boleh jawab soalan penting: “Aku sebenarnya untung ke rugi?” dan “Cash aku cukup ke untuk survive bulan ni?”",
 
-          donateTitle: "☕ Sokong NiagaSenang",
-          donateP1: "NiagaSenang dibina untuk bantu peniaga Malaysia menyediakan tools penting <strong>secara percuma</strong>.",
-          donateP2: "Jika tool ini membantu bisnes anda, anda boleh menyokong kami melalui sumbangan kecil (one-time).",
-          donateCta: "☕ Support NiagaSenang",
-          donateNote: "(Sumbangan adalah sukarela & bukan bayaran perkhidmatan)"
-        },
+        seoH3: "Masalah biasa peniaga bila tak ada rekod",
+        seoList1: "<li>Harga jual tak cover kos sebenar (margin bocor).</li><li>Nampak sales tinggi tapi cash selalu ketat (cashflow problem).</li><li>Stok cepat habis atau rosak, tapi tak sedar “leak”.</li><li>Komitmen bulanan (sewa, bil, loan) makan cash tanpa plan.</li><li>Susah nak buat keputusan: nak tambah produk, nak stop ads, nak upah staff.</li>",
 
-        en: {
-          tagline: "Free Tools for Small Businesses",
-          intro: "Create invoices, quotations & receipts in 2 minutes.<br>No login. No subscription. Use instantly & download PDF.",
+        seoH4: "Cara paling cepat untuk guna NiagaSenang",
+        seoList2: "<li><strong>Start dengan Ledger:</strong> rekod semua duit masuk &amp; keluar. Buat simple dulu.</li><li><strong>Buka P&amp;L:</strong> tengok kategori mana buat duit, kategori mana bocor.</li><li><strong>Buka Cashflow:</strong> tengok net cash, burn per day, dan “survival view”.</li><li><strong>Set komitmen bulanan:</strong> supaya kau tahu minimum cash yang mesti ada.</li><li><strong>Track stok:</strong> elak out-of-stock dan elak beli stok berlebihan.</li>",
 
-          startTitle: "🧭 Start Here (new users)",
-          startPill: "1 minute",
-          startStep1: "<strong>If you need a document for customers:</strong> use <a href='invoice.html'>Invoice</a> / <a href='quotation.html'>Quotation</a> / <a href='resit.html'>Receipt</a>.",
-          startStep2: "<strong>If you want quick profit math:</strong> use <a href='margin.html'>Margin &amp; Markup</a>.",
-          startStep3: "<strong>If you want simple bookkeeping:</strong> start with <a href='ledger.html'>Ledger</a> → then view reports: <a href='pl.html'>P&amp;L</a> and <a href='cashflow.html'>Cashflow</a>.",
-          startCta1: "Create an Invoice",
-          startCta2: "Start Ledger",
-          startCta3: "View P&amp;L",
-          startNote: "Tip: All data is stored locally in your browser. If you switch devices, use Export/Backup inside each tool.",
+        seoP4: "Bila nombor jelas, keputusan jadi mudah. Kau boleh adjust harga dengan yakin, potong kos yang tak perlu, dan fokus pada produk/servis yang betul-betul bagi untung. Itu matlamat NiagaSenang — bagi peniaga tool yang ringkas, tapi cukup power untuk bantu bisnes jadi stabil.",
 
-          freeToolsTitle: "🧾 Free Tools",
-          toolInvoiceTitle: "Free Invoice (Pro)",
-          toolInvoiceDesc: "Multi-item, discounts & optional tax field",
-          toolQuotationTitle: "Free Quotation (Pro)",
-          toolQuotationDesc: "Great for service or product quotes",
-          toolReceiptTitle: "Free Receipt (Pro)",
-          toolReceiptDesc: "Payment proof for customers",
-          toolMarginTitle: "Profit, Margin & Markup Calculator",
-          toolMarginDesc: "Enter cost + selling price → see profit & margin instantly",
-          toolStockTitle: "Stock Tracker (Free)",
-          toolStockDesc: "Track stock in/out + low stock alert + export/import backup",
+        seoH5: "Privasi & backup",
+        seoP5: "NiagaSenang bersifat offline-first: data disimpan di browser (localStorage). Ini bagus untuk peniaga yang nak cepat dan tak nak setup rumit. Tapi ingat: kalau kau clear browser data atau tukar device, data boleh hilang. Sebab tu NiagaSenang sediakan fungsi Export/Import backup pada tools tertentu (contohnya Ledger dan Komitmen). Untuk detail, rujuk <a href='privacy.html'>Privacy Policy</a>.",
+        seoP6: "Nota: Tool ini untuk kegunaan dalaman. Untuk compliance cukai/e-Invoice dan laporan rasmi, rujuk akauntan atau penasihat cukai.",
 
-          popularPrefix: "Most popular:",
-          popularLink: "Pro Invoice",
-          popularSuffix: "— built for SMEs, easy to use.",
+        trustTitle: "📌 Info penting",
+        trustDesc: "Untuk kelulusan AdSense dan kepercayaan pengguna, pastikan halaman ini wujud dan mudah dicari.",
+        trustAbout: "About",
+        trustTerms: "Terms",
+        trustContact: "Contact",
+        trustPrivacy: "Privacy",
 
-          faqTitle: "❓ FAQ",
-          faq1q: "Is NiagaSenang really free?",
-          faq1a: "Yes. No account needed and no subscription. Use instantly & download PDF.",
-          faq2q: "Where is my data stored?",
-          faq2a1: "All data is stored locally in your browser. We do not store your data on our servers. Use Export/Backup (if available) to save a copy.",
-          faq2note: "Tip: If you switch devices, your data won’t transfer unless you export/backup.",
-          faq3q: "Can I add multiple items and auto-calculate totals?",
-          faq3a: "Yes. NiagaSenang supports multi-item and auto totals (including discounts and optional tax fields).",
-          faq4q: "Malaysia e-Invoice (LHDN) — is NiagaSenang compliant?",
-          disclaimerPill: "Disclaimer",
-          faq4a1: "At the moment, NiagaSenang provides standard invoice/quotation/receipt PDFs for record-keeping. We have <strong>not</strong> implemented official LHDN e-Invoice submission/integration.",
-          faq4note: "Please consult your accountant or tax advisor for your e-Invoice requirements.",
-          faq5q: "Need help or want to suggest improvements?",
-          faq5aPrefix: "Email us at",
+        fAbout: "About",
+        fTerms: "Terms",
+        fContact: "Contact",
+        fPrivacy: "Privacy Policy",
+        fNote: "© NiagaSenang — Tool percuma untuk peniaga Malaysia (offline-first)."
+      },
 
-          partnerTitle: "🚗 Need a Rental Car?",
-          partnerIntro: "Looking for daily/weekly car rentals at a reasonable price?<br>Our partner provides car rental services for personal & business use.",
-          partnerCta: "🚗 Kitra Car Rental – View Packages",
-          partnerNote: "(Partner ad • Not a paid endorsement)",
+      en: {
+        heroTitle: "🚀 NiagaSenang — Free Tools for Malaysian Sellers",
+        heroSubtitle: "Create invoices/receipts, record money in/out, and view profit/loss & cashflow — in one place. <strong>Offline-first</strong>, data stays in your browser.",
+        pill1: "Cash Basis",
+        pill2: "Offline-first",
+        pill3: "Local Storage",
 
-          donateTitle: "☕ Support NiagaSenang",
-          donateP1: "NiagaSenang is built to help small businesses access essential tools <strong>for free</strong>.",
-          donateP2: "If this tool helps your business, you can support us with a small one-time donation.",
-          donateCta: "☕ Support NiagaSenang",
-          donateNote: "(Donations are optional and not a service fee)"
-        }
-      };
+        toolsTitle: "🧰 Tools",
+        tInvoice: "📄 Invoice",
+        dInvoice: "Create clean invoices fast and ready to print.",
+        tQuotation: "🧾 Quotation",
+        dQuotation: "Professional quotations for customers.",
+        tReceipt: "🧾 Receipt",
+        dReceipt: "Simple receipts for sales records.",
 
-      function applyLang(lang) {
-        if (!supported.includes(lang)) lang = "ms";
-        localStorage.setItem(storageKey, lang);
+        tLedger: "📒 Ledger (Cash Basis)",
+        dLedger: "Track money in/out — the engine for other reports.",
+        tPL: "📊 P&L (Cash Basis)",
+        dPL: "Auto-calculate profit/loss by category and period.",
+        tCashflow: "💸 Cashflow",
+        dCashflow: "Survival view: net cash in/out + burn per day.",
 
-        // update active state
-        document.querySelectorAll(".lang-btn").forEach(btn => {
-          btn.classList.toggle("active", btn.dataset.lang === lang);
-        });
+        tStock: "📦 Stock",
+        dStock: "Track stock movement to avoid out-of-stock.",
+        tMargin: "📈 Margin",
+        dMargin: "Calculate margin so pricing doesn’t eat capital.",
+        tCommitment: "🧷 Monthly Commitments",
+        dCommitment: "List must-pay monthly fixed costs.",
 
-        // apply translations
-        document.querySelectorAll("[data-i18n]").forEach(el => {
-          const key = el.getAttribute("data-i18n");
-          const val = (dict[lang] && dict[lang][key]) || (dict.ms && dict.ms[key]);
-          if (val != null) el.innerHTML = val;
-        });
+        seoH1: "Why NiagaSenang exists",
+        seoP1: "Many micro and small business sellers in Malaysia work hard and sell daily, yet at month-end it still feels like the money “disappears”. Often the business is not the issue — <strong>visibility is</strong>. Without clear records, decisions become guesswork: buying stock by feeling, pricing by competitors, or cutting costs blindly.",
+        seoP2: "NiagaSenang is built to make financial record-keeping <strong>simple</strong> and <strong>startable today</strong>. No complicated setup, no login, and no need to “be an accountant”. You only need one habit: <strong>record money in and money out (cash basis)</strong>. From there, reports like P&amp;L and Cashflow can automatically help you see the real condition of your business.",
 
-        // update html lang attribute
-        document.documentElement.setAttribute("lang", lang === "ms" ? "ms" : "en");
+        seoH2: "What cash basis means for sellers",
+        seoP3: "Cash basis means you record transactions when money actually comes in or goes out. It’s ideal for small sellers because it’s simple and practical. Sell today and get paid today — income. Pay suppliers today — expense. With consistent records, you can answer the key questions: “Am I truly profitable?” and “Do I have enough cash to survive this month?”",
+
+        seoH3: "Common problems without records",
+        seoList1: "<li>Pricing doesn’t cover true costs (margin leak).</li><li>High sales but tight cash (cashflow issue).</li><li>Stock runs out or leaks without noticing.</li><li>Fixed monthly commitments drain cash without planning.</li><li>Hard to decide: expand products, stop ads, hire staff.</li>",
+
+        seoH4: "Fastest way to use NiagaSenang",
+        seoList2: "<li><strong>Start with Ledger:</strong> record all money in/out consistently.</li><li><strong>Open P&amp;L:</strong> see what categories generate profit and what leaks.</li><li><strong>Open Cashflow:</strong> track net cash, burn per day, and survival view.</li><li><strong>Set monthly commitments:</strong> know the minimum money-in required.</li><li><strong>Track stock:</strong> avoid out-of-stock and overbuying.</li>",
+
+        seoP4: "When numbers are clear, decisions get easier: adjust pricing confidently, cut unnecessary costs, and focus on products/services that truly profit. That’s the goal of NiagaSenang — simple tools that still move the needle for business stability.",
+
+        seoH5: "Privacy & backup",
+        seoP5: "NiagaSenang is offline-first: data is stored in your browser (localStorage). This is great for speed and simplicity. But remember: if you clear site data or switch devices, data may be lost. That’s why some tools include Export/Import backup (e.g., Ledger and Commitments). For details, refer to the <a href='privacy.html'>Privacy Policy</a>.",
+        seoP6: "Note: These tools are for internal use. For tax/e-Invoice compliance and official reporting, consult an accountant or tax advisor.",
+
+        trustTitle: "📌 Important info",
+        trustDesc: "For AdSense approval and user trust, make sure these pages exist and are easy to find.",
+        trustAbout: "About",
+        trustTerms: "Terms",
+        trustContact: "Contact",
+        trustPrivacy: "Privacy",
+
+        fAbout: "About",
+        fTerms: "Terms",
+        fContact: "Contact",
+        fPrivacy: "Privacy Policy",
+        fNote: "© NiagaSenang — Free offline-first tools for Malaysian sellers."
       }
+    };
 
-      // init language:
-      const saved = localStorage.getItem(storageKey);
-      const browserLang = (navigator.language || "").toLowerCase().startsWith("en") ? "en" : "ms";
-      applyLang(saved || browserLang);
+    function detectBrowserLang(){
+      const nav = (navigator.language || "").toLowerCase();
+      return nav.startsWith("en") ? "en" : "ms";
+    }
+    function t(key){
+      const pack = I18N[CURRENT_LANG] || I18N.ms;
+      return (pack[key] != null) ? pack[key] : (I18N.ms[key] ?? "");
+    }
+    function applyLang(lang){
+      CURRENT_LANG = (lang === "en") ? "en" : "ms";
+      localStorage.setItem("ns_lang", CURRENT_LANG);
 
-      // bind buttons
+      document.documentElement.setAttribute("lang", CURRENT_LANG === "en" ? "en" : "ms");
+      document.title = (CURRENT_LANG === "en")
+        ? "NiagaSenang | Free Financial Record Tools for Malaysian Sellers"
+        : "NiagaSenang | Tool Percuma Untuk Rekod Kewangan Peniaga Malaysia";
+
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === CURRENT_LANG);
+      });
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if(key === "seoList1" || key === "seoList2") el.innerHTML = t(key);
+        else el.innerHTML = t(key);
+      });
+
+      const ul = document.querySelector("ul[data-i18n='seoList1']");
+      if(ul) ul.innerHTML = t("seoList1");
+      const ol = document.querySelector("ol[data-i18n='seoList2']");
+      if(ol) ol.innerHTML = t("seoList2");
+    }
+
+    (function initLang(){
+      const saved = localStorage.getItem("ns_lang");
+      applyLang(saved || detectBrowserLang());
+
       document.querySelectorAll(".lang-btn").forEach(btn => {
         btn.addEventListener("click", () => applyLang(btn.dataset.lang));
       });
-
-      // Optional GA event for Start Here click tracking (safe)
-      document.getElementById("startHere").addEventListener("click", function(e){
-        const a = e.target.closest("a");
-        if(!a) return;
-        try{
-          gtag('event','start_here_click',{ event_category:'onboarding', event_label: a.getAttribute('href') || 'link' });
-        }catch(err){}
-      });
     })();
   </script>
 
-  <!-- ✅ Footer year script (safe) -->
-  <script>
-    (function(){
-      var el = document.getElementById("nsYear");
-      if(el) el.textContent = new Date().getFullYear();
-    })();
-  </script>
 </body>
 </html>

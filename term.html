@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Use | NiagaSenang</title>
+  <meta name="description" content="Terma penggunaan NiagaSenang. Tool percuma untuk peniaga Malaysia (invoice, ledger, P&L, cashflow, stok). Data disimpan secara local dalam browser.">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .muted { color:#64748b; font-size:13px; }
+    .box{
+      margin-top:12px;
+      background:#f8fafc;
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      padding:12px;
+    }
+    .top-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .lang-toggle{
+      display:flex;
+      gap:6px;
+      padding:4px;
+      border:1px solid #e5e7eb;
+      border-radius:999px;
+      background:#ffffff;
+      flex:0 0 auto;
+      margin-top:2px;
+    }
+    .lang-btn{
+      border:0;
+      background:transparent;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:12px;
+      cursor:pointer;
+      color:#334155;
+      line-height:1;
+    }
+    .lang-btn.active{
+      background:#1e293b;
+      color:#ffffff;
+    }
+    ul { margin: 8px 0 0 18px; }
+    li { margin: 6px 0; }
+    a { color: inherit; }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+
+      <div class="top-row">
+        <div>
+          <h2 data-i18n="h2">📜 Terma Penggunaan</h2>
+          <p class="muted" data-i18n="subtitle">
+            Dengan menggunakan NiagaSenang, anda bersetuju dengan terma di bawah.
+          </p>
+        </div>
+
+        <div class="lang-toggle" aria-label="Language toggle">
+          <button type="button" class="lang-btn" data-lang="ms">BM</button>
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
+        </div>
+      </div>
+
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="t1">1) Ringkasan</h3>
+        <p class="muted" style="margin:0;" data-i18n="p1">
+          NiagaSenang menyediakan tools percuma (invoice, quotation, resit, ledger, P&amp;L, cashflow, stok, komitmen) untuk membantu peniaga menyimpan rekod kewangan.
+          Tool ini bertujuan membantu anda nampak nombor—supaya keputusan bisnes lebih tepat.
+        </p>
+      </div>
+
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="t2">2) Data & simpanan</h3>
+        <p class="muted" style="margin:0;" data-i18n="p2">
+          Kebanyakan fungsi NiagaSenang menyimpan data dalam browser anda (localStorage). Ini bermakna data berada pada device anda.
+          Jika anda padam “site data” atau tukar device, data boleh hilang. Gunakan fungsi Export/Import backup untuk simpan fail.
+        </p>
+      </div>
+
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="t3">3) Tiada nasihat akaun/cukai</h3>
+        <p class="muted" style="margin:0;" data-i18n="p3">
+          NiagaSenang bukan pengganti akauntan atau penasihat cukai. Output (report, kiraan, template) adalah untuk rujukan dalaman.
+          Untuk pematuhan cukai (termasuk e-Invoice) atau keputusan kewangan besar, sila rujuk profesional.
+        </p>
+      </div>
+
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="t4">4) Tanggungjawab pengguna</h3>
+        <ul class="muted" data-i18n="p4list">
+          <li>Anda bertanggungjawab memastikan maklumat yang dimasukkan adalah betul.</li>
+          <li>Anda bertanggungjawab menyimpan backup jika perlu.</li>
+          <li>Anda tidak boleh menggunakan tool ini untuk aktiviti yang menyalahi undang-undang.</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="t5">5) Ketersediaan</h3>
+        <p class="muted" style="margin:0;" data-i18n="p5">
+          Kami cuba pastikan NiagaSenang stabil, tetapi kami tidak menjamin akses tanpa gangguan. Ciri boleh berubah/ditambah dari semasa ke semasa.
+        </p>
+      </div>
+
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="t6">6) Iklan</h3>
+        <p class="muted" style="margin:0;" data-i18n="p6">
+          Untuk menampung kos hosting dan pembangunan, laman ini mungkin memaparkan iklan (contohnya Google AdSense).
+        </p>
+      </div>
+
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="t7">7) Hubungi kami</h3>
+        <p class="muted" style="margin:0;" data-i18n="p7">
+          Jika ada isu atau pertanyaan, sila pergi ke halaman <a href="contact.html">Contact</a>.
+        </p>
+      </div>
+
+      <p style="margin-top:18px;">
+        <a href="index.html" data-i18n="backLink">← Kembali ke NiagaSenang</a>
+      </p>
+
+    </div>
+  </div>
+
+  <script>
+    const LANG_KEY = "ns_lang";
+    let CURRENT_LANG = "ms";
+
+    const I18N = {
+      ms: {
+        h2: "📜 Terma Penggunaan",
+        subtitle: "Dengan menggunakan NiagaSenang, anda bersetuju dengan terma di bawah.",
+
+        t1: "1) Ringkasan",
+        p1: "NiagaSenang menyediakan tools percuma (invoice, quotation, resit, ledger, P&amp;L, cashflow, stok, komitmen) untuk membantu peniaga menyimpan rekod kewangan. Tool ini bertujuan membantu anda nampak nombor—supaya keputusan bisnes lebih tepat.",
+
+        t2: "2) Data & simpanan",
+        p2: "Kebanyakan fungsi NiagaSenang menyimpan data dalam browser anda (localStorage). Ini bermakna data berada pada device anda. Jika anda padam “site data” atau tukar device, data boleh hilang. Gunakan fungsi Export/Import backup untuk simpan fail.",
+
+        t3: "3) Tiada nasihat akaun/cukai",
+        p3: "NiagaSenang bukan pengganti akauntan atau penasihat cukai. Output (report, kiraan, template) adalah untuk rujukan dalaman. Untuk pematuhan cukai (termasuk e-Invoice) atau keputusan kewangan besar, sila rujuk profesional.",
+
+        t4: "4) Tanggungjawab pengguna",
+        p4list: "<li>Anda bertanggungjawab memastikan maklumat yang dimasukkan adalah betul.</li><li>Anda bertanggungjawab menyimpan backup jika perlu.</li><li>Anda tidak boleh menggunakan tool ini untuk aktiviti yang menyalahi undang-undang.</li>",
+
+        t5: "5) Ketersediaan",
+        p5: "Kami cuba pastikan NiagaSenang stabil, tetapi kami tidak menjamin akses tanpa gangguan. Ciri boleh berubah/ditambah dari semasa ke semasa.",
+
+        t6: "6) Iklan",
+        p6: "Untuk menampung kos hosting dan pembangunan, laman ini mungkin memaparkan iklan (contohnya Google AdSense).",
+
+        t7: "7) Hubungi kami",
+        p7: "Jika ada isu atau pertanyaan, sila pergi ke halaman <a href='contact.html'>Contact</a>.",
+
+        backLink: "← Kembali ke NiagaSenang"
+      },
+
+      en: {
+        h2: "📜 Terms of Use",
+        subtitle: "By using NiagaSenang, you agree to the terms below.",
+
+        t1: "1) Summary",
+        p1: "NiagaSenang provides free tools (invoice, quotation, receipt, ledger, P&amp;L, cashflow, stock, commitments) to help sellers keep financial records. The goal is simple: make your numbers visible so decisions are more accurate.",
+
+        t2: "2) Data & storage",
+        p2: "Most NiagaSenang features store data in your browser (localStorage). This means the data lives on your device. If you clear site data or switch devices, data may be lost. Use Export/Import backup to save your files.",
+
+        t3: "3) No accounting/tax advice",
+        p3: "NiagaSenang is not a replacement for an accountant or tax advisor. Reports/calculations/templates are for internal reference. For tax compliance (including e-Invoice) or major financial decisions, consult a professional.",
+
+        t4: "4) User responsibilities",
+        p4list: "<li>You are responsible for the accuracy of data you enter.</li><li>You are responsible for keeping backups if needed.</li><li>You must not use the tools for illegal activities.</li>",
+
+        t5: "5) Availability",
+        p5: "We aim to keep NiagaSenang stable, but we do not guarantee uninterrupted access. Features may change or be updated over time.",
+
+        t6: "6) Ads",
+        p6: "To support hosting and development costs, this site may display ads (e.g., Google AdSense).",
+
+        t7: "7) Contact",
+        p7: "If you have questions, please visit the <a href='contact.html'>Contact</a> page.",
+
+        backLink: "← Back to NiagaSenang"
+      }
+    };
+
+    function detectBrowserLang(){
+      const nav = (navigator.language || "").toLowerCase();
+      return nav.startsWith("en") ? "en" : "ms";
+    }
+    function t(key){
+      const pack = I18N[CURRENT_LANG] || I18N.ms;
+      return (pack[key] != null) ? pack[key] : (I18N.ms[key] ?? "");
+    }
+    function applyLang(lang){
+      CURRENT_LANG = (lang === "en") ? "en" : "ms";
+      localStorage.setItem(LANG_KEY, CURRENT_LANG);
+
+      document.documentElement.setAttribute("lang", CURRENT_LANG === "en" ? "en" : "ms");
+      document.title = (CURRENT_LANG === "en") ? "Terms of Use | NiagaSenang" : "Terms of Use | NiagaSenang";
+
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === CURRENT_LANG);
+      });
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if(key === "p4list"){
+          el.innerHTML = t("p4list");
+        }else{
+          el.innerHTML = t(key);
+        }
+      });
+
+      const ul = document.querySelector("ul[data-i18n='p4list']");
+      if(ul) ul.innerHTML = t("p4list");
+    }
+
+    (function initLang(){
+      const saved = localStorage.getItem(LANG_KEY);
+      applyLang(saved || detectBrowserLang());
+
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.addEventListener("click", () => applyLang(btn.dataset.lang));
+      });
+    })();
+  </script>
+
+  <div style="text-align:center;margin-top:40px;padding:20px 0;font-size:14px;color:#777;">
+    <a href="privacy.html">Privacy Policy</a>
+  </div>
+</body>
+</html>

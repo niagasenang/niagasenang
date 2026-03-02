@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tentang NiagaSenang | Tool Rekod Kewangan Peniaga</title>
+  <meta name="description" content="NiagaSenang ialah tool percuma untuk peniaga Malaysia: invoice, ledger, P&L, cashflow, stok & komitmen. Bantu peniaga simpan rekod kewangan supaya bisnes lebih stabil dan senang buat keputusan.">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .muted { color:#64748b; font-size:13px; }
+    .small { color:#64748b; font-size:12px; }
+    .box{
+      margin-top:12px;
+      background:#f8fafc;
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      padding:12px;
+    }
+    .top-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .lang-toggle{
+      display:flex;
+      gap:6px;
+      padding:4px;
+      border:1px solid #e5e7eb;
+      border-radius:999px;
+      background:#ffffff;
+      flex:0 0 auto;
+      margin-top:2px;
+    }
+    .lang-btn{
+      border:0;
+      background:transparent;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:12px;
+      cursor:pointer;
+      color:#334155;
+      line-height:1;
+    }
+    .lang-btn.active{
+      background:#1e293b;
+      color:#ffffff;
+    }
+    .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    ul { margin: 8px 0 0 18px; }
+    li { margin: 6px 0; }
+    a { color: inherit; }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+
+      <div class="top-row">
+        <div>
+          <h2 data-i18n="h2">🏷️ Tentang NiagaSenang</h2>
+          <p class="muted" data-i18n="subtitle">
+            NiagaSenang ialah toolkit percuma untuk peniaga Malaysia—fokus pada rekod kewangan yang ringkas, jelas, dan boleh terus guna.
+          </p>
+        </div>
+
+        <div class="lang-toggle" aria-label="Language toggle">
+          <button type="button" class="lang-btn" data-lang="ms">BM</button>
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
+        </div>
+      </div>
+
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="whyTitle">Kenapa peniaga kena ada rekod kewangan?</h3>
+        <p class="muted" style="margin:0;" data-i18n="whyP1">
+          Realitinya, ramai peniaga buat sales hari-hari tapi hujung bulan tetap rasa “duit macam tak cukup”.
+          Biasanya bukan sebab bisnes tak jalan—tapi sebab <strong>tak nampak nombor</strong>.
+          Bila rekod tak kemas, kita tak tahu:
+        </p>
+        <ul class="muted" data-i18n="whyList">
+          <li>berapa duit masuk vs duit keluar (cashflow)</li>
+          <li>untung rugi sebenar (profit/loss)</li>
+          <li>stok bocor/kehabisan tanpa sedar</li>
+          <li>komitmen bulanan yang “confirm kena bayar”</li>
+        </ul>
+        <p class="muted" style="margin-top:10px;" data-i18n="whyP2">
+          Rekod kewangan bukan untuk jadi “akauntan”—rekod kewangan ialah <strong>peta</strong>.
+          Bila ada peta, kau boleh buat keputusan cepat: naikkan harga, potong kos, reorder stok, atau stop produk yang rugi.
+        </p>
+      </div>
+
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="whatTitle">Apa yang NiagaSenang buat?</h3>
+        <p class="muted" style="margin:0;" data-i18n="whatP1">
+          NiagaSenang sediakan tools asas yang peniaga micro/small business selalu perlukan—simple, ringan, dan terus boleh pakai.
+          Semua data disimpan <strong>dalam browser (local)</strong> dan kau boleh <strong>Export/Import backup</strong>.
+        </p>
+
+        <div class="grid-2" style="margin-top:10px;">
+          <div class="box" style="margin-top:0;">
+            <strong data-i18n="toolTitle1">📄 Invoice / Quotation / Resit</strong>
+            <p class="muted" style="margin:8px 0 0 0;" data-i18n="toolDesc1">
+              Buat dokumen jualan cepat, kemas, dan nampak profesional.
+            </p>
+          </div>
+
+          <div class="box" style="margin-top:0;">
+            <strong data-i18n="toolTitle2">📒 Ledger (Cash Basis)</strong>
+            <p class="muted" style="margin:8px 0 0 0;" data-i18n="toolDesc2">
+              Rekod duit masuk & keluar. Lepas tu, report lain akan auto kira dari ledger.
+            </p>
+          </div>
+
+          <div class="box" style="margin-top:0;">
+            <strong data-i18n="toolTitle3">📊 P&L (Cash Basis)</strong>
+            <p class="muted" style="margin:8px 0 0 0;" data-i18n="toolDesc3">
+              Nampak untung/rugi ikut tempoh. Bukan agak-agak.
+            </p>
+          </div>
+
+          <div class="box" style="margin-top:0;">
+            <strong data-i18n="toolTitle4">💸 Cashflow</strong>
+            <p class="muted" style="margin:8px 0 0 0;" data-i18n="toolDesc4">
+              Fokus survival: net cash in/out, burn per day, dan ringkasan ikut bulan/range.
+            </p>
+          </div>
+
+          <div class="box" style="margin-top:0;">
+            <strong data-i18n="toolTitle5">📦 Stock Tracker</strong>
+            <p class="muted" style="margin:8px 0 0 0;" data-i18n="toolDesc5">
+              Track stok masuk/keluar + low stock alert untuk elak lost sales.
+            </p>
+          </div>
+
+          <div class="box" style="margin-top:0;">
+            <strong data-i18n="toolTitle6">🧷 Komitmen Bulanan</strong>
+            <p class="muted" style="margin:8px 0 0 0;" data-i18n="toolDesc6">
+              Senarai kos wajib bayar bulanan supaya kau tahu “minimum duit masuk” untuk hidup.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="offlineTitle">Offline-first & privasi</h3>
+        <p class="muted" style="margin:0;" data-i18n="offlineP1">
+          NiagaSenang dibina untuk peniaga yang nak laju. Kebanyakan tools boleh digunakan tanpa login.
+          Data disimpan dalam browser sahaja (localStorage). Kalau tukar device, guna Export/Import backup.
+        </p>
+        <p class="muted" style="margin-top:10px;" data-i18n="offlineP2">
+          Untuk info lanjut tentang data & privasi, baca <a href="privacy.html">Privacy Policy</a>.
+        </p>
+      </div>
+
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="ctaTitle">Langkah paling senang untuk mula</h3>
+        <ol class="muted" style="margin:8px 0 0 18px;" data-i18n="ctaList">
+          <li>Start dengan Ledger: rekod duit masuk & keluar setiap hari.</li>
+          <li>Seminggu sekali buka Cashflow & P&L untuk nampak trend.</li>
+          <li>Kalau kau jual produk fizikal, track stok & komitmen bulanan.</li>
+        </ol>
+        <p class="muted" style="margin-top:10px;" data-i18n="ctaNote">
+          Bila nombor jelas, keputusan jadi mudah. Itu tujuan NiagaSenang.
+        </p>
+      </div>
+
+      <p style="margin-top:18px;">
+        <a href="index.html" data-i18n="backLink">← Kembali ke NiagaSenang</a>
+      </p>
+
+    </div>
+  </div>
+
+  <script>
+    const LANG_KEY = "ns_lang";
+    let CURRENT_LANG = "ms";
+
+    const I18N = {
+      ms: {
+        h2: "🏷️ Tentang NiagaSenang",
+        subtitle: "NiagaSenang ialah toolkit percuma untuk peniaga Malaysia—fokus pada rekod kewangan yang ringkas, jelas, dan boleh terus guna.",
+
+        whyTitle: "Kenapa peniaga kena ada rekod kewangan?",
+        whyP1: "Realitinya, ramai peniaga buat sales hari-hari tapi hujung bulan tetap rasa “duit macam tak cukup”. Biasanya bukan sebab bisnes tak jalan—tapi sebab <strong>tak nampak nombor</strong>. Bila rekod tak kemas, kita tak tahu:",
+        whyList: "<li>berapa duit masuk vs duit keluar (cashflow)</li><li>untung rugi sebenar (profit/loss)</li><li>stok bocor/kehabisan tanpa sedar</li><li>komitmen bulanan yang “confirm kena bayar”</li>",
+        whyP2: "Rekod kewangan bukan untuk jadi “akauntan”—rekod kewangan ialah <strong>peta</strong>. Bila ada peta, kau boleh buat keputusan cepat: naikkan harga, potong kos, reorder stok, atau stop produk yang rugi.",
+
+        whatTitle: "Apa yang NiagaSenang buat?",
+        whatP1: "NiagaSenang sediakan tools asas yang peniaga micro/small business selalu perlukan—simple, ringan, dan terus boleh pakai. Semua data disimpan <strong>dalam browser (local)</strong> dan kau boleh <strong>Export/Import backup</strong>.",
+
+        toolTitle1: "📄 Invoice / Quotation / Resit",
+        toolDesc1: "Buat dokumen jualan cepat, kemas, dan nampak profesional.",
+        toolTitle2: "📒 Ledger (Cash Basis)",
+        toolDesc2: "Rekod duit masuk & keluar. Lepas tu, report lain akan auto kira dari ledger.",
+        toolTitle3: "📊 P&L (Cash Basis)",
+        toolDesc3: "Nampak untung/rugi ikut tempoh. Bukan agak-agak.",
+        toolTitle4: "💸 Cashflow",
+        toolDesc4: "Fokus survival: net cash in/out, burn per day, dan ringkasan ikut bulan/range.",
+        toolTitle5: "📦 Stock Tracker",
+        toolDesc5: "Track stok masuk/keluar + low stock alert untuk elak lost sales.",
+        toolTitle6: "🧷 Komitmen Bulanan",
+        toolDesc6: "Senarai kos wajib bayar bulanan supaya kau tahu “minimum duit masuk” untuk hidup.",
+
+        offlineTitle: "Offline-first & privasi",
+        offlineP1: "NiagaSenang dibina untuk peniaga yang nak laju. Kebanyakan tools boleh digunakan tanpa login. Data disimpan dalam browser sahaja (localStorage). Kalau tukar device, guna Export/Import backup.",
+        offlineP2: "Untuk info lanjut tentang data & privasi, baca <a href='privacy.html'>Privacy Policy</a>.",
+
+        ctaTitle: "Langkah paling senang untuk mula",
+        ctaList: "<li>Start dengan Ledger: rekod duit masuk & keluar setiap hari.</li><li>Seminggu sekali buka Cashflow & P&L untuk nampak trend.</li><li>Kalau kau jual produk fizikal, track stok & komitmen bulanan.</li>",
+        ctaNote: "Bila nombor jelas, keputusan jadi mudah. Itu tujuan NiagaSenang.",
+
+        backLink: "← Kembali ke NiagaSenang"
+      },
+
+      en: {
+        h2: "🏷️ About NiagaSenang",
+        subtitle: "NiagaSenang is a free toolkit for Malaysian sellers—focused on simple, clear financial records you can use right away.",
+
+        whyTitle: "Why sellers need financial records",
+        whyP1: "Many sellers make sales daily, but at month-end still feel like “the money is gone”. Often the business is okay—what’s missing is <strong>visibility</strong>. Without records, you can’t clearly see:",
+        whyList: "<li>money in vs money out (cashflow)</li><li>real profit/loss (not guessing)</li><li>stock leakouts / out-of-stock risks</li><li>fixed monthly commitments you must pay</li>",
+        whyP2: "Financial records aren’t about becoming an accountant—records are a <strong>map</strong>. With a map, you make faster decisions: adjust pricing, cut costs, reorder stock, or stop losing products.",
+
+        whatTitle: "What NiagaSenang does",
+        whatP1: "NiagaSenang provides essential tools for micro/small businesses—simple, lightweight, and practical. Data is stored <strong>locally in your browser</strong>, and you can <strong>Export/Import backups</strong> when switching devices.",
+
+        toolTitle1: "📄 Invoice / Quotation / Receipt",
+        toolDesc1: "Create clean, professional sales documents quickly.",
+        toolTitle2: "📒 Ledger (Cash Basis)",
+        toolDesc2: "Record money in/out. Other reports are calculated from your ledger.",
+        toolTitle3: "📊 P&L (Cash Basis)",
+        toolDesc3: "See profit/loss by period—no guessing.",
+        toolTitle4: "💸 Cashflow",
+        toolDesc4: "A survival view: net cash in/out, burn per day, and monthly/range summaries.",
+        toolTitle5: "📦 Stock Tracker",
+        toolDesc5: "Track stock movement with low-stock alerts to avoid lost sales.",
+        toolTitle6: "🧷 Monthly Commitments",
+        toolDesc6: "List must-pay monthly costs to know the minimum money-in to stay alive.",
+
+        offlineTitle: "Offline-first & privacy",
+        offlineP1: "NiagaSenang is built for speed. Most tools work without login. Data stays in your browser (localStorage). When switching devices, use Export/Import backup.",
+        offlineP2: "For data & privacy details, read the <a href='privacy.html'>Privacy Policy</a>.",
+
+        ctaTitle: "The easiest way to start",
+        ctaList: "<li>Start with Ledger: record money in/out daily.</li><li>Weekly: open Cashflow & P&L to see trends.</li><li>If you sell products: track stock & fixed commitments.</li>",
+        ctaNote: "When numbers are clear, decisions get easier. That’s the goal of NiagaSenang.",
+
+        backLink: "← Back to NiagaSenang"
+      }
+    };
+
+    function detectBrowserLang(){
+      const nav = (navigator.language || "").toLowerCase();
+      return nav.startsWith("en") ? "en" : "ms";
+    }
+
+    function t(key){
+      const pack = I18N[CURRENT_LANG] || I18N.ms;
+      return (pack[key] != null) ? pack[key] : (I18N.ms[key] ?? "");
+    }
+
+    function applyLang(lang){
+      CURRENT_LANG = (lang === "en") ? "en" : "ms";
+      localStorage.setItem(LANG_KEY, CURRENT_LANG);
+
+      document.documentElement.setAttribute("lang", CURRENT_LANG === "en" ? "en" : "ms");
+
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === CURRENT_LANG);
+      });
+
+      // set title/description (title only)
+      document.title = (CURRENT_LANG === "en")
+        ? "About NiagaSenang | Financial Record Tools for Sellers"
+        : "Tentang NiagaSenang | Tool Rekod Kewangan Peniaga";
+
+      // apply text
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        const val = t(key);
+        if(val != null && val !== ""){
+          // for list blocks
+          if(key === "whyList" || key === "ctaList") el.innerHTML = val;
+          else el.innerHTML = val;
+        }
+      });
+
+      // special: whyList is UL content
+      const ul = document.querySelector("ul[data-i18n='whyList']");
+      if(ul) ul.innerHTML = t("whyList");
+      const ol = document.querySelector("ol[data-i18n='ctaList']");
+      if(ol) ol.innerHTML = t("ctaList");
+    }
+
+    (function initLang(){
+      const saved = localStorage.getItem(LANG_KEY);
+      applyLang(saved || detectBrowserLang());
+
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.addEventListener("click", () => applyLang(btn.dataset.lang));
+      });
+    })();
+  </script>
+
+  <div style="text-align:center;margin-top:40px;padding:20px 0;font-size:14px;color:#777;">
+    <a href="privacy.html">Privacy Policy</a>
+  </div>
+</body>
+</html>
