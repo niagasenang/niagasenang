@@ -162,6 +162,29 @@
       thead { display: table-header-group; }
       tr { page-break-inside: avoid; }
       .container { max-width: 100% !important; }
+      .ns-footer{ display:none !important; } /* ✅ hide footer when print */
+    }
+
+    /* ===== Standard footer (inside .card) ===== */
+    .ns-footer{
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+    .ns-footer__links{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .ns-footer__links a{ text-decoration: none; }
+    .ns-footer__links a:hover{ text-decoration: underline; }
+    .ns-footer__sep{ opacity: 0.6; }
+    .ns-footer__copy{
+      margin-top: 6px;
+      opacity: 0.75;
     }
   </style>
 </head>
@@ -352,6 +375,21 @@
   <p style="margin-top:16px;">
     <a href="index.html" data-i18n="backLink">← Kembali ke NiagaSenang</a>
   </p>
+
+  <!-- ✅ Standard footer (INSIDE .card) -->
+  <footer class="ns-footer">
+    <div class="ns-footer__links">
+      <a href="privacy.html">Privacy Policy</a>
+      <span class="ns-footer__sep">•</span>
+      <a href="terms.html">Terms of Use</a>
+      <span class="ns-footer__sep">•</span>
+      <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>
+    </div>
+
+    <div class="ns-footer__copy">
+      © <span id="nsYear"></span> NiagaSenang. All rights reserved.
+    </div>
+  </footer>
 
 </div>
 </div>
@@ -723,21 +761,16 @@ function totalFor(list){
 function setSurvivalPill(net, burnPerDay){
   const el = document.getElementById("survivalPill");
 
-  // if no activity at all
   if(net === 0 && burnPerDay === 0){
     el.className = "pill neutral";
     el.textContent = t("survNeutral");
     return;
   }
-
-  // if net positive => healthy
   if(net > 0){
     el.className = "pill ok";
     el.textContent = t("survHealthy");
     return;
   }
-
-  // net negative: grade by burn/day
   if(burnPerDay <= 20){
     el.className = "pill warn";
     el.textContent = t("survOk");
@@ -794,7 +827,6 @@ function render(){
     if(fFrom && fTo) periodDays = daysBetweenISO(fFrom, fTo);
     periodLabelText = filterLabel(rf);
   } else {
-    // default: infer from shown date range if possible
     if(shown.length){
       const fFrom = shown[0].date;
       const fTo = shown[shown.length-1].date;
@@ -956,6 +988,14 @@ function printCF(){
 
   render();
 })();
+</script>
+
+<!-- ✅ Auto year for footer -->
+<script>
+  (function () {
+    var el = document.getElementById('nsYear');
+    if (el) el.textContent = new Date().getFullYear();
+  })();
 </script>
 
 </body>

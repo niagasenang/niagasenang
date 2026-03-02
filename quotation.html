@@ -42,6 +42,28 @@
     .totals-row { display:flex; justify-content:space-between; margin:6px 0; }
     .muted { color:#64748b; font-size:13px; }
     .small { font-size:12px; color:#64748b; }
+
+    /* ===== Standard footer (inside .card) ===== */
+    .ns-footer{
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+    .ns-footer__links{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .ns-footer__links a{ text-decoration: none; }
+    .ns-footer__links a:hover{ text-decoration: underline; }
+    .ns-footer__sep{ opacity: 0.6; }
+    .ns-footer__copy{
+      margin-top: 6px;
+      opacity: 0.75;
+    }
   </style>
 </head>
 
@@ -139,6 +161,21 @@
       <p style="margin-top:16px;">
         <a href="index.html">← Kembali ke NiagaSenang</a>
       </p>
+
+      <!-- ✅ Standard footer (INSIDE .card) -->
+      <footer class="ns-footer">
+        <div class="ns-footer__links">
+          <a href="privacy.html">Privacy Policy</a>
+          <span class="ns-footer__sep">•</span>
+          <a href="terms.html">Terms of Use</a>
+          <span class="ns-footer__sep">•</span>
+          <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>
+        </div>
+
+        <div class="ns-footer__copy">
+          © <span id="nsYear"></span> NiagaSenang. All rights reserved.
+        </div>
+      </footer>
 
     </div>
   </div>
@@ -502,6 +539,14 @@
     /* init */
     loadDraft();
     calc();
+  </script>
+
+  <!-- ✅ Auto year for footer -->
+  <script>
+    (function () {
+      var el = document.getElementById('nsYear');
+      if (el) el.textContent = new Date().getFullYear();
+    })();
   </script>
 </body>
 </html>
