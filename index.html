@@ -111,6 +111,14 @@
     ul { margin: 8px 0 0 18px; }
     li { margin: 6px 0; }
     hr{ border:0; border-top:1px solid #e5e7eb; margin:14px 0; }
+
+    @media (max-width: 900px){
+      .grid-3{ grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width: 640px){
+      .top-row{ flex-direction:column; }
+      .grid-2, .grid-3{ grid-template-columns:1fr; }
+    }
   </style>
 </head>
 
@@ -256,6 +264,74 @@
         <p class="muted" data-i18n="seoP6">
           Nota: Tool ini untuk kegunaan dalaman. Untuk compliance cukai/e-Invoice dan laporan rasmi, rujuk akauntan atau penasihat cukai.
         </p>
+      </div>
+
+      <!-- POPULAR PAGES -->
+      <div class="box">
+        <h3 style="margin:0 0 10px 0;">📚 Popular Pages</h3>
+
+        <div class="grid-3 link-grid">
+          <a href="invoice-generator-malaysia.html">
+            <div class="link-title">Free Invoice Generator Malaysia</div>
+            <div class="link-desc">Buat invoice percuma online untuk peniaga Malaysia.</div>
+          </a>
+
+          <a href="quotation-generator-malaysia.html">
+            <div class="link-title">Free Quotation Generator Malaysia</div>
+            <div class="link-desc">Buat quotation atau sebut harga yang kemas dan profesional.</div>
+          </a>
+
+          <a href="cashflow-calculator-malaysia.html">
+            <div class="link-title">Cashflow Calculator Malaysia</div>
+            <div class="link-desc">Semak cash in, cash out dan survival view bisnes kecil.</div>
+          </a>
+        </div>
+
+        <div class="grid-3 link-grid" style="margin-top:12px;">
+          <a href="template-invoice-malaysia.html">
+            <div class="link-title">Template Invoice Malaysia</div>
+            <div class="link-desc">Contoh invoice simple dan profesional untuk peniaga kecil.</div>
+          </a>
+
+          <a href="contoh-resit-malaysia.html">
+            <div class="link-title">Contoh Resit Malaysia</div>
+            <div class="link-desc">Template resit simple dan profesional untuk rekod bayaran.</div>
+          </a>
+
+          <a href="contoh-quotation-malaysia.html">
+            <div class="link-title">Contoh Quotation Malaysia</div>
+            <div class="link-desc">Template sebut harga profesional untuk peniaga dan freelancer.</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- ARTICLES -->
+      <div class="box">
+        <h3 style="margin:0 0 10px 0;">📝 Artikel & Panduan</h3>
+
+        <div class="grid-3 link-grid">
+          <a href="beza-invoice-quotation-resit.html">
+            <div class="link-title">Beza Invoice, Quotation & Resit</div>
+            <div class="link-desc">Panduan mudah untuk faham fungsi setiap dokumen bisnes.</div>
+          </a>
+
+          <a href="cara-urus-duit-bisnes-kecil.html">
+            <div class="link-title">Cara Urus Duit Bisnes Kecil</div>
+            <div class="link-desc">Elak bisnes bocor tanpa sedar dengan pengurusan duit yang lebih kemas.</div>
+          </a>
+
+          <a href="cara-kira-untung-rugi-bisnes-kecil.html">
+            <div class="link-title">Cara Kira Untung Rugi Bisnes Kecil</div>
+            <div class="link-desc">Faham beza sales, kos, untung kasar dan untung bersih.</div>
+          </a>
+        </div>
+
+        <div class="grid-3 link-grid" style="margin-top:12px;">
+          <a href="cara-rekod-duit-masuk-keluar-bisnes-kecil.html">
+            <div class="link-title">Cara Rekod Duit Masuk Keluar Bisnes Kecil</div>
+            <div class="link-desc">Panduan mudah supaya peniaga lebih jelas tentang sales, belanja dan cashflow.</div>
+          </a>
+        </div>
       </div>
 
       <!-- TRUST PAGES CTA -->
