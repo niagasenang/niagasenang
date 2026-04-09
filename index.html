@@ -108,6 +108,28 @@
     }
     .footer-links a{ color:#64748b; text-decoration:none; }
     .footer-links a:hover{ text-decoration:underline; }
+    .donate-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top:10px;
+    }
+    .donate-btn{
+      display:inline-block;
+      text-decoration:none;
+      background:#1e293b;
+      color:#ffffff;
+      border:1px solid #1e293b;
+      padding:10px 16px;
+      border-radius:999px;
+      font-size:14px;
+      font-weight:800;
+      line-height:1;
+    }
+    .donate-btn:hover{
+      opacity:.92;
+    }
     ul { margin: 8px 0 0 18px; }
     li { margin: 6px 0; }
     hr{ border:0; border-top:1px solid #e5e7eb; margin:14px 0; }
@@ -338,13 +360,25 @@
       <div class="box">
         <h3 style="margin:0 0 8px 0;" data-i18n="trustTitle">📌 Info penting</h3>
         <p class="muted" style="margin:0;" data-i18n="trustDesc">
-          Untuk kelulusan AdSense dan kepercayaan pengguna, pastikan halaman ini wujud dan mudah dicari.
+          Halaman rasmi ini disediakan untuk rujukan pengguna, maklumat privasi dan terma penggunaan laman NiagaSenang.
         </p>
         <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
           <a class="pill" href="about.html" style="text-decoration:none;" data-i18n="trustAbout">About</a>
           <a class="pill" href="terms.html" style="text-decoration:none;" data-i18n="trustTerms">Terms</a>
           <a class="pill" href="contact.html" style="text-decoration:none;" data-i18n="trustContact">Contact</a>
           <a class="pill" href="privacy.html" style="text-decoration:none;" data-i18n="trustPrivacy">Privacy</a>
+        </div>
+      </div>
+
+      <!-- DONATION -->
+      <div class="box">
+        <h3 style="margin:0 0 8px 0;" data-i18n="donateTitle">💝 Sokong NiagaSenang</h3>
+        <p class="muted" style="margin:0;" data-i18n="donateDesc">
+          Jika tool percuma ini membantu bisnes anda, sumbangan kecil amat dihargai untuk sokong kos pembangunan dan penambahbaikan NiagaSenang.
+        </p>
+        <div class="donate-row">
+          <a class="donate-btn" href="https://sociabuzz.com/niagasenang/tribe" target="_blank" rel="noopener noreferrer" data-i18n="donateBtn">❤️ Donate / Support</a>
+          <span class="small" data-i18n="donateNote">https://sociabuzz.com/niagasenang/tribe</span>
         </div>
       </div>
 
@@ -421,11 +455,16 @@
         seoP6: "Nota: Tool ini untuk kegunaan dalaman. Untuk compliance cukai/e-Invoice dan laporan rasmi, rujuk akauntan atau penasihat cukai.",
 
         trustTitle: "📌 Info penting",
-        trustDesc: "Untuk kelulusan AdSense dan kepercayaan pengguna, pastikan halaman ini wujud dan mudah dicari.",
+        trustDesc: "Halaman rasmi ini disediakan untuk rujukan pengguna, maklumat privasi dan terma penggunaan laman NiagaSenang.",
         trustAbout: "About",
         trustTerms: "Terms",
         trustContact: "Contact",
         trustPrivacy: "Privacy",
+
+        donateTitle: "💝 Sokong NiagaSenang",
+        donateDesc: "Jika tool percuma ini membantu bisnes anda, sumbangan kecil amat dihargai untuk sokong kos pembangunan dan penambahbaikan NiagaSenang.",
+        donateBtn: "❤️ Donate / Support",
+        donateNote: "https://sociabuzz.com/niagasenang/tribe",
 
         fAbout: "About",
         fTerms: "Terms",
@@ -483,11 +522,16 @@
         seoP6: "Note: These tools are for internal use. For tax/e-Invoice compliance and official reporting, consult an accountant or tax advisor.",
 
         trustTitle: "📌 Important info",
-        trustDesc: "For AdSense approval and user trust, make sure these pages exist and are easy to find.",
+        trustDesc: "These official pages are provided for user reference, privacy information and the terms of use for the NiagaSenang website.",
         trustAbout: "About",
         trustTerms: "Terms",
         trustContact: "Contact",
         trustPrivacy: "Privacy",
+
+        donateTitle: "💝 Support NiagaSenang",
+        donateDesc: "If these free tools help your business, a small contribution is greatly appreciated to support the ongoing development and improvement of NiagaSenang.",
+        donateBtn: "❤️ Donate / Support",
+        donateNote: "https://sociabuzz.com/niagasenang/tribe",
 
         fAbout: "About",
         fTerms: "Terms",
@@ -520,12 +564,12 @@
 
       document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
-        if(key === "seoList1" || key === "seoList2") el.innerHTML = t(key);
-        else el.innerHTML = t(key);
+        el.innerHTML = t(key);
       });
 
       const ul = document.querySelector("ul[data-i18n='seoList1']");
       if(ul) ul.innerHTML = t("seoList1");
+
       const ol = document.querySelector("ol[data-i18n='seoList2']");
       if(ol) ol.innerHTML = t("seoList2");
     }
