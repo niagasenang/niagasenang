@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cashflow (Cash Basis) | NiagaSenang</title>
-  <meta name="description" content="Cashflow cash basis percuma untuk peniaga Malaysia. Auto kira Net Cash In/Out, bulan/range, survival pill. Offline-first.">
+  <title>Cashflow Calculator Malaysia | Kira Aliran Tunai Bisnes Kecil | NiagaSenang</title>
+  <meta name="description" content="Cashflow calculator percuma untuk peniaga Malaysia. Auto kira cash in, cash out, net cashflow, burn per day dan survival view berdasarkan Ledger cash basis.">
 
   <link rel="stylesheet" href="css/style.css">
 
@@ -17,19 +17,27 @@
     gtag('config', 'G-P81GM8SJWX');
   </script>
 
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js?client=ca-pub-2042278846951839"
+     crossorigin="anonymous"></script>
+
   <style>
     .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
     .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
-    .small { font-size:12px; color:#64748b; }
-    .muted { color:#64748b; font-size:13px; }
+    .small { font-size:12px; color:#64748b; line-height:1.55; }
+    .muted { color:#64748b; font-size:13px; line-height:1.65; }
 
     .box{
       background:#f8fafc;
       border:1px solid #e5e7eb;
       border-radius:12px;
-      padding:12px;
-      margin-top:12px;
+      padding:14px;
+      margin-top:16px;
     }
+    .box h3 { margin:0 0 8px 0; }
+    .box h4 { margin:14px 0 6px 0; }
+    .box ul, .box ol { margin:8px 0 0 20px; }
+    .box li { margin:7px 0; }
 
     table { width:100%; border-collapse:collapse; margin-top:10px; }
     th, td { padding:8px; border-bottom:1px solid #e5e7eb; font-size:14px; vertical-align:top; }
@@ -70,7 +78,6 @@
     .incomeTxt { color:#047857; font-weight:800; }
     .expenseTxt { color:#b91c1c; font-weight:800; }
 
-    /* ===== Top header row (title + language toggle) ===== */
     .top-row{
       display:flex;
       align-items:flex-start;
@@ -103,28 +110,16 @@
       color:#ffffff;
     }
 
-    /* Filter UI */
-    .filter-row{
+    .filter-row, .month-row{
       display:flex;
       flex-wrap:wrap;
       gap:10px;
       align-items:end;
       margin-top:10px;
     }
-    .filter-row > div{ min-width: 160px; }
+    .filter-row > div, .month-row > div{ min-width:160px; }
     .hint { font-size:12px; color:#64748b; margin-top:6px; }
 
-    /* Month filter UI */
-    .month-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      align-items:end;
-      margin-top:10px;
-    }
-    .month-row > div{ min-width: 160px; }
-
-    /* Print */
     .print-header{
       display:none;
       margin-bottom:12px;
@@ -152,39 +147,55 @@
       background:#f8fafc;
     }
 
+    .link-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:12px;
+      margin-top:10px;
+    }
+    .link-grid a{
+      display:block;
+      text-decoration:none;
+      border:1px solid #e5e7eb;
+      background:#fff;
+      padding:12px;
+      border-radius:12px;
+    }
+    .link-title{ font-weight:900; color:#0f172a; }
+    .link-desc{ margin-top:6px; color:#64748b; font-size:13px; line-height:1.45; }
+
+    .footer-links{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:12px;
+      font-size:14px;
+      color:#64748b;
+    }
+    .footer-links a{ color:#64748b; text-decoration:none; }
+    .footer-links a:hover{ text-decoration:underline; }
+
+    @media (max-width:900px){
+      .grid-3, .link-grid{ grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:640px){
+      .top-row{ flex-direction:column; }
+      .grid-2, .grid-3, .link-grid{ grid-template-columns:1fr; }
+    }
+
     @media print{
       .btn, .btn-secondary, button, input, select, textarea,
-      a[href="index.html"], .lang-toggle { display:none !important; }
+      a[href="index.html"], .lang-toggle, .guide-box, .faq-box, .related-box, .footer-print-hide {
+        display:none !important;
+      }
       body { background:#fff !important; }
       .card { box-shadow:none !important; border:0 !important; }
       .print-header { display:block !important; }
       th, td { font-size:12px; padding:6px; }
       thead { display: table-header-group; }
       tr { page-break-inside: avoid; }
-      .container { max-width: 100% !important; }
-      .ns-footer{ display:none !important; } /* ✅ hide footer when print */
-    }
-
-    /* ===== Standard footer (inside .card) ===== */
-    .ns-footer{
-      margin-top: 16px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(0,0,0,0.08);
-      font-size: 0.92rem;
-      line-height: 1.4;
-    }
-    .ns-footer__links{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
-    .ns-footer__links a{ text-decoration: none; }
-    .ns-footer__links a:hover{ text-decoration: underline; }
-    .ns-footer__sep{ opacity: 0.6; }
-    .ns-footer__copy{
-      margin-top: 6px;
-      opacity: 0.75;
+      .container { max-width:100% !important; }
     }
   </style>
 </head>
@@ -193,7 +204,6 @@
 <div class="container">
 <div class="card">
 
-  <!-- PRINT ONLY HEADER -->
   <div class="print-header">
     <h1 id="phTitle">NiagaSenang — Cashflow (Cash Basis)</h1>
     <div class="print-meta">
@@ -203,13 +213,11 @@
     </div>
   </div>
 
-  <!-- Top row: title + lang toggle -->
   <div class="top-row">
     <div>
-      <h2 data-i18n="pageH2">💸 Cashflow — Cash Basis</h2>
+      <h2 data-i18n="pageH2">💸 Cashflow Calculator Malaysia</h2>
       <p class="small" data-i18n="pageIntro">
-        Ringkasan aliran tunai dari <strong>Ledger</strong> (duit masuk/keluar).
-        Fokus: “bisnes hidup ke mati” ikut cash.
+        Kira aliran tunai bisnes kecil berdasarkan transaksi dalam Ledger. Lihat cash in, cash out, net cashflow, burn per day dan survival view.
       </p>
     </div>
 
@@ -219,11 +227,8 @@
     </div>
   </div>
 
-  <hr style="margin:14px 0;">
-
-  <!-- MONTH FILTER -->
   <div class="box">
-    <h3 style="margin:0;" data-i18n="monthTitle">🗓️ Filter Bulan (cepat)</h3>
+    <h3 data-i18n="monthTitle">🗓️ Filter Bulan (cepat)</h3>
 
     <div class="month-row">
       <div>
@@ -241,9 +246,8 @@
     <div class="hint" id="monthHintTxt">Menunjukkan: Semua transaksi</div>
   </div>
 
-  <!-- RANGE FILTER -->
   <div class="box">
-    <h3 style="margin:0;" data-i18n="filterTitle">🗓️ Filter Tarikh (paparan &amp; print)</h3>
+    <h3 data-i18n="filterTitle">🗓️ Filter Tarikh (paparan & print)</h3>
 
     <div class="filter-row">
       <div>
@@ -275,9 +279,8 @@
     <div class="hint" id="filterHint">Menunjukkan: Semua transaksi</div>
   </div>
 
-  <!-- SUMMARY -->
   <div class="box">
-    <h3 style="margin:0 0 10px 0;" data-i18n="summaryTitle">📌 Ringkasan Cashflow</h3>
+    <h3 data-i18n="summaryTitle">📌 Ringkasan Cashflow</h3>
 
     <div class="grid-3">
       <div>
@@ -302,18 +305,16 @@
     </div>
 
     <p class="small" style="margin-top:10px;" data-i18n="summaryNote">
-      Nota: “Burn/Day” dikira dari total cash out ÷ bilangan hari dalam tempoh filter.
-      Ini bukan GAAP—ini survival view.
+      Nota: “Burn/Day” dikira dari total cash out ÷ bilangan hari dalam tempoh filter. Ini bukan GAAP—ini survival view.
     </p>
   </div>
 
-  <!-- BREAKDOWN -->
   <div class="box">
-    <h3 style="margin:0 0 10px 0;" data-i18n="breakdownTitle">🧾 Breakdown (ikut kategori)</h3>
+    <h3 data-i18n="breakdownTitle">🧾 Breakdown (ikut kategori)</h3>
 
     <div class="grid-2">
       <div>
-        <h4 style="margin:0 0 6px 0;" data-i18n="incomeTitle">Cash In</h4>
+        <h4 data-i18n="incomeTitle">Cash In</h4>
         <table>
           <thead>
             <tr>
@@ -332,7 +333,7 @@
       </div>
 
       <div>
-        <h4 style="margin:0 0 6px 0;" data-i18n="expenseTitle">Cash Out</h4>
+        <h4 data-i18n="expenseTitle">Cash Out</h4>
         <table>
           <thead>
             <tr>
@@ -359,58 +360,133 @@
   <div style="margin-top:14px;">
     <button class="btn-secondary" onclick="printCF()" data-i18n="btnPrint">🖨 Print Cashflow (ikut filter)</button>
 
-    <a class="btn-secondary" href="ledger.html" style="text-decoration:none; display:inline-block;" data-i18n="btnLedger">
-      ← Pergi Ledger
-    </a>
+    <a class="btn-secondary" href="ledger.html" style="text-decoration:none; display:inline-block;" data-i18n="btnLedger">← Pergi Ledger</a>
 
-    <a class="btn-secondary" href="pl.html" style="text-decoration:none; display:inline-block;" data-i18n="btnPL">
-      📊 Pergi P&amp;L
-    </a>
+    <a class="btn-secondary" href="pl.html" style="text-decoration:none; display:inline-block;" data-i18n="btnPL">📊 Pergi P&amp;L</a>
 
-    <a class="btn-secondary" href="commitment.html" style="text-decoration:none; display:inline-block;" data-i18n="btnCommitment">
-      📌 Komitmen
-    </a>
+    <a class="btn-secondary" href="commitment.html" style="text-decoration:none; display:inline-block;" data-i18n="btnCommitment">📌 Komitmen</a>
   </div>
 
-  <p style="margin-top:16px;">
+  <div class="box guide-box">
+    <h3 data-i18n="guideH1">Panduan Cashflow Untuk Peniaga Kecil</h3>
+    <p class="muted" data-i18n="guideP1">
+      Cashflow ialah aliran tunai masuk dan keluar dalam bisnes. Untuk peniaga kecil, cashflow lebih penting daripada sekadar tengok sales. Sales tinggi belum tentu bisnes sihat jika duit keluar terlalu laju atau bayaran pelanggan lambat masuk.
+    </p>
+    <p class="muted" data-i18n="guideP2">
+      Cashflow cash basis bermaksud kiraan dibuat berdasarkan duit yang benar-benar masuk dan keluar. Jika pelanggan bayar hari ini, ia menjadi cash in. Jika anda bayar supplier, sewa, iklan atau delivery hari ini, ia menjadi cash out. Cara ini mudah untuk peniaga yang mahu pantau survival bisnes harian dan bulanan.
+    </p>
+
+    <h4 data-i18n="guideH2">Apa maksud Cash In, Cash Out dan Net Cashflow?</h4>
+    <ul class="muted" data-i18n="guideList1">
+      <li><strong>Cash In:</strong> semua duit yang masuk seperti jualan, bayaran invoice, deposit dan servis.</li>
+      <li><strong>Cash Out:</strong> semua duit keluar seperti stok, sewa, bil, marketing, petrol, delivery dan komisen.</li>
+      <li><strong>Net Cashflow:</strong> Cash In tolak Cash Out. Jika positif, cash bertambah. Jika negatif, cash sedang menyusut.</li>
+      <li><strong>Burn / Day:</strong> purata cash out sehari dalam tempoh yang dipilih.</li>
+    </ul>
+
+    <h4 data-i18n="guideH3">Kenapa cashflow penting?</h4>
+    <p class="muted" data-i18n="guideP3">
+      Ramai peniaga rasa bisnes berjalan sebab ada jualan, tetapi cash masih ketat. Ini berlaku bila kos stok tinggi, komitmen bulanan besar, pelanggan lambat bayar, atau terlalu banyak belanja kecil yang tidak direkod. Dengan cashflow calculator, peniaga boleh nampak sama ada bisnes sedang mengumpul cash atau membakar cash.
+    </p>
+
+    <h4 data-i18n="guideH4">Cara guna Cashflow NiagaSenang</h4>
+    <ol class="muted" data-i18n="guideList2">
+      <li>Rekod semua duit masuk dan duit keluar dalam halaman Ledger.</li>
+      <li>Buka halaman Cashflow.</li>
+      <li>Pilih bulan atau range tarikh yang mahu disemak.</li>
+      <li>Lihat Cash In, Cash Out dan Net Cashflow.</li>
+      <li>Semak Burn / Day untuk tahu purata duit keluar sehari.</li>
+      <li>Gunakan breakdown kategori untuk kenal pasti kos yang paling besar.</li>
+      <li>Print report jika mahu simpan rekod bulanan.</li>
+    </ol>
+
+    <h4 data-i18n="guideH5">Cara baca survival pill</h4>
+    <p class="muted" data-i18n="guideP4">
+      Survival pill memberi gambaran pantas tentang keadaan cash. Jika cashflow positif, status akan lebih sihat. Jika cashflow negatif, sistem akan menilai tahap tekanan berdasarkan burn per day. Ini bukan laporan rasmi, tetapi sesuai sebagai amaran awal supaya peniaga cepat sedar apabila duit keluar lebih laju daripada duit masuk.
+    </p>
+
+    <h4 data-i18n="guideH6">Tip kawal cashflow bisnes kecil</h4>
+    <ul class="muted" data-i18n="guideList3">
+      <li>Rekod transaksi setiap hari supaya data tidak tertinggal.</li>
+      <li>Asingkan duit personal dan duit bisnes.</li>
+      <li>Semak kos kecil seperti packaging, delivery dan ads.</li>
+      <li>Elak beli stok terlalu banyak tanpa kira cash reserve.</li>
+      <li>Gunakan halaman Komitmen untuk senarai kos tetap bulanan.</li>
+      <li>Semak Cashflow dan P&L bersama-sama supaya nampak untung dan cash sebenar.</li>
+    </ul>
+  </div>
+
+  <div class="box faq-box">
+    <h3 data-i18n="faqH1">FAQ Cashflow</h3>
+
+    <h4 data-i18n="faqQ1">Adakah cashflow ini dikira automatik?</h4>
+    <p class="muted" data-i18n="faqA1">Ya. Cashflow dikira daripada transaksi yang anda rekod dalam Ledger.</p>
+
+    <h4 data-i18n="faqQ2">Kenapa data cashflow kosong?</h4>
+    <p class="muted" data-i18n="faqA2">Biasanya sebab belum ada transaksi dalam Ledger, atau filter bulan/tarikh tidak mempunyai transaksi.</p>
+
+    <h4 data-i18n="faqQ3">Apa beza cashflow dengan P&L?</h4>
+    <p class="muted" data-i18n="faqA3">Cashflow fokus pada duit masuk dan keluar. P&L fokus pada income, expense dan untung rugi mengikut kategori.</p>
+
+    <h4 data-i18n="faqQ4">Adakah report ini sesuai untuk cukai rasmi?</h4>
+    <p class="muted" data-i18n="faqA4">Tool ini untuk pemantauan dalaman. Untuk cukai, e-Invoice dan laporan rasmi, sila rujuk akauntan atau penasihat cukai.</p>
+  </div>
+
+  <div class="box related-box">
+    <h3 data-i18n="relatedTitle">Tools & Panduan Berkaitan</h3>
+    <div class="link-grid">
+      <a href="ledger.html">
+        <div class="link-title" data-i18n="relLedger">Ledger Cash Basis</div>
+        <div class="link-desc" data-i18n="relLedgerDesc">Rekod duit masuk dan duit keluar untuk jana report cashflow.</div>
+      </a>
+      <a href="pl.html">
+        <div class="link-title" data-i18n="relPL">P&L Cash Basis</div>
+        <div class="link-desc" data-i18n="relPLDesc">Auto kira untung rugi berdasarkan transaksi ledger.</div>
+      </a>
+      <a href="cara-urus-duit-bisnes-kecil.html">
+        <div class="link-title" data-i18n="relGuide">Cara Urus Duit Bisnes Kecil</div>
+        <div class="link-desc" data-i18n="relGuideDesc">Panduan mudah kawal cashflow dan rekod kewangan bisnes.</div>
+      </a>
+    </div>
+  </div>
+
+  <p style="margin-top:18px;">
     <a href="index.html" data-i18n="backLink">← Kembali ke NiagaSenang</a>
   </p>
 
-  <!-- ✅ Standard footer (INSIDE .card) -->
-  <footer class="ns-footer">
-    <div class="ns-footer__links">
-      <a href="privacy.html">Privacy Policy</a>
-      <span class="ns-footer__sep">•</span>
-      <a href="terms.html">Terms of Use</a>
-      <span class="ns-footer__sep">•</span>
-      <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>
+  <div class="footer-print-hide" style="text-align:center;margin-top:22px;padding-top:16px;border-top:1px solid #e5e7eb;">
+    <div class="footer-links">
+      <a href="about.html" data-i18n="fAbout">About</a>
+      <span>•</span>
+      <a href="terms.html" data-i18n="fTerms">Terms</a>
+      <span>•</span>
+      <a href="contact.html" data-i18n="fContact">Contact</a>
+      <span>•</span>
+      <a href="privacy.html" data-i18n="fPrivacy">Privacy Policy</a>
     </div>
-
-    <div class="ns-footer__copy">
-      © <span id="nsYear"></span> NiagaSenang. All rights reserved.
+    <div class="small" style="margin-top:10px;">
+      © <span id="yearNow"></span> NiagaSenang — <span data-i18n="fNote">Tool percuma untuk peniaga Malaysia.</span>
     </div>
-  </footer>
+  </div>
 
 </div>
 </div>
 
 <script>
-/* ===== storage keys ===== */
 const LEDGER_KEY = "ns_ledger_v3";
-const RANGE_FILTER_KEY = "ns_cashflow_filter_v1";   // date range filter
-const MONTH_FILTER_KEY = "ns_cashflow_month_v1";    // month quick filter
+const RANGE_FILTER_KEY = "ns_cashflow_filter_v1";
+const MONTH_FILTER_KEY = "ns_cashflow_month_v1";
 const LANG_KEY = "ns_lang";
 
 let CURRENT_LANG = "ms";
 
-/* ===== i18n ===== */
 const I18N = {
   ms: {
-    docTitle: "Cashflow (Cash Basis) | NiagaSenang",
+    docTitle: "Cashflow Calculator Malaysia | Kira Aliran Tunai Bisnes Kecil | NiagaSenang",
     phTitle: "NiagaSenang — Cashflow (Cash Basis)",
 
-    pageH2: "💸 Cashflow — Cash Basis",
-    pageIntro: "Ringkasan aliran tunai dari <strong>Ledger</strong> (duit masuk/keluar). Fokus: “bisnes hidup ke mati” ikut cash.",
+    pageH2: "💸 Cashflow Calculator Malaysia",
+    pageIntro: "Kira aliran tunai bisnes kecil berdasarkan transaksi dalam Ledger. Lihat cash in, cash out, net cashflow, burn per day dan survival view.",
 
     monthTitle: "🗓️ Filter Bulan (cepat)",
     labelMonth: "Bulan",
@@ -454,7 +530,6 @@ const I18N = {
     btnCommitment: "📌 Komitmen",
     backLink: "← Kembali ke NiagaSenang",
 
-    // dynamic
     showPrefix: "Menunjukkan: ",
     allTxns: "Semua transaksi",
     weekLabel: "Minggu ini",
@@ -470,20 +545,57 @@ const I18N = {
 
     alertCustomNeedDate: "Untuk Custom, sila pilih tarikh Dari / Hingga (sekurang-kurangnya satu).",
 
-    // survival pills
     survHealthy: "Sihat",
     survOk: "OK",
     survWarning: "Warning",
     survCritical: "Kritikal",
-    survNeutral: "Neutral"
+    survNeutral: "Neutral",
+
+    guideH1: "Panduan Cashflow Untuk Peniaga Kecil",
+    guideP1: "Cashflow ialah aliran tunai masuk dan keluar dalam bisnes. Untuk peniaga kecil, cashflow lebih penting daripada sekadar tengok sales. Sales tinggi belum tentu bisnes sihat jika duit keluar terlalu laju atau bayaran pelanggan lambat masuk.",
+    guideP2: "Cashflow cash basis bermaksud kiraan dibuat berdasarkan duit yang benar-benar masuk dan keluar. Jika pelanggan bayar hari ini, ia menjadi cash in. Jika anda bayar supplier, sewa, iklan atau delivery hari ini, ia menjadi cash out. Cara ini mudah untuk peniaga yang mahu pantau survival bisnes harian dan bulanan.",
+    guideH2: "Apa maksud Cash In, Cash Out dan Net Cashflow?",
+    guideList1: "<li><strong>Cash In:</strong> semua duit yang masuk seperti jualan, bayaran invoice, deposit dan servis.</li><li><strong>Cash Out:</strong> semua duit keluar seperti stok, sewa, bil, marketing, petrol, delivery dan komisen.</li><li><strong>Net Cashflow:</strong> Cash In tolak Cash Out. Jika positif, cash bertambah. Jika negatif, cash sedang menyusut.</li><li><strong>Burn / Day:</strong> purata cash out sehari dalam tempoh yang dipilih.</li>",
+    guideH3: "Kenapa cashflow penting?",
+    guideP3: "Ramai peniaga rasa bisnes berjalan sebab ada jualan, tetapi cash masih ketat. Ini berlaku bila kos stok tinggi, komitmen bulanan besar, pelanggan lambat bayar, atau terlalu banyak belanja kecil yang tidak direkod. Dengan cashflow calculator, peniaga boleh nampak sama ada bisnes sedang mengumpul cash atau membakar cash.",
+    guideH4: "Cara guna Cashflow NiagaSenang",
+    guideList2: "<li>Rekod semua duit masuk dan duit keluar dalam halaman Ledger.</li><li>Buka halaman Cashflow.</li><li>Pilih bulan atau range tarikh yang mahu disemak.</li><li>Lihat Cash In, Cash Out dan Net Cashflow.</li><li>Semak Burn / Day untuk tahu purata duit keluar sehari.</li><li>Gunakan breakdown kategori untuk kenal pasti kos yang paling besar.</li><li>Print report jika mahu simpan rekod bulanan.</li>",
+    guideH5: "Cara baca survival pill",
+    guideP4: "Survival pill memberi gambaran pantas tentang keadaan cash. Jika cashflow positif, status akan lebih sihat. Jika cashflow negatif, sistem akan menilai tahap tekanan berdasarkan burn per day. Ini bukan laporan rasmi, tetapi sesuai sebagai amaran awal supaya peniaga cepat sedar apabila duit keluar lebih laju daripada duit masuk.",
+    guideH6: "Tip kawal cashflow bisnes kecil",
+    guideList3: "<li>Rekod transaksi setiap hari supaya data tidak tertinggal.</li><li>Asingkan duit personal dan duit bisnes.</li><li>Semak kos kecil seperti packaging, delivery dan ads.</li><li>Elak beli stok terlalu banyak tanpa kira cash reserve.</li><li>Gunakan halaman Komitmen untuk senarai kos tetap bulanan.</li><li>Semak Cashflow dan P&L bersama-sama supaya nampak untung dan cash sebenar.</li>",
+
+    faqH1: "FAQ Cashflow",
+    faqQ1: "Adakah cashflow ini dikira automatik?",
+    faqA1: "Ya. Cashflow dikira daripada transaksi yang anda rekod dalam Ledger.",
+    faqQ2: "Kenapa data cashflow kosong?",
+    faqA2: "Biasanya sebab belum ada transaksi dalam Ledger, atau filter bulan/tarikh tidak mempunyai transaksi.",
+    faqQ3: "Apa beza cashflow dengan P&L?",
+    faqA3: "Cashflow fokus pada duit masuk dan keluar. P&L fokus pada income, expense dan untung rugi mengikut kategori.",
+    faqQ4: "Adakah report ini sesuai untuk cukai rasmi?",
+    faqA4: "Tool ini untuk pemantauan dalaman. Untuk cukai, e-Invoice dan laporan rasmi, sila rujuk akauntan atau penasihat cukai.",
+
+    relatedTitle: "Tools & Panduan Berkaitan",
+    relLedger: "Ledger Cash Basis",
+    relLedgerDesc: "Rekod duit masuk dan duit keluar untuk jana report cashflow.",
+    relPL: "P&L Cash Basis",
+    relPLDesc: "Auto kira untung rugi berdasarkan transaksi ledger.",
+    relGuide: "Cara Urus Duit Bisnes Kecil",
+    relGuideDesc: "Panduan mudah kawal cashflow dan rekod kewangan bisnes.",
+
+    fAbout: "About",
+    fTerms: "Terms",
+    fContact: "Contact",
+    fPrivacy: "Privacy Policy",
+    fNote: "Tool percuma untuk peniaga Malaysia."
   },
 
   en: {
-    docTitle: "Cashflow (Cash Basis) | NiagaSenang",
+    docTitle: "Cashflow Calculator Malaysia | Small Business Cashflow | NiagaSenang",
     phTitle: "NiagaSenang — Cashflow (Cash Basis)",
 
-    pageH2: "💸 Cashflow — Cash Basis",
-    pageIntro: "Cashflow summary from your <strong>Ledger</strong> (money in/out). Focus: “is the business alive?” in cash terms.",
+    pageH2: "💸 Cashflow Calculator Malaysia",
+    pageIntro: "Calculate small business cashflow based on Ledger transactions. See cash in, cash out, net cashflow, burn per day and survival view.",
 
     monthTitle: "🗓️ Monthly Filter (quick)",
     labelMonth: "Month",
@@ -527,7 +639,6 @@ const I18N = {
     btnCommitment: "📌 Commitments",
     backLink: "← Back to NiagaSenang",
 
-    // dynamic
     showPrefix: "Showing: ",
     allTxns: "All transactions",
     weekLabel: "This week",
@@ -543,12 +654,49 @@ const I18N = {
 
     alertCustomNeedDate: "For Custom, choose From/To dates (at least one).",
 
-    // survival pills
     survHealthy: "Healthy",
     survOk: "OK",
     survWarning: "Warning",
     survCritical: "Critical",
-    survNeutral: "Neutral"
+    survNeutral: "Neutral",
+
+    guideH1: "Cashflow Guide for Small Sellers",
+    guideP1: "Cashflow is the movement of money in and out of a business. For small sellers, cashflow is more important than sales alone. High sales do not always mean the business is healthy if money goes out too quickly or customers pay late.",
+    guideP2: "Cash basis cashflow means the calculation is based on money that actually comes in and goes out. If a customer pays today, it becomes cash in. If you pay suppliers, rent, ads or delivery today, it becomes cash out.",
+    guideH2: "What do Cash In, Cash Out and Net Cashflow mean?",
+    guideList1: "<li><strong>Cash In:</strong> money received from sales, invoice payments, deposits and services.</li><li><strong>Cash Out:</strong> money spent on stock, rent, bills, marketing, fuel, delivery and commissions.</li><li><strong>Net Cashflow:</strong> Cash In minus Cash Out. Positive means cash increases. Negative means cash is decreasing.</li><li><strong>Burn / Day:</strong> average cash out per day for the selected period.</li>",
+    guideH3: "Why cashflow matters",
+    guideP3: "Many sellers feel the business is running because there are sales, but cash is still tight. This can happen because stock costs are high, monthly commitments are large, customers pay late, or many small expenses are not recorded.",
+    guideH4: "How to use NiagaSenang Cashflow",
+    guideList2: "<li>Record all money in and money out in Ledger.</li><li>Open the Cashflow page.</li><li>Select a month or date range.</li><li>Check Cash In, Cash Out and Net Cashflow.</li><li>Review Burn / Day to see average daily cash out.</li><li>Use category breakdown to identify major costs.</li><li>Print the report if you want a monthly record.</li>",
+    guideH5: "How to read the survival pill",
+    guideP4: "The survival pill gives a quick view of cash condition. If cashflow is positive, the status is healthier. If cashflow is negative, it estimates pressure based on burn per day.",
+    guideH6: "Tips to control small business cashflow",
+    guideList3: "<li>Record transactions daily.</li><li>Separate personal and business money.</li><li>Monitor small costs like packaging, delivery and ads.</li><li>Avoid overbuying stock without checking cash reserve.</li><li>Use Commitments to list monthly fixed costs.</li><li>Review Cashflow and P&L together.</li>",
+
+    faqH1: "Cashflow FAQ",
+    faqQ1: "Is cashflow calculated automatically?",
+    faqA1: "Yes. Cashflow is calculated from transactions recorded in Ledger.",
+    faqQ2: "Why is cashflow empty?",
+    faqA2: "Usually because there are no Ledger transactions yet, or the selected filter has no transactions.",
+    faqQ3: "What is the difference between cashflow and P&L?",
+    faqA3: "Cashflow focuses on money in and out. P&L focuses on income, expenses and profit/loss by category.",
+    faqQ4: "Is this report suitable for official tax reporting?",
+    faqA4: "This tool is for internal monitoring. For tax, e-Invoice and official reports, consult an accountant or tax advisor.",
+
+    relatedTitle: "Related Tools & Guides",
+    relLedger: "Cash Basis Ledger",
+    relLedgerDesc: "Record money in and money out to generate cashflow reports.",
+    relPL: "Cash Basis P&L",
+    relPLDesc: "Auto-calculate profit/loss based on ledger transactions.",
+    relGuide: "How to Manage Small Business Money",
+    relGuideDesc: "Simple guide to control cashflow and financial records.",
+
+    fAbout: "About",
+    fTerms: "Terms",
+    fContact: "Contact",
+    fPrivacy: "Privacy Policy",
+    fNote: "Free tools for Malaysian sellers."
   }
 };
 
@@ -557,7 +705,6 @@ function t(key){
   return (pack[key] != null) ? pack[key] : (I18N.ms[key] ?? "");
 }
 
-/* ===== helpers ===== */
 function today(){ return new Date().toISOString().slice(0,10); }
 function money(n){ return Number(n || 0).toFixed(2); }
 
@@ -576,7 +723,6 @@ function escapeHtml(s){
     .replaceAll("'","&#039;");
 }
 
-/* ===== language ===== */
 function detectBrowserLang(){
   const nav = (navigator.language || "").toLowerCase();
   return nav.startsWith("en") ? "en" : "ms";
@@ -602,7 +748,6 @@ function applyLang(lang){
   const phTitle = document.getElementById("phTitle");
   if(phTitle) phTitle.textContent = t("phTitle");
 
-  // update dropdown option labels
   const rngAll = document.getElementById("rngAll");
   const rngWeek = document.getElementById("rngWeek");
   const rngMonth = document.getElementById("rngMonth");
@@ -624,7 +769,6 @@ function applyLang(lang){
   });
 })();
 
-/* ===== ledger load ===== */
 function loadLedger(){
   try{
     const v = JSON.parse(localStorage.getItem(LEDGER_KEY) || "[]");
@@ -634,11 +778,10 @@ function loadLedger(){
   }
 }
 
-/* ===== date helpers ===== */
 function startOfWeekISO(d){
   const date = new Date(d);
-  const day = date.getDay(); // 0 Sun..6 Sat
-  const diff = (day === 0 ? -6 : 1 - day); // Monday start
+  const day = date.getDay();
+  const diff = (day === 0 ? -6 : 1 - day);
   date.setDate(date.getDate() + diff);
   return date.toISOString().slice(0,10);
 }
@@ -659,25 +802,22 @@ function endOfMonthISO(d){
   return date.toISOString().slice(0,10);
 }
 function daysBetweenISO(a, b){
-  // inclusive days count
   const da = new Date(a + "T00:00:00");
   const db = new Date(b + "T00:00:00");
   const diff = Math.floor((db - da) / (1000*60*60*24));
   return Math.max(1, diff + 1);
 }
 
-/* ===== month filter state ===== */
 function getMonthFilter(){
   try{
     const m = JSON.parse(localStorage.getItem(MONTH_FILTER_KEY) || "{}");
-    return { month: m.month || "" }; // YYYY-MM
+    return { month: m.month || "" };
   }catch(e){
     return { month:"" };
   }
 }
 function setMonthFilter(m){ localStorage.setItem(MONTH_FILTER_KEY, JSON.stringify(m)); }
 
-/* ===== range filter state ===== */
 function getRangeFilter(){
   try{
     const f = JSON.parse(localStorage.getItem(RANGE_FILTER_KEY) || "{}");
@@ -736,7 +876,6 @@ function filterLabel(f){
   return t("allTxns");
 }
 
-/* ===== aggregation ===== */
 function sumByCategory(txns, type){
   const map = new Map();
   txns
@@ -757,7 +896,6 @@ function totalFor(list){
   return list.reduce((s, x) => s + Number(x.amount || 0), 0);
 }
 
-/* ===== survival pill ===== */
 function setSurvivalPill(net, burnPerDay){
   const el = document.getElementById("survivalPill");
 
@@ -766,11 +904,13 @@ function setSurvivalPill(net, burnPerDay){
     el.textContent = t("survNeutral");
     return;
   }
+
   if(net > 0){
     el.className = "pill ok";
     el.textContent = t("survHealthy");
     return;
   }
+
   if(burnPerDay <= 20){
     el.className = "pill warn";
     el.textContent = t("survOk");
@@ -783,13 +923,11 @@ function setSurvivalPill(net, burnPerDay){
   }
 }
 
-/* ===== render ===== */
 function render(){
   const all = loadLedger()
     .slice()
     .sort((a,b) => String(a.date).localeCompare(String(b.date)) || (a.id - b.id));
 
-  // Apply month quick filter first (if set), then range filter
   const mf = getMonthFilter();
   let monthFiltered = all;
 
@@ -812,7 +950,6 @@ function render(){
   const outTotal = totalFor(outList);
   const net = inTotal - outTotal;
 
-  // compute burn/day based on period boundaries
   let periodDays = 1;
   let periodLabelText = "";
 
@@ -837,14 +974,12 @@ function render(){
 
   const burn = (outTotal > 0) ? (outTotal / periodDays) : 0;
 
-  // Summary
   sumIn.textContent = money(inTotal);
   sumOut.textContent = money(outTotal);
   sumNet.textContent = money(net);
   burnPerDay.textContent = money(burn);
   setSurvivalPill(net, burn);
 
-  // Tables
   inRows.innerHTML = inList.length
     ? inList.map(x => `
       <tr>
@@ -866,26 +1001,23 @@ function render(){
   inTotalFoot.textContent = money(inTotal);
   outTotalFoot.textContent = money(outTotal);
 
-  // hints
   const monthHint = mf.month ? `${t("monthQuick")}: ${mf.month}` : t("allTxns");
   monthHintTxt.textContent = t("showPrefix") + monthHint;
 
   filterHint.textContent = t("showPrefix") + filterLabel(rf);
 
-  // print meta
   document.getElementById("phBiz").textContent = t("bizLabel") + "NiagaSenang (Local)";
   document.getElementById("phPeriod").textContent = t("periodLabel") + periodLabelText;
   document.getElementById("phPrinted").textContent = t("printedLabel") + nowReadable();
 }
 
-/* ===== month filter handlers ===== */
 function syncMonthUI(){
   const mf = getMonthFilter();
   monthPick.value = mf.month || "";
 }
 
 function applyMonth(){
-  const m = (monthPick.value || "").trim(); // YYYY-MM
+  const m = (monthPick.value || "").trim();
   setMonthFilter({ month: m });
   try { gtag('event', 'filter_cashflow_month', { event_category:'accounting', event_label: m || 'none' }); } catch(e){}
   render();
@@ -897,7 +1029,6 @@ function resetMonth(){
   render();
 }
 
-/* ===== range filter UI ===== */
 function syncRangeUIFromState(){
   const f = getRangeFilter();
   rangePreset.value = f.preset || "all";
@@ -959,19 +1090,15 @@ function resetFilter(){
   render();
 }
 
-/* ===== print ===== */
 function printCF(){
   try { gtag('event', 'print_cashflow', { event_category:'accounting' }); } catch(e){}
   render();
   window.print();
 }
 
-/* ===== init ===== */
 (function init(){
-  // init month UI
   syncMonthUI();
 
-  // init range filter defaults
   const f = getRangeFilter();
   if((f.preset === "week" || f.preset === "month") && (!f.from || !f.to)){
     const tdy = today();
@@ -986,16 +1113,10 @@ function printCF(){
   }
   syncRangeUIFromState();
 
+  document.getElementById("yearNow").textContent = new Date().getFullYear();
+
   render();
 })();
-</script>
-
-<!-- ✅ Auto year for footer -->
-<script>
-  (function () {
-    var el = document.getElementById('nsYear');
-    if (el) el.textContent = new Date().getFullYear();
-  })();
 </script>
 
 </body>

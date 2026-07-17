@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Invoice Percuma Pro Malaysia | NiagaSenang</title>
-  <meta name="description" content="Invoice percuma pro untuk peniaga Malaysia. Multi-item, diskaun, SST 6%, auto numbering dan terus download PDF tanpa login.">
+
+  <title>Invoice Percuma Pro Malaysia | Buat Invoice PDF Online | NiagaSenang</title>
+  <meta name="description" content="Buat invoice percuma untuk peniaga Malaysia. Multi-item, diskaun, SST 6%, auto numbering, draft auto-save dan download PDF tanpa login. Sesuai untuk bisnes kecil, freelancer dan seller online.">
+
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- ✅ Google Analytics -->
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-P81GM8SJWX"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -15,6 +17,10 @@
     gtag('js', new Date());
     gtag('config', 'G-P81GM8SJWX');
   </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2042278846951839"
+     crossorigin="anonymous"></script>
 
   <style>
     table { width:100%; border-collapse:collapse; margin-top:8px; }
@@ -30,6 +36,7 @@
       border-radius:8px;
       cursor:pointer;
       margin-right:8px;
+      margin-top:8px;
     }
     .btn-secondary:hover { background:rgba(15,118,110,.18); }
     .totals-box {
@@ -40,10 +47,35 @@
       margin-top:12px;
     }
     .totals-row { display:flex; justify-content:space-between; margin:6px 0; }
-    .muted { color:#64748b; font-size:13px; }
-    .small { font-size:12px; color:#64748b; }
-
-    /* ===== Top row (title + language toggle) ===== */
+    .muted { color:#64748b; font-size:13px; line-height:1.65; }
+    .small { font-size:12px; color:#64748b; line-height:1.55; }
+    .box{
+      background:#f8fafc;
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      padding:14px;
+      margin-top:16px;
+    }
+    .box h3{ margin:0 0 8px 0; }
+    .box h4{ margin:14px 0 6px 0; }
+    .box ul, .box ol{ margin:8px 0 0 20px; }
+    .box li{ margin:7px 0; }
+    .link-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:12px;
+      margin-top:10px;
+    }
+    .link-grid a{
+      display:block;
+      text-decoration:none;
+      border:1px solid #e5e7eb;
+      background:#fff;
+      padding:12px;
+      border-radius:12px;
+    }
+    .link-title{ font-weight:900; color:#0f172a; }
+    .link-desc{ margin-top:6px; color:#64748b; font-size:13px; line-height:1.45; }
     .top-row{
       display:flex;
       align-items:flex-start;
@@ -75,33 +107,23 @@
       background:#1e293b;
       color:#ffffff;
     }
-
-    /* ===== Standard footer (inside .card) ===== */
-    .ns-footer{
-      margin-top: 16px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(0,0,0,0.08);
-      font-size: 0.92rem;
-      line-height: 1.4;
+    .footer-links{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:12px;
+      font-size:14px;
+      color:#64748b;
     }
-    .ns-footer__links{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
+    .footer-links a{ color:#64748b; text-decoration:none; }
+    .footer-links a:hover{ text-decoration:underline; }
+    @media (max-width:900px){
+      .grid-3, .link-grid{ grid-template-columns:1fr 1fr; }
     }
-    .ns-footer__links a{
-      text-decoration: none;
-    }
-    .ns-footer__links a:hover{
-      text-decoration: underline;
-    }
-    .ns-footer__sep{
-      opacity: 0.6;
-    }
-    .ns-footer__copy{
-      margin-top: 6px;
-      opacity: 0.75;
+    @media (max-width:640px){
+      .top-row{ flex-direction:column; }
+      .grid-2, .grid-3, .link-grid{ grid-template-columns:1fr; }
     }
   </style>
 </head>
@@ -112,182 +134,298 @@
 
       <div class="top-row">
         <div>
-          <h2 data-i18n="h2">🧾 Invoice Percuma (Pro)</h2>
-          <p class="muted" data-i18n="subtitle">Multi-item, diskaun, SST 6% & auto numbering. Data auto simpan (draft).</p>
+          <h2 data-i18n="h2">🧾 Invoice Percuma Pro Malaysia</h2>
+          <p class="muted" data-i18n="subtitle">
+            Buat invoice PDF yang kemas untuk pelanggan. Sesuai untuk peniaga kecil, freelancer, seller online, servis rumah, kedai makan, kontraktor kecil dan bisnes yang perlukan rekod jualan lebih teratur.
+          </p>
         </div>
 
-        <!-- Language toggle -->
         <div class="lang-toggle" aria-label="Language toggle">
           <button type="button" class="lang-btn" data-lang="ms">BM</button>
           <button type="button" class="lang-btn" data-lang="en">EN</button>
         </div>
       </div>
 
-      <label data-i18n="lblBiz">Nama Perniagaan</label>
-      <input id="biz" placeholder="Contoh: Kedai Makan Pak Ali">
+      <div class="box">
+        <h3 data-i18n="toolTitle">Borang Invoice</h3>
+        <p class="muted" data-i18n="toolDesc">
+          Isi maklumat bisnes, pelanggan dan item jualan. Sistem akan kira subtotal, diskaun, SST dan jumlah akhir secara automatik.
+        </p>
 
-      <label data-i18n="lblBizAddr">Alamat Perniagaan (optional)</label>
-      <input id="bizAddr" placeholder="Contoh: No 12, Jalan ABC, 43000 Kajang">
+        <label data-i18n="lblBiz">Nama Perniagaan</label>
+        <input id="biz" placeholder="Contoh: Kedai Makan Pak Ali">
 
-      <div class="grid-2">
-        <div>
-          <label data-i18n="lblInvNo">No Invoice</label>
-          <input id="docNo" readonly>
-        </div>
-        <div>
-          <label data-i18n="lblDate">Tarikh</label>
-          <input id="docDate" type="date">
-        </div>
-      </div>
+        <label data-i18n="lblBizAddr">Alamat Perniagaan (optional)</label>
+        <input id="bizAddr" placeholder="Contoh: No 12, Jalan ABC, 43000 Kajang">
 
-      <label data-i18n="lblCust">Nama Pelanggan</label>
-      <input id="cust" placeholder="Contoh: Ahmad">
-
-      <label data-i18n="lblCustAddr">Alamat Pelanggan (optional)</label>
-      <input id="custAddr" placeholder="Contoh: Shah Alam, Selangor">
-
-      <hr style="margin:16px 0;">
-
-      <h3 data-i18n="itemsTitle">Item</h3>
-      <table id="itemsTable">
-        <thead>
-          <tr>
-            <th style="width:52%;" data-i18n="thDesc">Butiran</th>
-            <th style="width:12%;" data-i18n="thQty">Qty</th>
-            <th style="width:20%;" data-i18n="thPrice">Harga (RM)</th>
-            <th style="width:16%;"></th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-
-      <button class="btn-secondary" onclick="addRow()" data-i18n="btnAddItem">➕ Tambah Item</button>
-      <button class="btn-secondary" onclick="clearItems()" data-i18n="btnClear">🧹 Clear</button>
-
-      <hr style="margin:16px 0;">
-
-      <div class="grid-3">
-        <div>
-          <label data-i18n="lblDiscountType">Diskaun Type</label>
-          <select id="discountType">
-            <option value="rm">RM</option>
-            <option value="percent">%</option>
-          </select>
-        </div>
-        <div>
-          <label data-i18n="lblDiscount">Diskaun</label>
-          <input id="discountVal" type="number" step="0.01" value="0">
-        </div>
-        <div>
-          <label data-i18n="lblSst">SST 6%</label>
-          <div style="display:flex; gap:10px; align-items:center; margin-top:6px;">
-            <input id="sstOn" type="checkbox">
-            <span data-i18n="sstApply">Apply</span>
+        <div class="grid-2">
+          <div>
+            <label data-i18n="lblInvNo">No Invoice</label>
+            <input id="docNo" readonly>
+          </div>
+          <div>
+            <label data-i18n="lblDate">Tarikh</label>
+            <input id="docDate" type="date">
           </div>
         </div>
+
+        <label data-i18n="lblCust">Nama Pelanggan</label>
+        <input id="cust" placeholder="Contoh: Ahmad">
+
+        <label data-i18n="lblCustAddr">Alamat Pelanggan (optional)</label>
+        <input id="custAddr" placeholder="Contoh: Shah Alam, Selangor">
+
+        <hr style="margin:16px 0;">
+
+        <h3 data-i18n="itemsTitle">Item</h3>
+        <table id="itemsTable">
+          <thead>
+            <tr>
+              <th style="width:52%;" data-i18n="thDesc">Butiran</th>
+              <th style="width:12%;" data-i18n="thQty">Qty</th>
+              <th style="width:20%;" data-i18n="thPrice">Harga (RM)</th>
+              <th style="width:16%;"></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <button class="btn-secondary" onclick="addRow()" data-i18n="btnAddItem">➕ Tambah Item</button>
+        <button class="btn-secondary" onclick="clearItems()" data-i18n="btnClear">🧹 Clear</button>
+
+        <hr style="margin:16px 0;">
+
+        <div class="grid-3">
+          <div>
+            <label data-i18n="lblDiscountType">Diskaun Type</label>
+            <select id="discountType">
+              <option value="rm">RM</option>
+              <option value="percent">%</option>
+            </select>
+          </div>
+          <div>
+            <label data-i18n="lblDiscount">Diskaun</label>
+            <input id="discountVal" type="number" step="0.01" value="0">
+          </div>
+          <div>
+            <label data-i18n="lblSst">SST 6%</label>
+            <div style="display:flex; gap:10px; align-items:center; margin-top:6px;">
+              <input id="sstOn" type="checkbox">
+              <span data-i18n="sstApply">Apply</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="totals-box">
+          <div class="totals-row"><span data-i18n="subTotal">Subtotal</span><span>RM <span id="subtotalTxt">0.00</span></span></div>
+          <div class="totals-row"><span data-i18n="discountLabel">Diskaun</span><span>- RM <span id="discountAmtTxt">0.00</span></span></div>
+          <div class="totals-row"><span data-i18n="sstLabel">SST (6%)</span><span>RM <span id="sstAmtTxt">0.00</span></span></div>
+          <hr>
+          <div class="totals-row"><strong data-i18n="totalLabel">TOTAL</strong><strong>RM <span id="grandTotalTxt">0.00</span></strong></div>
+        </div>
+
+        <label data-i18n="lblNote">Nota (optional)</label>
+        <input id="note" placeholder="Contoh: Terima kasih!">
+
+        <div style="margin-top:14px;">
+          <button class="btn" onclick="generatePDF()" data-i18n="btnDownload">Download PDF</button>
+          <button class="btn-secondary" onclick="newDoc()" data-i18n="btnNew">🆕 Invoice Baru</button>
+        </div>
+
+        <p class="small" style="margin-top:14px;">
+          <span data-i18n="helpText">Ada cadangan / perlukan bantuan? Email</span>
+          <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>
+        </p>
       </div>
 
-      <div class="totals-box">
-        <div class="totals-row"><span data-i18n="subTotal">Subtotal</span><span>RM <span id="subtotalTxt">0.00</span></span></div>
-        <div class="totals-row"><span data-i18n="discountLabel">Diskaun</span><span>- RM <span id="discountAmtTxt">0.00</span></span></div>
-        <div class="totals-row"><span data-i18n="sstLabel">SST (6%)</span><span>RM <span id="sstAmtTxt">0.00</span></span></div>
-        <hr>
-        <div class="totals-row"><strong data-i18n="totalLabel">TOTAL</strong><strong>RM <span id="grandTotalTxt">0.00</span></strong></div>
+      <div class="box">
+        <h3 data-i18n="guideH1">Panduan Invoice Untuk Peniaga Malaysia</h3>
+        <p class="muted" data-i18n="guideP1">
+          Invoice ialah dokumen penting yang digunakan untuk meminta bayaran daripada pelanggan selepas produk atau servis telah diberi, atau apabila bayaran perlu dibuat mengikut terma yang dipersetujui. Untuk peniaga kecil, invoice bukan sekadar kertas tuntutan bayaran. Ia membantu bisnes nampak lebih profesional, memudahkan pelanggan semak caj, dan menjadikan rekod jualan lebih tersusun.
+        </p>
+        <p class="muted" data-i18n="guideP2">
+          Ramai peniaga mula berniaga melalui WhatsApp, Instagram, TikTok Shop, Shopee, Facebook Marketplace atau jualan terus. Pada awalnya, rekod mungkin hanya ada dalam chat atau nota telefon. Tetapi bila order bertambah, cara ini mudah jadi kelam-kabut. Pelanggan boleh lupa jumlah bayaran, peniaga boleh terlepas rekod, dan susah untuk semak semula transaksi lama. Dengan invoice, setiap jualan ada nombor rujukan, tarikh, nama pelanggan, item dan jumlah yang jelas.
+        </p>
+
+        <h4 data-i18n="guideH2">Kenapa invoice penting untuk bisnes kecil?</h4>
+        <ul class="muted" data-i18n="guideList1">
+          <li><strong>Rekod jualan lebih kemas:</strong> setiap invoice ada nombor dan tarikh untuk rujukan.</li>
+          <li><strong>Nampak lebih profesional:</strong> pelanggan lebih yakin bila dokumen jualan tersusun.</li>
+          <li><strong>Kurangkan salah faham:</strong> harga, qty, diskaun dan jumlah akhir ditunjukkan dengan jelas.</li>
+          <li><strong>Mudah follow up bayaran:</strong> peniaga boleh rujuk nombor invoice bila pelanggan belum bayar.</li>
+          <li><strong>Bantu semakan kewangan:</strong> invoice boleh dibandingkan dengan ledger, resit dan cashflow.</li>
+        </ul>
+
+        <h4 data-i18n="guideH3">Maklumat yang patut ada dalam invoice</h4>
+        <p class="muted" data-i18n="guideP3">
+          Invoice yang baik biasanya mengandungi nama perniagaan, alamat atau maklumat ringkas penjual, nombor invoice, tarikh invoice, nama pelanggan, senarai item, kuantiti, harga seunit, jumlah, diskaun, cukai jika berkenaan, total akhir dan nota tambahan. Untuk peniaga kecil, maklumat ini sudah cukup untuk kegunaan harian dan rekod dalaman.
+        </p>
+
+        <h4 data-i18n="guideH4">Cara guna invoice generator NiagaSenang</h4>
+        <ol class="muted" data-i18n="guideList2">
+          <li>Isi nama perniagaan dan alamat jika perlu.</li>
+          <li>Semak nombor invoice dan tarikh.</li>
+          <li>Masukkan nama pelanggan dan alamat pelanggan jika ada.</li>
+          <li>Tambah item jualan, kuantiti dan harga.</li>
+          <li>Masukkan diskaun dalam RM atau peratus jika perlu.</li>
+          <li>Tick SST 6% hanya jika bisnes anda memang perlu kenakan SST.</li>
+          <li>Tekan Download PDF untuk simpan invoice.</li>
+        </ol>
+
+        <h4 data-i18n="guideH5">Kesilapan biasa bila buat invoice</h4>
+        <ul class="muted" data-i18n="guideList3">
+          <li>Tiada nombor invoice yang konsisten.</li>
+          <li>Jumlah item dan total tidak sama dengan bayaran sebenar.</li>
+          <li>Terlupa tulis diskaun atau caj tambahan.</li>
+          <li>Menggunakan invoice sebagai resit walaupun bayaran belum diterima.</li>
+          <li>Tidak menyimpan salinan PDF untuk rekod sendiri.</li>
+        </ul>
+
+        <h4 data-i18n="guideH6">Invoice, quotation dan resit — apa beza?</h4>
+        <p class="muted" data-i18n="guideP4">
+          Quotation digunakan sebelum pelanggan setuju membeli. Invoice digunakan untuk meminta bayaran selepas pelanggan setuju atau selepas kerja dibuat. Resit pula digunakan sebagai bukti bayaran selepas duit diterima. Tiga dokumen ini nampak hampir sama, tetapi fungsinya berbeza. Peniaga yang guna dokumen dengan betul akan lebih mudah menyusun rekod jualan dan mengelakkan kekeliruan dengan pelanggan.
+        </p>
       </div>
 
-      <label data-i18n="lblNote">Nota (optional)</label>
-      <input id="note" placeholder="Contoh: Terima kasih!">
+      <div class="box">
+        <h3 data-i18n="faqH1">FAQ Invoice</h3>
 
-      <div style="margin-top:14px;">
-        <button class="btn" onclick="generatePDF()" data-i18n="btnDownload">Download PDF</button>
-        <button class="btn-secondary" onclick="newDoc()" data-i18n="btnNew">🆕 Invoice Baru</button>
+        <h4 data-i18n="faqQ1">Adakah invoice ini percuma?</h4>
+        <p class="muted" data-i18n="faqA1">Ya, tool invoice NiagaSenang boleh digunakan secara percuma tanpa login.</p>
+
+        <h4 data-i18n="faqQ2">Data invoice disimpan di mana?</h4>
+        <p class="muted" data-i18n="faqA2">Draft invoice disimpan dalam browser menggunakan localStorage. Jika anda clear browser data atau tukar device, draft boleh hilang.</p>
+
+        <h4 data-i18n="faqQ3">Boleh guna untuk bisnes online?</h4>
+        <p class="muted" data-i18n="faqA3">Boleh. Tool ini sesuai untuk seller online, freelancer, servis kecil, kedai fizikal dan peniaga yang perlukan invoice ringkas.</p>
+
+        <h4 data-i18n="faqQ4">Adakah invoice ini menggantikan nasihat akauntan?</h4>
+        <p class="muted" data-i18n="faqA4">Tidak. Tool ini untuk rekod dalaman dan dokumen jualan ringkas. Untuk cukai, e-Invoice atau compliance rasmi, rujuk akauntan atau penasihat cukai.</p>
       </div>
 
-      <p class="small" style="margin-top:14px;">
-        <span data-i18n="helpText">Ada cadangan / perlukan bantuan? Email</span>
-        <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>
-      </p>
+      <div class="box">
+        <h3 data-i18n="relatedTitle">Tools & Panduan Berkaitan</h3>
+        <div class="link-grid">
+          <a href="quotation.html">
+            <div class="link-title" data-i18n="relQuotation">Quotation Generator</div>
+            <div class="link-desc" data-i18n="relQuotationDesc">Buat sebut harga sebelum pelanggan setuju membeli.</div>
+          </a>
+          <a href="resit.html">
+            <div class="link-title" data-i18n="relReceipt">Resit Generator</div>
+            <div class="link-desc" data-i18n="relReceiptDesc">Buat resit selepas bayaran diterima.</div>
+          </a>
+          <a href="ledger.html">
+            <div class="link-title" data-i18n="relLedger">Ledger Cash Basis</div>
+            <div class="link-desc" data-i18n="relLedgerDesc">Rekod duit masuk dan duit keluar untuk semak untung rugi.</div>
+          </a>
+        </div>
+      </div>
 
-      <p style="margin-top:16px;">
+      <p style="margin-top:18px;">
         <a href="index.html" data-i18n="backLink">← Kembali ke NiagaSenang</a>
       </p>
 
-      <!-- ✅ Standard footer (INSIDE .card) -->
-      <footer class="ns-footer">
-        <div class="ns-footer__links">
-          <a href="privacy.html">Privacy Policy</a>
-          <span class="ns-footer__sep">•</span>
-          <a href="terms.html">Terms of Use</a>
-          <span class="ns-footer__sep">•</span>
-          <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>
+      <div style="text-align:center;margin-top:22px;padding-top:16px;border-top:1px solid #e5e7eb;">
+        <div class="footer-links">
+          <a href="about.html" data-i18n="fAbout">About</a>
+          <span>•</span>
+          <a href="terms.html" data-i18n="fTerms">Terms</a>
+          <span>•</span>
+          <a href="contact.html" data-i18n="fContact">Contact</a>
+          <span>•</span>
+          <a href="privacy.html" data-i18n="fPrivacy">Privacy Policy</a>
         </div>
-
-        <div class="ns-footer__copy">
-          © <span id="nsYear"></span> NiagaSenang. All rights reserved.
+        <div class="small" style="margin-top:10px;">
+          © <span id="yearNow"></span> NiagaSenang — <span data-i18n="fNote">Tool percuma untuk peniaga Malaysia.</span>
         </div>
-      </footer>
+      </div>
 
     </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
-    /* =======================
-       Language (shared key)
-    ======================= */
     const LANG_KEY = "ns_lang";
     let CURRENT_LANG = "ms";
 
     const I18N = {
       ms: {
-        docTitle: "Invoice Percuma Pro Malaysia | NiagaSenang",
-        h2: "🧾 Invoice Percuma (Pro)",
-        subtitle: "Multi-item, diskaun, SST 6% & auto numbering. Data auto simpan (draft).",
+        docTitle: "Invoice Percuma Pro Malaysia | Buat Invoice PDF Online | NiagaSenang",
+        h2: "🧾 Invoice Percuma Pro Malaysia",
+        subtitle: "Buat invoice PDF yang kemas untuk pelanggan. Sesuai untuk peniaga kecil, freelancer, seller online, servis rumah, kedai makan, kontraktor kecil dan bisnes yang perlukan rekod jualan lebih teratur.",
+        toolTitle: "Borang Invoice",
+        toolDesc: "Isi maklumat bisnes, pelanggan dan item jualan. Sistem akan kira subtotal, diskaun, SST dan jumlah akhir secara automatik.",
 
         lblBiz: "Nama Perniagaan",
         phBiz: "Contoh: Kedai Makan Pak Ali",
         lblBizAddr: "Alamat Perniagaan (optional)",
         phBizAddr: "Contoh: No 12, Jalan ABC, 43000 Kajang",
-
         lblInvNo: "No Invoice",
         lblDate: "Tarikh",
-
         lblCust: "Nama Pelanggan",
         phCust: "Contoh: Ahmad",
         lblCustAddr: "Alamat Pelanggan (optional)",
         phCustAddr: "Contoh: Shah Alam, Selangor",
-
         itemsTitle: "Item",
         thDesc: "Butiran",
         thQty: "Qty",
         thPrice: "Harga (RM)",
-
         btnAddItem: "➕ Tambah Item",
         btnClear: "🧹 Clear",
-
         lblDiscountType: "Diskaun Type",
         lblDiscount: "Diskaun",
         lblSst: "SST 6%",
         sstApply: "Apply",
-
         subTotal: "Subtotal",
         discountLabel: "Diskaun",
         sstLabel: "SST (6%)",
         totalLabel: "TOTAL",
-
         lblNote: "Nota (optional)",
         phNote: "Contoh: Terima kasih!",
-
         btnDownload: "Download PDF",
         btnNew: "🆕 Invoice Baru",
-
         helpText: "Ada cadangan / perlukan bantuan? Email",
         backLink: "← Kembali ke NiagaSenang",
-
-        // row placeholders
         phItemDesc: "Contoh: Nasi Ayam",
 
-        // PDF labels
+        guideH1: "Panduan Invoice Untuk Peniaga Malaysia",
+        guideP1: "Invoice ialah dokumen penting yang digunakan untuk meminta bayaran daripada pelanggan selepas produk atau servis telah diberi, atau apabila bayaran perlu dibuat mengikut terma yang dipersetujui. Untuk peniaga kecil, invoice bukan sekadar kertas tuntutan bayaran. Ia membantu bisnes nampak lebih profesional, memudahkan pelanggan semak caj, dan menjadikan rekod jualan lebih tersusun.",
+        guideP2: "Ramai peniaga mula berniaga melalui WhatsApp, Instagram, TikTok Shop, Shopee, Facebook Marketplace atau jualan terus. Pada awalnya, rekod mungkin hanya ada dalam chat atau nota telefon. Tetapi bila order bertambah, cara ini mudah jadi kelam-kabut. Pelanggan boleh lupa jumlah bayaran, peniaga boleh terlepas rekod, dan susah untuk semak semula transaksi lama. Dengan invoice, setiap jualan ada nombor rujukan, tarikh, nama pelanggan, item dan jumlah yang jelas.",
+        guideH2: "Kenapa invoice penting untuk bisnes kecil?",
+        guideList1: "<li><strong>Rekod jualan lebih kemas:</strong> setiap invoice ada nombor dan tarikh untuk rujukan.</li><li><strong>Nampak lebih profesional:</strong> pelanggan lebih yakin bila dokumen jualan tersusun.</li><li><strong>Kurangkan salah faham:</strong> harga, qty, diskaun dan jumlah akhir ditunjukkan dengan jelas.</li><li><strong>Mudah follow up bayaran:</strong> peniaga boleh rujuk nombor invoice bila pelanggan belum bayar.</li><li><strong>Bantu semakan kewangan:</strong> invoice boleh dibandingkan dengan ledger, resit dan cashflow.</li>",
+        guideH3: "Maklumat yang patut ada dalam invoice",
+        guideP3: "Invoice yang baik biasanya mengandungi nama perniagaan, alamat atau maklumat ringkas penjual, nombor invoice, tarikh invoice, nama pelanggan, senarai item, kuantiti, harga seunit, jumlah, diskaun, cukai jika berkenaan, total akhir dan nota tambahan. Untuk peniaga kecil, maklumat ini sudah cukup untuk kegunaan harian dan rekod dalaman.",
+        guideH4: "Cara guna invoice generator NiagaSenang",
+        guideList2: "<li>Isi nama perniagaan dan alamat jika perlu.</li><li>Semak nombor invoice dan tarikh.</li><li>Masukkan nama pelanggan dan alamat pelanggan jika ada.</li><li>Tambah item jualan, kuantiti dan harga.</li><li>Masukkan diskaun dalam RM atau peratus jika perlu.</li><li>Tick SST 6% hanya jika bisnes anda memang perlu kenakan SST.</li><li>Tekan Download PDF untuk simpan invoice.</li>",
+        guideH5: "Kesilapan biasa bila buat invoice",
+        guideList3: "<li>Tiada nombor invoice yang konsisten.</li><li>Jumlah item dan total tidak sama dengan bayaran sebenar.</li><li>Terlupa tulis diskaun atau caj tambahan.</li><li>Menggunakan invoice sebagai resit walaupun bayaran belum diterima.</li><li>Tidak menyimpan salinan PDF untuk rekod sendiri.</li>",
+        guideH6: "Invoice, quotation dan resit — apa beza?",
+        guideP4: "Quotation digunakan sebelum pelanggan setuju membeli. Invoice digunakan untuk meminta bayaran selepas pelanggan setuju atau selepas kerja dibuat. Resit pula digunakan sebagai bukti bayaran selepas duit diterima. Tiga dokumen ini nampak hampir sama, tetapi fungsinya berbeza. Peniaga yang guna dokumen dengan betul akan lebih mudah menyusun rekod jualan dan mengelakkan kekeliruan dengan pelanggan.",
+
+        faqH1: "FAQ Invoice",
+        faqQ1: "Adakah invoice ini percuma?",
+        faqA1: "Ya, tool invoice NiagaSenang boleh digunakan secara percuma tanpa login.",
+        faqQ2: "Data invoice disimpan di mana?",
+        faqA2: "Draft invoice disimpan dalam browser menggunakan localStorage. Jika anda clear browser data atau tukar device, draft boleh hilang.",
+        faqQ3: "Boleh guna untuk bisnes online?",
+        faqA3: "Boleh. Tool ini sesuai untuk seller online, freelancer, servis kecil, kedai fizikal dan peniaga yang perlukan invoice ringkas.",
+        faqQ4: "Adakah invoice ini menggantikan nasihat akauntan?",
+        faqA4: "Tidak. Tool ini untuk rekod dalaman dan dokumen jualan ringkas. Untuk cukai, e-Invoice atau compliance rasmi, rujuk akauntan atau penasihat cukai.",
+
+        relatedTitle: "Tools & Panduan Berkaitan",
+        relQuotation: "Quotation Generator",
+        relQuotationDesc: "Buat sebut harga sebelum pelanggan setuju membeli.",
+        relReceipt: "Resit Generator",
+        relReceiptDesc: "Buat resit selepas bayaran diterima.",
+        relLedger: "Ledger Cash Basis",
+        relLedgerDesc: "Rekod duit masuk dan duit keluar untuk semak untung rugi.",
+
+        fAbout: "About",
+        fTerms: "Terms",
+        fContact: "Contact",
+        fPrivacy: "Privacy Policy",
+        fNote: "Tool percuma untuk peniaga Malaysia.",
+
         pdfTitle: "INVOICE",
         pdfInvoiceNo: "Invoice No:",
         pdfDate: "Tarikh:",
@@ -306,51 +444,81 @@
       },
 
       en: {
-        docTitle: "Pro Invoice Generator | NiagaSenang",
-        h2: "🧾 Free Invoice (Pro)",
-        subtitle: "Multi-item, discounts, optional tax & auto numbering. Auto-saves as draft.",
+        docTitle: "Free Pro Invoice Generator Malaysia | PDF Invoice Online | NiagaSenang",
+        h2: "🧾 Free Pro Invoice Generator Malaysia",
+        subtitle: "Create clean PDF invoices for customers. Suitable for small businesses, freelancers, online sellers, home services, food sellers, small contractors and businesses that need better sales records.",
+        toolTitle: "Invoice Form",
+        toolDesc: "Enter your business details, customer details and sold items. The tool will calculate subtotal, discount, SST and final total automatically.",
 
         lblBiz: "Business Name",
         phBiz: "Example: Pak Ali Restaurant",
         lblBizAddr: "Business Address (optional)",
         phBizAddr: "Example: No 12, Jalan ABC, 43000 Kajang",
-
         lblInvNo: "Invoice No",
         lblDate: "Date",
-
         lblCust: "Customer Name",
         phCust: "Example: Ahmad",
         lblCustAddr: "Customer Address (optional)",
         phCustAddr: "Example: Shah Alam, Selangor",
-
         itemsTitle: "Items",
         thDesc: "Description",
         thQty: "Qty",
         thPrice: "Price (RM)",
-
         btnAddItem: "➕ Add Item",
         btnClear: "🧹 Clear",
-
         lblDiscountType: "Discount Type",
         lblDiscount: "Discount",
         lblSst: "Tax (6%)",
         sstApply: "Apply",
-
         subTotal: "Subtotal",
         discountLabel: "Discount",
         sstLabel: "Tax (6%)",
         totalLabel: "TOTAL",
-
         lblNote: "Note (optional)",
         phNote: "Example: Thank you!",
-
         btnDownload: "Download PDF",
         btnNew: "🆕 New Invoice",
-
         helpText: "Suggestions / need help? Email",
         backLink: "← Back to NiagaSenang",
-
         phItemDesc: "Example: Chicken Rice",
+
+        guideH1: "Invoice Guide for Malaysian Sellers",
+        guideP1: "An invoice is an important document used to request payment from a customer after products or services have been provided, or when payment is due based on agreed terms. For small sellers, an invoice is more than a payment request. It helps the business look professional, helps customers review charges clearly, and keeps sales records organized.",
+        guideP2: "Many sellers start through WhatsApp, Instagram, TikTok Shop, Shopee, Facebook Marketplace or direct sales. At the beginning, records may only exist inside chats or phone notes. As orders increase, that becomes messy. Customers may forget the amount, sellers may miss records, and old transactions become hard to check. With invoices, every sale has a reference number, date, customer name, items and total amount.",
+        guideH2: "Why invoices matter for small businesses",
+        guideList1: "<li><strong>Better sales records:</strong> every invoice has a number and date for reference.</li><li><strong>More professional:</strong> customers trust organized documents.</li><li><strong>Less misunderstanding:</strong> price, qty, discount and final total are clearly shown.</li><li><strong>Easier payment follow-up:</strong> sellers can refer to invoice numbers when customers have not paid.</li><li><strong>Helpful for financial review:</strong> invoices can be compared with ledger, receipts and cashflow.</li>",
+        guideH3: "What should be included in an invoice",
+        guideP3: "A good invoice usually includes the business name, seller address or details, invoice number, invoice date, customer name, item list, quantity, unit price, amount, discount, tax if applicable, final total and optional notes. For small sellers, this is enough for daily internal records.",
+        guideH4: "How to use NiagaSenang invoice generator",
+        guideList2: "<li>Enter your business name and address if needed.</li><li>Check the invoice number and date.</li><li>Enter the customer name and address if available.</li><li>Add sold items, quantity and price.</li><li>Enter discount in RM or percentage if needed.</li><li>Tick SST 6% only if your business needs to charge SST.</li><li>Click Download PDF to save the invoice.</li>",
+        guideH5: "Common invoice mistakes",
+        guideList3: "<li>No consistent invoice number.</li><li>Item total does not match actual payment.</li><li>Forgot to include discount or extra charges.</li><li>Using invoice as receipt before payment is received.</li><li>Not keeping a PDF copy for internal records.</li>",
+        guideH6: "Invoice, quotation and receipt — what is the difference?",
+        guideP4: "A quotation is used before the customer agrees to buy. An invoice is used to request payment after the customer agrees or after work is completed. A receipt is used as proof of payment after money is received. These documents may look similar, but they serve different purposes.",
+
+        faqH1: "Invoice FAQ",
+        faqQ1: "Is this invoice tool free?",
+        faqA1: "Yes, NiagaSenang invoice tool is free to use without login.",
+        faqQ2: "Where is invoice data stored?",
+        faqA2: "Invoice drafts are stored in your browser using localStorage. If you clear browser data or switch device, the draft may be lost.",
+        faqQ3: "Can this be used for online business?",
+        faqA3: "Yes. This tool is suitable for online sellers, freelancers, small services, physical stores and sellers that need simple invoices.",
+        faqQ4: "Does this replace accountant advice?",
+        faqA4: "No. This tool is for internal records and simple sales documents. For tax, e-Invoice or official compliance, consult an accountant or tax advisor.",
+
+        relatedTitle: "Related Tools & Guides",
+        relQuotation: "Quotation Generator",
+        relQuotationDesc: "Create quotes before customers agree to buy.",
+        relReceipt: "Receipt Generator",
+        relReceiptDesc: "Create receipts after payment is received.",
+        relLedger: "Cash Basis Ledger",
+        relLedgerDesc: "Record money in and out to review profit and loss.",
+
+        fAbout: "About",
+        fTerms: "Terms",
+        fContact: "Contact",
+        fPrivacy: "Privacy Policy",
+        fNote: "Free tools for Malaysian sellers.",
 
         pdfTitle: "INVOICE",
         pdfInvoiceNo: "Invoice No:",
@@ -397,20 +565,17 @@
         if (val != null && val !== "") el.innerHTML = val;
       });
 
-      // placeholders
       biz.placeholder = t("phBiz");
       bizAddr.placeholder = t("phBizAddr");
       cust.placeholder = t("phCust");
       custAddr.placeholder = t("phCustAddr");
       note.placeholder = t("phNote");
 
-      // update existing item row placeholders
       document.querySelectorAll("#itemsTable tbody tr .desc").forEach(inp => {
         inp.placeholder = t("phItemDesc");
       });
     }
 
-    // init language
     (function initLang(){
       const saved = localStorage.getItem(LANG_KEY);
       const start = saved || detectBrowserLang();
@@ -421,7 +586,6 @@
       });
     })();
 
-    /* ========= helpers ========= */
     function money(n){ return (Math.round((Number(n||0) + Number.EPSILON) * 100)/100).toFixed(2); }
     function today(){ return new Date().toISOString().slice(0,10); }
 
@@ -439,7 +603,6 @@
       return "INV-" + String(seq).padStart(4,"0");
     }
 
-    /* ========= items ========= */
     function hookRow(tr){
       tr.querySelectorAll("input").forEach(inp=>{
         inp.addEventListener("input", ()=>{ calc(); saveDraft(); });
@@ -483,7 +646,6 @@
       saveDraft();
     }
 
-    /* ========= calc ========= */
     function calc(){
       let sub=0;
       const rows=[...document.querySelectorAll("#itemsTable tbody tr")];
@@ -514,7 +676,6 @@
       return {sub, dAmt, sst, total};
     }
 
-    /* ========= save/load ========= */
     function saveDraft(){
       const rows=[...document.querySelectorAll("#itemsTable tbody tr")].map(r=>({
         desc: r.querySelector(".desc").value.trim(),
@@ -574,7 +735,6 @@
       saveDraft();
     }
 
-    /* ========= PDF ========= */
     function wrapText(doc, text, x, y, maxW, fontSize){
       doc.setFontSize(fontSize);
       const lines = doc.splitTextToSize(text, maxW);
@@ -586,7 +746,6 @@
       const {jsPDF}=window.jspdf;
       const doc=new jsPDF({ unit:"pt", format:"a4" });
 
-      // ✅ EVENT: download_invoice
       try{
         gtag('event','download_invoice',{ event_category:'tools', event_label:'invoice_pdf' });
       }catch(e){}
@@ -604,7 +763,6 @@
       const dateVal = (docDate.value || "-").trim();
       const noteVal = (note.value || "").trim();
 
-      // Header
       doc.setFont("helvetica","bold");
       doc.setFontSize(22);
       doc.text(t("pdfTitle"), margin, y);
@@ -625,7 +783,6 @@
       doc.line(margin, y, pageW - margin, y);
       y += 18;
 
-      // Blocks
       const leftX = margin;
       const rightX = margin + 280;
 
@@ -652,7 +809,6 @@
 
       y = Math.max(yLeft, yRight) + 14;
 
-      // Table
       const tableX = margin;
       const tableW = pageW - margin*2;
       const colDesc = Math.floor(tableW * 0.52);
@@ -707,7 +863,6 @@
 
       y += 18;
 
-      // Totals
       const {sub, dAmt, sst, total} = calc();
       const boxW = 260;
       const boxH = 110;
@@ -750,7 +905,6 @@
       doc.text("RM " + money(total), boxX + boxW - 14, ty, {align:"right"});
       doc.setFontSize(11);
 
-      // Note
       if(noteVal){
         y = y + boxH + 22;
         doc.setFont("helvetica","bold");
@@ -760,7 +914,6 @@
         wrapText(doc, noteVal, margin, y, pageW - margin*2, 11);
       }
 
-      // Footer
       doc.setFontSize(9);
       doc.setTextColor(140);
       doc.text(t("pdfFooter"), margin, pageH - 24);
@@ -769,23 +922,15 @@
       doc.save(`${safeNo}.pdf`);
     }
 
-    /* ========= listeners ========= */
     ["biz","bizAddr","cust","custAddr","discountType","discountVal","note","docDate"].forEach(id=>{
       document.getElementById(id).addEventListener("input", ()=>{ calc(); saveDraft(); });
     });
     document.getElementById("sstOn").addEventListener("change", ()=>{ calc(); saveDraft(); });
 
-    /* init */
+    document.getElementById("yearNow").textContent = new Date().getFullYear();
+
     loadDraft();
     calc();
-  </script>
-
-  <!-- ✅ Auto year for footer -->
-  <script>
-    (function () {
-      var el = document.getElementById('nsYear');
-      if (el) el.textContent = new Date().getFullYear();
-    })();
   </script>
 </body>
 </html>

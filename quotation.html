@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quotation Percuma Pro Malaysia | NiagaSenang</title>
-  <meta name="description" content="Quotation percuma pro untuk peniaga Malaysia. Multi-item, diskaun, SST 6%, auto numbering dan terus download PDF tanpa login.">
+
+  <title>Quotation Percuma Pro Malaysia | Buat Sebut Harga PDF Online | NiagaSenang</title>
+  <meta name="description" content="Buat quotation percuma untuk peniaga Malaysia. Multi-item, diskaun, SST 6%, auto numbering, draft auto-save dan download PDF tanpa login. Sesuai untuk bisnes kecil, freelancer dan seller online.">
+
   <link rel="stylesheet" href="css/style.css">
 
   <!-- Google Analytics -->
@@ -15,6 +17,10 @@
     gtag('js', new Date());
     gtag('config', 'G-P81GM8SJWX');
   </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2042278846951839"
+     crossorigin="anonymous"></script>
 
   <style>
     table { width:100%; border-collapse:collapse; margin-top:8px; }
@@ -30,6 +36,7 @@
       border-radius:8px;
       cursor:pointer;
       margin-right:8px;
+      margin-top:8px;
     }
     .btn-secondary:hover { background:rgba(15,118,110,.18); }
     .totals-box {
@@ -40,29 +47,83 @@
       margin-top:12px;
     }
     .totals-row { display:flex; justify-content:space-between; margin:6px 0; }
-    .muted { color:#64748b; font-size:13px; }
-    .small { font-size:12px; color:#64748b; }
-
-    /* ===== Standard footer (inside .card) ===== */
-    .ns-footer{
-      margin-top: 16px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(0,0,0,0.08);
-      font-size: 0.92rem;
-      line-height: 1.4;
+    .muted { color:#64748b; font-size:13px; line-height:1.65; }
+    .small { font-size:12px; color:#64748b; line-height:1.55; }
+    .box{
+      background:#f8fafc;
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      padding:14px;
+      margin-top:16px;
     }
-    .ns-footer__links{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
+    .box h3{ margin:0 0 8px 0; }
+    .box h4{ margin:14px 0 6px 0; }
+    .box ul, .box ol{ margin:8px 0 0 20px; }
+    .box li{ margin:7px 0; }
+    .link-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:12px;
+      margin-top:10px;
     }
-    .ns-footer__links a{ text-decoration: none; }
-    .ns-footer__links a:hover{ text-decoration: underline; }
-    .ns-footer__sep{ opacity: 0.6; }
-    .ns-footer__copy{
-      margin-top: 6px;
-      opacity: 0.75;
+    .link-grid a{
+      display:block;
+      text-decoration:none;
+      border:1px solid #e5e7eb;
+      background:#fff;
+      padding:12px;
+      border-radius:12px;
+    }
+    .link-title{ font-weight:900; color:#0f172a; }
+    .link-desc{ margin-top:6px; color:#64748b; font-size:13px; line-height:1.45; }
+    .top-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .lang-toggle{
+      display:flex;
+      gap:6px;
+      padding:4px;
+      border:1px solid #e5e7eb;
+      border-radius:999px;
+      background:#ffffff;
+      flex:0 0 auto;
+      margin-top:2px;
+    }
+    .lang-btn{
+      border:0;
+      background:transparent;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:12px;
+      cursor:pointer;
+      color:#334155;
+      line-height:1;
+    }
+    .lang-btn.active{
+      background:#1e293b;
+      color:#ffffff;
+    }
+    .footer-links{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:12px;
+      font-size:14px;
+      color:#64748b;
+    }
+    .footer-links a{ color:#64748b; text-decoration:none; }
+    .footer-links a:hover{ text-decoration:underline; }
+    @media (max-width:900px){
+      .grid-3, .link-grid{ grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:640px){
+      .top-row{ flex-direction:column; }
+      .grid-2, .grid-3, .link-grid{ grid-template-columns:1fr; }
     }
   </style>
 </head>
@@ -71,118 +132,461 @@
   <div class="container">
     <div class="card">
 
-      <h2>📄 Quotation Percuma (Pro)</h2>
-      <p class="muted">Multi-item, diskaun, SST 6% & auto numbering. Data auto simpan (draft).</p>
-
-      <label>Nama Perniagaan</label>
-      <input id="biz" placeholder="Contoh: Kedai Makan Pak Ali">
-
-      <label>Alamat Perniagaan (optional)</label>
-      <input id="bizAddr" placeholder="Contoh: No 12, Jalan ABC, 43000 Kajang">
-
-      <div class="grid-2">
+      <div class="top-row">
         <div>
-          <label>No Quotation</label>
-          <input id="docNo" readonly>
+          <h2 data-i18n="h2">📄 Quotation Percuma Pro Malaysia</h2>
+          <p class="muted" data-i18n="subtitle">
+            Buat quotation atau sebut harga PDF yang kemas sebelum pelanggan setuju membeli. Sesuai untuk peniaga kecil, freelancer, kontraktor, servis rumah, katering, printing, seller online dan bisnes yang selalu beri harga kepada pelanggan.
+          </p>
         </div>
-        <div>
-          <label>Tarikh</label>
-          <input id="docDate" type="date">
+
+        <div class="lang-toggle" aria-label="Language toggle">
+          <button type="button" class="lang-btn" data-lang="ms">BM</button>
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
         </div>
       </div>
 
-      <label>Nama Pelanggan</label>
-      <input id="cust" placeholder="Contoh: Ahmad">
+      <div class="box">
+        <h3 data-i18n="toolTitle">Borang Quotation</h3>
+        <p class="muted" data-i18n="toolDesc">
+          Isi maklumat bisnes, pelanggan dan item tawaran. Sistem akan kira subtotal, diskaun, SST dan jumlah akhir secara automatik.
+        </p>
 
-      <label>Alamat Pelanggan (optional)</label>
-      <input id="custAddr" placeholder="Contoh: Shah Alam, Selangor">
+        <label data-i18n="lblBiz">Nama Perniagaan</label>
+        <input id="biz" placeholder="Contoh: Kedai Makan Pak Ali">
 
-      <hr style="margin:16px 0;">
+        <label data-i18n="lblBizAddr">Alamat Perniagaan (optional)</label>
+        <input id="bizAddr" placeholder="Contoh: No 12, Jalan ABC, 43000 Kajang">
 
-      <h3>Item</h3>
-      <table id="itemsTable">
-        <thead>
-          <tr>
-            <th style="width:52%;">Butiran</th>
-            <th style="width:12%;">Qty</th>
-            <th style="width:20%;">Harga (RM)</th>
-            <th style="width:16%;"></th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-
-      <button class="btn-secondary" onclick="addRow()">➕ Tambah Item</button>
-      <button class="btn-secondary" onclick="clearItems()">🧹 Clear</button>
-
-      <hr style="margin:16px 0;">
-
-      <div class="grid-3">
-        <div>
-          <label>Diskaun Type</label>
-          <select id="discountType">
-            <option value="rm">RM</option>
-            <option value="percent">%</option>
-          </select>
-        </div>
-        <div>
-          <label>Diskaun</label>
-          <input id="discountVal" type="number" step="0.01" value="0">
-        </div>
-        <div>
-          <label>SST 6%</label>
-          <div style="display:flex; gap:10px; align-items:center; margin-top:6px;">
-            <input id="sstOn" type="checkbox">
-            <span>Apply</span>
+        <div class="grid-2">
+          <div>
+            <label data-i18n="lblQtNo">No Quotation</label>
+            <input id="docNo" readonly>
+          </div>
+          <div>
+            <label data-i18n="lblDate">Tarikh</label>
+            <input id="docDate" type="date">
           </div>
         </div>
-      </div>
 
-      <div class="totals-box">
-        <div class="totals-row"><span>Subtotal</span><span>RM <span id="subtotalTxt">0.00</span></span></div>
-        <div class="totals-row"><span>Diskaun</span><span>- RM <span id="discountAmtTxt">0.00</span></span></div>
-        <div class="totals-row"><span>SST (6%)</span><span>RM <span id="sstAmtTxt">0.00</span></span></div>
-        <hr>
-        <div class="totals-row"><strong>TOTAL</strong><strong>RM <span id="grandTotalTxt">0.00</span></strong></div>
-      </div>
+        <label data-i18n="lblCust">Nama Pelanggan</label>
+        <input id="cust" placeholder="Contoh: Ahmad">
 
-      <label>Nota (optional)</label>
-      <input id="note" placeholder="Contoh: Harga sah 7 hari / tertakluk kepada stok.">
+        <label data-i18n="lblCustAddr">Alamat Pelanggan (optional)</label>
+        <input id="custAddr" placeholder="Contoh: Shah Alam, Selangor">
 
-      <div style="margin-top:14px;">
-        <button class="btn" onclick="generatePDF()">Download PDF</button>
-        <button class="btn-secondary" onclick="newDoc()">🆕 Quotation Baru</button>
-      </div>
+        <hr style="margin:16px 0;">
 
-      <p class="small" style="margin-top:14px;">
-        Ada cadangan / perlukan bantuan? Email <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>
-      </p>
+        <h3 data-i18n="itemsTitle">Item</h3>
+        <table id="itemsTable">
+          <thead>
+            <tr>
+              <th style="width:52%;" data-i18n="thDesc">Butiran</th>
+              <th style="width:12%;" data-i18n="thQty">Qty</th>
+              <th style="width:20%;" data-i18n="thPrice">Harga (RM)</th>
+              <th style="width:16%;"></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
 
-      <p style="margin-top:16px;">
-        <a href="index.html">← Kembali ke NiagaSenang</a>
-      </p>
+        <button class="btn-secondary" onclick="addRow()" data-i18n="btnAddItem">➕ Tambah Item</button>
+        <button class="btn-secondary" onclick="clearItems()" data-i18n="btnClear">🧹 Clear</button>
 
-      <!-- ✅ Standard footer (INSIDE .card) -->
-      <footer class="ns-footer">
-        <div class="ns-footer__links">
-          <a href="privacy.html">Privacy Policy</a>
-          <span class="ns-footer__sep">•</span>
-          <a href="terms.html">Terms of Use</a>
-          <span class="ns-footer__sep">•</span>
+        <hr style="margin:16px 0;">
+
+        <div class="grid-3">
+          <div>
+            <label data-i18n="lblDiscountType">Diskaun Type</label>
+            <select id="discountType">
+              <option value="rm">RM</option>
+              <option value="percent">%</option>
+            </select>
+          </div>
+          <div>
+            <label data-i18n="lblDiscount">Diskaun</label>
+            <input id="discountVal" type="number" step="0.01" value="0">
+          </div>
+          <div>
+            <label data-i18n="lblSst">SST 6%</label>
+            <div style="display:flex; gap:10px; align-items:center; margin-top:6px;">
+              <input id="sstOn" type="checkbox">
+              <span data-i18n="sstApply">Apply</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="totals-box">
+          <div class="totals-row"><span data-i18n="subTotal">Subtotal</span><span>RM <span id="subtotalTxt">0.00</span></span></div>
+          <div class="totals-row"><span data-i18n="discountLabel">Diskaun</span><span>- RM <span id="discountAmtTxt">0.00</span></span></div>
+          <div class="totals-row"><span data-i18n="sstLabel">SST (6%)</span><span>RM <span id="sstAmtTxt">0.00</span></span></div>
+          <hr>
+          <div class="totals-row"><strong data-i18n="totalLabel">TOTAL</strong><strong>RM <span id="grandTotalTxt">0.00</span></strong></div>
+        </div>
+
+        <label data-i18n="lblNote">Nota / Terma (optional)</label>
+        <input id="note" placeholder="Contoh: Harga sah 7 hari / tertakluk kepada stok.">
+
+        <div style="margin-top:14px;">
+          <button class="btn" onclick="generatePDF()" data-i18n="btnDownload">Download PDF</button>
+          <button class="btn-secondary" onclick="newDoc()" data-i18n="btnNew">🆕 Quotation Baru</button>
+        </div>
+
+        <p class="small" style="margin-top:14px;">
+          <span data-i18n="helpText">Ada cadangan / perlukan bantuan? Email</span>
           <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>
-        </div>
+        </p>
+      </div>
 
-        <div class="ns-footer__copy">
-          © <span id="nsYear"></span> NiagaSenang. All rights reserved.
+      <div class="box">
+        <h3 data-i18n="guideH1">Panduan Quotation Untuk Peniaga Malaysia</h3>
+        <p class="muted" data-i18n="guideP1">
+          Quotation atau sebut harga ialah dokumen yang diberi kepada pelanggan sebelum mereka bersetuju membeli produk atau menggunakan servis. Ia menunjukkan anggaran harga, senarai item, kuantiti, terma, tempoh sah harga dan jumlah keseluruhan. Untuk peniaga kecil, quotation membantu pelanggan faham tawaran dengan jelas sebelum membuat keputusan.
+        </p>
+        <p class="muted" data-i18n="guideP2">
+          Dalam bisnes harian, ramai pelanggan akan tanya “berapa harga?”, “boleh bagi quotation?”, atau “boleh saya tengok pecahan kos?”. Kalau jawapan hanya diberi melalui chat, maklumat mudah tenggelam atau salah faham. Dengan quotation PDF, peniaga boleh beri dokumen yang lebih kemas, mudah dihantar melalui WhatsApp atau email, dan senang dirujuk semula.
+        </p>
+
+        <h4 data-i18n="guideH2">Kenapa quotation penting untuk bisnes kecil?</h4>
+        <ul class="muted" data-i18n="guideList1">
+          <li><strong>Nampak lebih profesional:</strong> pelanggan lebih yakin bila harga diberi dalam dokumen yang tersusun.</li>
+          <li><strong>Kurangkan salah faham:</strong> item, qty, harga, diskaun dan jumlah akhir ditunjukkan dengan jelas.</li>
+          <li><strong>Mudah banding pilihan:</strong> pelanggan boleh semak pakej atau item sebelum buat keputusan.</li>
+          <li><strong>Jaga margin bisnes:</strong> peniaga boleh semak kos dan harga sebelum beri tawaran.</li>
+          <li><strong>Senang tukar kepada invoice:</strong> bila pelanggan setuju, quotation boleh dijadikan rujukan untuk invoice.</li>
+        </ul>
+
+        <h4 data-i18n="guideH3">Maklumat yang patut ada dalam quotation</h4>
+        <p class="muted" data-i18n="guideP3">
+          Quotation yang baik biasanya mengandungi nama perniagaan, nombor quotation, tarikh, nama pelanggan, senarai item atau servis, kuantiti, harga seunit, subtotal, diskaun, cukai jika berkenaan, jumlah akhir dan nota seperti tempoh sah harga. Untuk bisnes kecil, maklumat ini sudah cukup untuk kelihatan profesional dan mudah difahami pelanggan.
+        </p>
+
+        <h4 data-i18n="guideH4">Cara guna quotation generator NiagaSenang</h4>
+        <ol class="muted" data-i18n="guideList2">
+          <li>Isi nama perniagaan dan alamat jika perlu.</li>
+          <li>Semak nombor quotation dan tarikh.</li>
+          <li>Masukkan nama pelanggan dan alamat pelanggan jika ada.</li>
+          <li>Tambah item, kuantiti dan harga tawaran.</li>
+          <li>Masukkan diskaun dalam RM atau peratus jika perlu.</li>
+          <li>Tick SST 6% hanya jika bisnes anda memang perlu kenakan SST.</li>
+          <li>Tambah nota seperti “harga sah 7 hari” atau “tertakluk kepada stok”.</li>
+          <li>Tekan Download PDF untuk simpan dan hantar kepada pelanggan.</li>
+        </ol>
+
+        <h4 data-i18n="guideH5">Kesilapan biasa bila buat quotation</h4>
+        <ul class="muted" data-i18n="guideList3">
+          <li>Tidak tulis tempoh sah harga.</li>
+          <li>Tidak jelaskan apa yang termasuk dan tidak termasuk dalam harga.</li>
+          <li>Terlupa masukkan caj penghantaran, pemasangan atau kos tambahan.</li>
+          <li>Memberi quotation terlalu murah sampai margin bisnes bocor.</li>
+          <li>Tidak simpan salinan quotation untuk rujukan bila pelanggan setuju.</li>
+        </ul>
+
+        <h4 data-i18n="guideH6">Quotation, invoice dan resit — apa beza?</h4>
+        <p class="muted" data-i18n="guideP4">
+          Quotation digunakan sebelum pelanggan setuju membeli. Invoice digunakan untuk meminta bayaran selepas pelanggan setuju atau selepas kerja dibuat. Resit pula digunakan sebagai bukti bayaran selepas duit diterima. Bila peniaga guna dokumen yang betul pada masa yang betul, rekod jualan jadi lebih jelas dan pelanggan lebih mudah faham status transaksi.
+        </p>
+      </div>
+
+      <div class="box">
+        <h3 data-i18n="faqH1">FAQ Quotation</h3>
+
+        <h4 data-i18n="faqQ1">Adakah quotation ini percuma?</h4>
+        <p class="muted" data-i18n="faqA1">Ya, tool quotation NiagaSenang boleh digunakan secara percuma tanpa login.</p>
+
+        <h4 data-i18n="faqQ2">Data quotation disimpan di mana?</h4>
+        <p class="muted" data-i18n="faqA2">Draft quotation disimpan dalam browser menggunakan localStorage. Jika anda clear browser data atau tukar device, draft boleh hilang.</p>
+
+        <h4 data-i18n="faqQ3">Boleh guna untuk contractor atau freelancer?</h4>
+        <p class="muted" data-i18n="faqA3">Boleh. Tool ini sesuai untuk contractor kecil, freelancer, servis rumah, seller online, katering, printing dan peniaga servis.</p>
+
+        <h4 data-i18n="faqQ4">Adakah quotation bermaksud pelanggan wajib bayar?</h4>
+        <p class="muted" data-i18n="faqA4">Tidak semestinya. Quotation ialah tawaran harga sebelum pelanggan setuju. Bila pelanggan setuju, anda boleh keluarkan invoice untuk meminta bayaran.</p>
+      </div>
+
+      <div class="box">
+        <h3 data-i18n="relatedTitle">Tools & Panduan Berkaitan</h3>
+        <div class="link-grid">
+          <a href="invoice.html">
+            <div class="link-title" data-i18n="relInvoice">Invoice Generator</div>
+            <div class="link-desc" data-i18n="relInvoiceDesc">Buat invoice selepas pelanggan setuju atau selepas kerja siap.</div>
+          </a>
+          <a href="resit.html">
+            <div class="link-title" data-i18n="relReceipt">Resit Generator</div>
+            <div class="link-desc" data-i18n="relReceiptDesc">Buat resit selepas bayaran diterima.</div>
+          </a>
+          <a href="contoh-quotation-malaysia.html">
+            <div class="link-title" data-i18n="relGuide">Contoh Quotation Malaysia</div>
+            <div class="link-desc" data-i18n="relGuideDesc">Panduan contoh sebut harga untuk peniaga Malaysia.</div>
+          </a>
         </div>
-      </footer>
+      </div>
+
+      <p style="margin-top:18px;">
+        <a href="index.html" data-i18n="backLink">← Kembali ke NiagaSenang</a>
+      </p>
+
+      <div style="text-align:center;margin-top:22px;padding-top:16px;border-top:1px solid #e5e7eb;">
+        <div class="footer-links">
+          <a href="about.html" data-i18n="fAbout">About</a>
+          <span>•</span>
+          <a href="terms.html" data-i18n="fTerms">Terms</a>
+          <span>•</span>
+          <a href="contact.html" data-i18n="fContact">Contact</a>
+          <span>•</span>
+          <a href="privacy.html" data-i18n="fPrivacy">Privacy Policy</a>
+        </div>
+        <div class="small" style="margin-top:10px;">
+          © <span id="yearNow"></span> NiagaSenang — <span data-i18n="fNote">Tool percuma untuk peniaga Malaysia.</span>
+        </div>
+      </div>
 
     </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
-    /* ========= helpers ========= */
+    const LANG_KEY = "ns_lang";
+    let CURRENT_LANG = "ms";
+
+    const I18N = {
+      ms: {
+        docTitle: "Quotation Percuma Pro Malaysia | Buat Sebut Harga PDF Online | NiagaSenang",
+        h2: "📄 Quotation Percuma Pro Malaysia",
+        subtitle: "Buat quotation atau sebut harga PDF yang kemas sebelum pelanggan setuju membeli. Sesuai untuk peniaga kecil, freelancer, kontraktor, servis rumah, katering, printing, seller online dan bisnes yang selalu beri harga kepada pelanggan.",
+        toolTitle: "Borang Quotation",
+        toolDesc: "Isi maklumat bisnes, pelanggan dan item tawaran. Sistem akan kira subtotal, diskaun, SST dan jumlah akhir secara automatik.",
+
+        lblBiz: "Nama Perniagaan",
+        phBiz: "Contoh: Kedai Makan Pak Ali",
+        lblBizAddr: "Alamat Perniagaan (optional)",
+        phBizAddr: "Contoh: No 12, Jalan ABC, 43000 Kajang",
+        lblQtNo: "No Quotation",
+        lblDate: "Tarikh",
+        lblCust: "Nama Pelanggan",
+        phCust: "Contoh: Ahmad",
+        lblCustAddr: "Alamat Pelanggan (optional)",
+        phCustAddr: "Contoh: Shah Alam, Selangor",
+        itemsTitle: "Item",
+        thDesc: "Butiran",
+        thQty: "Qty",
+        thPrice: "Harga (RM)",
+        btnAddItem: "➕ Tambah Item",
+        btnClear: "🧹 Clear",
+        lblDiscountType: "Diskaun Type",
+        lblDiscount: "Diskaun",
+        lblSst: "SST 6%",
+        sstApply: "Apply",
+        subTotal: "Subtotal",
+        discountLabel: "Diskaun",
+        sstLabel: "SST (6%)",
+        totalLabel: "TOTAL",
+        lblNote: "Nota / Terma (optional)",
+        phNote: "Contoh: Harga sah 7 hari / tertakluk kepada stok.",
+        btnDownload: "Download PDF",
+        btnNew: "🆕 Quotation Baru",
+        helpText: "Ada cadangan / perlukan bantuan? Email",
+        backLink: "← Kembali ke NiagaSenang",
+        phItemDesc: "Contoh: Pakej katering 50 pax",
+
+        guideH1: "Panduan Quotation Untuk Peniaga Malaysia",
+        guideP1: "Quotation atau sebut harga ialah dokumen yang diberi kepada pelanggan sebelum mereka bersetuju membeli produk atau menggunakan servis. Ia menunjukkan anggaran harga, senarai item, kuantiti, terma, tempoh sah harga dan jumlah keseluruhan. Untuk peniaga kecil, quotation membantu pelanggan faham tawaran dengan jelas sebelum membuat keputusan.",
+        guideP2: "Dalam bisnes harian, ramai pelanggan akan tanya “berapa harga?”, “boleh bagi quotation?”, atau “boleh saya tengok pecahan kos?”. Kalau jawapan hanya diberi melalui chat, maklumat mudah tenggelam atau salah faham. Dengan quotation PDF, peniaga boleh beri dokumen yang lebih kemas, mudah dihantar melalui WhatsApp atau email, dan senang dirujuk semula.",
+        guideH2: "Kenapa quotation penting untuk bisnes kecil?",
+        guideList1: "<li><strong>Nampak lebih profesional:</strong> pelanggan lebih yakin bila harga diberi dalam dokumen yang tersusun.</li><li><strong>Kurangkan salah faham:</strong> item, qty, harga, diskaun dan jumlah akhir ditunjukkan dengan jelas.</li><li><strong>Mudah banding pilihan:</strong> pelanggan boleh semak pakej atau item sebelum buat keputusan.</li><li><strong>Jaga margin bisnes:</strong> peniaga boleh semak kos dan harga sebelum beri tawaran.</li><li><strong>Senang tukar kepada invoice:</strong> bila pelanggan setuju, quotation boleh dijadikan rujukan untuk invoice.</li>",
+        guideH3: "Maklumat yang patut ada dalam quotation",
+        guideP3: "Quotation yang baik biasanya mengandungi nama perniagaan, nombor quotation, tarikh, nama pelanggan, senarai item atau servis, kuantiti, harga seunit, subtotal, diskaun, cukai jika berkenaan, jumlah akhir dan nota seperti tempoh sah harga. Untuk bisnes kecil, maklumat ini sudah cukup untuk kelihatan profesional dan mudah difahami pelanggan.",
+        guideH4: "Cara guna quotation generator NiagaSenang",
+        guideList2: "<li>Isi nama perniagaan dan alamat jika perlu.</li><li>Semak nombor quotation dan tarikh.</li><li>Masukkan nama pelanggan dan alamat pelanggan jika ada.</li><li>Tambah item, kuantiti dan harga tawaran.</li><li>Masukkan diskaun dalam RM atau peratus jika perlu.</li><li>Tick SST 6% hanya jika bisnes anda memang perlu kenakan SST.</li><li>Tambah nota seperti “harga sah 7 hari” atau “tertakluk kepada stok”.</li><li>Tekan Download PDF untuk simpan dan hantar kepada pelanggan.</li>",
+        guideH5: "Kesilapan biasa bila buat quotation",
+        guideList3: "<li>Tidak tulis tempoh sah harga.</li><li>Tidak jelaskan apa yang termasuk dan tidak termasuk dalam harga.</li><li>Terlupa masukkan caj penghantaran, pemasangan atau kos tambahan.</li><li>Memberi quotation terlalu murah sampai margin bisnes bocor.</li><li>Tidak simpan salinan quotation untuk rujukan bila pelanggan setuju.</li>",
+        guideH6: "Quotation, invoice dan resit — apa beza?",
+        guideP4: "Quotation digunakan sebelum pelanggan setuju membeli. Invoice digunakan untuk meminta bayaran selepas pelanggan setuju atau selepas kerja dibuat. Resit pula digunakan sebagai bukti bayaran selepas duit diterima. Bila peniaga guna dokumen yang betul pada masa yang betul, rekod jualan jadi lebih jelas dan pelanggan lebih mudah faham status transaksi.",
+
+        faqH1: "FAQ Quotation",
+        faqQ1: "Adakah quotation ini percuma?",
+        faqA1: "Ya, tool quotation NiagaSenang boleh digunakan secara percuma tanpa login.",
+        faqQ2: "Data quotation disimpan di mana?",
+        faqA2: "Draft quotation disimpan dalam browser menggunakan localStorage. Jika anda clear browser data atau tukar device, draft boleh hilang.",
+        faqQ3: "Boleh guna untuk contractor atau freelancer?",
+        faqA3: "Boleh. Tool ini sesuai untuk contractor kecil, freelancer, servis rumah, seller online, katering, printing dan peniaga servis.",
+        faqQ4: "Adakah quotation bermaksud pelanggan wajib bayar?",
+        faqA4: "Tidak semestinya. Quotation ialah tawaran harga sebelum pelanggan setuju. Bila pelanggan setuju, anda boleh keluarkan invoice untuk meminta bayaran.",
+
+        relatedTitle: "Tools & Panduan Berkaitan",
+        relInvoice: "Invoice Generator",
+        relInvoiceDesc: "Buat invoice selepas pelanggan setuju atau selepas kerja siap.",
+        relReceipt: "Resit Generator",
+        relReceiptDesc: "Buat resit selepas bayaran diterima.",
+        relGuide: "Contoh Quotation Malaysia",
+        relGuideDesc: "Panduan contoh sebut harga untuk peniaga Malaysia.",
+
+        fAbout: "About",
+        fTerms: "Terms",
+        fContact: "Contact",
+        fPrivacy: "Privacy Policy",
+        fNote: "Tool percuma untuk peniaga Malaysia.",
+
+        pdfTitle: "QUOTATION",
+        pdfQuotationNo: "Quotation No:",
+        pdfDate: "Tarikh:",
+        pdfFrom: "Daripada",
+        pdfTo: "Kepada",
+        pdfDesc: "Butiran",
+        pdfQty: "Qty",
+        pdfPrice: "Harga",
+        pdfAmount: "Jumlah",
+        pdfSubtotal: "Subtotal",
+        pdfDiscount: "Diskaun",
+        pdfSst: "SST (6%)",
+        pdfTotal: "TOTAL",
+        pdfNote: "Nota:",
+        pdfFooter: "Generated by NiagaSenang"
+      },
+
+      en: {
+        docTitle: "Free Pro Quotation Generator Malaysia | PDF Quote Online | NiagaSenang",
+        h2: "📄 Free Pro Quotation Generator Malaysia",
+        subtitle: "Create clean quotation PDFs before customers agree to buy. Suitable for small businesses, freelancers, contractors, home services, catering, printing, online sellers and businesses that regularly quote prices to customers.",
+        toolTitle: "Quotation Form",
+        toolDesc: "Enter your business details, customer details and quoted items. The tool will calculate subtotal, discount, SST and final total automatically.",
+
+        lblBiz: "Business Name",
+        phBiz: "Example: Pak Ali Restaurant",
+        lblBizAddr: "Business Address (optional)",
+        phBizAddr: "Example: No 12, Jalan ABC, 43000 Kajang",
+        lblQtNo: "Quotation No",
+        lblDate: "Date",
+        lblCust: "Customer Name",
+        phCust: "Example: Ahmad",
+        lblCustAddr: "Customer Address (optional)",
+        phCustAddr: "Example: Shah Alam, Selangor",
+        itemsTitle: "Items",
+        thDesc: "Description",
+        thQty: "Qty",
+        thPrice: "Price (RM)",
+        btnAddItem: "➕ Add Item",
+        btnClear: "🧹 Clear",
+        lblDiscountType: "Discount Type",
+        lblDiscount: "Discount",
+        lblSst: "Tax (6%)",
+        sstApply: "Apply",
+        subTotal: "Subtotal",
+        discountLabel: "Discount",
+        sstLabel: "Tax (6%)",
+        totalLabel: "TOTAL",
+        lblNote: "Note / Terms (optional)",
+        phNote: "Example: Valid for 7 days / subject to stock availability.",
+        btnDownload: "Download PDF",
+        btnNew: "🆕 New Quotation",
+        helpText: "Suggestions / need help? Email",
+        backLink: "← Back to NiagaSenang",
+        phItemDesc: "Example: Catering package 50 pax",
+
+        guideH1: "Quotation Guide for Malaysian Sellers",
+        guideP1: "A quotation is a document given to customers before they agree to buy a product or service. It shows estimated pricing, item list, quantity, terms, validity period and total amount. For small sellers, quotations help customers understand the offer clearly before making a decision.",
+        guideP2: "In daily business, customers often ask “how much?”, “can you send a quotation?”, or “can I see the cost breakdown?”. If the answer is only sent through chat, the details can get buried or misunderstood. With a quotation PDF, sellers can provide a cleaner document that is easy to send through WhatsApp or email and easy to refer back to.",
+        guideH2: "Why quotations matter for small businesses",
+        guideList1: "<li><strong>More professional:</strong> customers trust prices presented in organized documents.</li><li><strong>Less misunderstanding:</strong> item, qty, price, discount and final total are clearly shown.</li><li><strong>Easier comparison:</strong> customers can review packages or items before deciding.</li><li><strong>Protects business margin:</strong> sellers can review costs and pricing before making an offer.</li><li><strong>Easy to convert into invoice:</strong> once customers agree, the quotation can become the reference for invoice.</li>",
+        guideH3: "What should be included in a quotation",
+        guideP3: "A good quotation usually includes the business name, quotation number, date, customer name, item or service list, quantity, unit price, subtotal, discount, tax if applicable, final total and notes such as price validity period. For small businesses, this is enough to look professional and easy for customers to understand.",
+        guideH4: "How to use NiagaSenang quotation generator",
+        guideList2: "<li>Enter your business name and address if needed.</li><li>Check the quotation number and date.</li><li>Enter the customer name and address if available.</li><li>Add items, quantity and quoted price.</li><li>Enter discount in RM or percentage if needed.</li><li>Tick SST 6% only if your business needs to charge SST.</li><li>Add notes such as “valid for 7 days” or “subject to stock availability”.</li><li>Click Download PDF to save and send to the customer.</li>",
+        guideH5: "Common quotation mistakes",
+        guideList3: "<li>No price validity period.</li><li>Not explaining what is included and excluded in the price.</li><li>Forgot delivery, installation or extra charges.</li><li>Quoting too low until business margin leaks.</li><li>Not keeping a quotation copy when customers agree.</li>",
+        guideH6: "Quotation, invoice and receipt — what is the difference?",
+        guideP4: "A quotation is used before the customer agrees to buy. An invoice is used to request payment after the customer agrees or after work is completed. A receipt is used as proof of payment after money is received. Using the right document at the right time makes sales records clearer and helps customers understand the transaction status.",
+
+        faqH1: "Quotation FAQ",
+        faqQ1: "Is this quotation tool free?",
+        faqA1: "Yes, NiagaSenang quotation tool is free to use without login.",
+        faqQ2: "Where is quotation data stored?",
+        faqA2: "Quotation drafts are stored in your browser using localStorage. If you clear browser data or switch device, the draft may be lost.",
+        faqQ3: "Can contractors or freelancers use this?",
+        faqA3: "Yes. This tool is suitable for small contractors, freelancers, home services, online sellers, catering, printing and service providers.",
+        faqQ4: "Does a quotation mean the customer must pay?",
+        faqA4: "Not necessarily. A quotation is a price offer before the customer agrees. Once the customer agrees, you can issue an invoice to request payment.",
+
+        relatedTitle: "Related Tools & Guides",
+        relInvoice: "Invoice Generator",
+        relInvoiceDesc: "Create invoices after customers agree or after work is completed.",
+        relReceipt: "Receipt Generator",
+        relReceiptDesc: "Create receipts after payment is received.",
+        relGuide: "Quotation Example Malaysia",
+        relGuideDesc: "Guide and examples for Malaysian sellers.",
+
+        fAbout: "About",
+        fTerms: "Terms",
+        fContact: "Contact",
+        fPrivacy: "Privacy Policy",
+        fNote: "Free tools for Malaysian sellers.",
+
+        pdfTitle: "QUOTATION",
+        pdfQuotationNo: "Quotation No:",
+        pdfDate: "Date:",
+        pdfFrom: "From",
+        pdfTo: "To",
+        pdfDesc: "Description",
+        pdfQty: "Qty",
+        pdfPrice: "Price",
+        pdfAmount: "Amount",
+        pdfSubtotal: "Subtotal",
+        pdfDiscount: "Discount",
+        pdfSst: "Tax (6%)",
+        pdfTotal: "TOTAL",
+        pdfNote: "Note:",
+        pdfFooter: "Generated by NiagaSenang"
+      }
+    };
+
+    function detectBrowserLang(){
+      const nav = (navigator.language || "").toLowerCase();
+      return nav.startsWith("en") ? "en" : "ms";
+    }
+
+    function t(key){
+      const pack = I18N[CURRENT_LANG] || I18N.ms;
+      return (pack[key] != null) ? pack[key] : (I18N.ms[key] ?? "");
+    }
+
+    function applyLang(lang){
+      CURRENT_LANG = (lang === "en") ? "en" : "ms";
+      localStorage.setItem(LANG_KEY, CURRENT_LANG);
+
+      document.documentElement.setAttribute("lang", CURRENT_LANG === "en" ? "en" : "ms");
+      document.title = t("docTitle");
+
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === CURRENT_LANG);
+      });
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        const val = t(key);
+        if (val != null && val !== "") el.innerHTML = val;
+      });
+
+      biz.placeholder = t("phBiz");
+      bizAddr.placeholder = t("phBizAddr");
+      cust.placeholder = t("phCust");
+      custAddr.placeholder = t("phCustAddr");
+      note.placeholder = t("phNote");
+
+      document.querySelectorAll("#itemsTable tbody tr .desc").forEach(inp => {
+        inp.placeholder = t("phItemDesc");
+      });
+    }
+
+    (function initLang(){
+      const saved = localStorage.getItem(LANG_KEY);
+      const start = saved || detectBrowserLang();
+      applyLang(start);
+
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.addEventListener("click", () => applyLang(btn.dataset.lang));
+      });
+    })();
+
     function money(n){ return (Math.round((Number(n||0) + Number.EPSILON) * 100)/100).toFixed(2); }
     function today(){ return new Date().toISOString().slice(0,10); }
 
@@ -200,7 +604,6 @@
       return "QT-" + String(seq).padStart(4,"0");
     }
 
-    /* ========= items ========= */
     function hookRow(tr){
       tr.querySelectorAll("input").forEach(inp=>{
         inp.addEventListener("input", ()=>{ calc(); saveDraft(); });
@@ -210,7 +613,7 @@
     function addRow(prefill){
       const tr=document.createElement("tr");
       tr.innerHTML=`
-        <td><input class="desc" placeholder="Contoh: Nasi Ayam"></td>
+        <td><input class="desc" placeholder="${t("phItemDesc")}"></td>
         <td><input class="qty" type="number" min="1" value="1"></td>
         <td><input class="price" type="number" step="0.01" placeholder="0.00"></td>
         <td style="text-align:right;">
@@ -244,7 +647,6 @@
       saveDraft();
     }
 
-    /* ========= calc ========= */
     function calc(){
       let sub=0;
       const rows=[...document.querySelectorAll("#itemsTable tbody tr")];
@@ -275,7 +677,6 @@
       return {sub, dAmt, sst, total};
     }
 
-    /* ========= save/load ========= */
     function saveDraft(){
       const rows=[...document.querySelectorAll("#itemsTable tbody tr")].map(r=>({
         desc: r.querySelector(".desc").value.trim(),
@@ -335,7 +736,6 @@
       saveDraft();
     }
 
-    /* ========= PDF ========= */
     function wrapText(doc, text, x, y, maxW, fontSize){
       doc.setFontSize(fontSize);
       const lines = doc.splitTextToSize(text, maxW);
@@ -347,7 +747,6 @@
       const {jsPDF}=window.jspdf;
       const doc=new jsPDF({ unit:"pt", format:"a4" });
 
-      // ✅ EVENT: download_quotation
       try{
         gtag('event','download_quotation',{ event_category:'tools', event_label:'quotation_pdf' });
       }catch(e){}
@@ -357,7 +756,7 @@
       const margin = 42;
       let y = 54;
 
-      const bizName = (biz.value || "Nama Perniagaan").trim();
+      const bizName = (biz.value || (CURRENT_LANG==="en" ? "Business Name" : "Nama Perniagaan")).trim();
       const bizA = (bizAddr.value || "").trim();
       const custName = (cust.value || "-").trim();
       const custA = (custAddr.value || "").trim();
@@ -365,19 +764,18 @@
       const dateVal = (docDate.value || "-").trim();
       const noteVal = (note.value || "").trim();
 
-      // Header
       doc.setFont("helvetica","bold");
       doc.setFontSize(22);
-      doc.text("QUOTATION", margin, y);
+      doc.text(t("pdfTitle"), margin, y);
 
       doc.setFontSize(11);
       doc.setFont("helvetica","bold");
-      doc.text("Quotation No:", pageW - margin - 170, y - 10);
+      doc.text(t("pdfQuotationNo"), pageW - margin - 170, y - 10);
       doc.setFont("helvetica","normal");
       doc.text(qtNo, pageW - margin, y - 10, {align:"right"});
 
       doc.setFont("helvetica","bold");
-      doc.text("Tarikh:", pageW - margin - 170, y + 8);
+      doc.text(t("pdfDate"), pageW - margin - 170, y + 8);
       doc.setFont("helvetica","normal");
       doc.text(dateVal, pageW - margin, y + 8, {align:"right"});
 
@@ -386,14 +784,13 @@
       doc.line(margin, y, pageW - margin, y);
       y += 18;
 
-      // Blocks
       const leftX = margin;
       const rightX = margin + 280;
 
       doc.setFont("helvetica","bold");
       doc.setFontSize(11);
-      doc.text("Daripada", leftX, y);
-      doc.text("Kepada", rightX, y);
+      doc.text(t("pdfFrom"), leftX, y);
+      doc.text(t("pdfTo"), rightX, y);
       y += 14;
 
       doc.setFontSize(12);
@@ -413,7 +810,6 @@
 
       y = Math.max(yLeft, yRight) + 14;
 
-      // Table
       const tableX = margin;
       const tableW = pageW - margin*2;
       const colDesc = Math.floor(tableW * 0.52);
@@ -427,10 +823,10 @@
 
       doc.setFont("helvetica","bold");
       doc.setFontSize(11);
-      doc.text("Butiran", tableX + 10, y + 17);
-      doc.text("Qty", tableX + colDesc + colQty - 10, y + 17, {align:"right"});
-      doc.text("Harga", tableX + colDesc + colQty + colPrice - 10, y + 17, {align:"right"});
-      doc.text("Jumlah", tableX + tableW - 10, y + 17, {align:"right"});
+      doc.text(t("pdfDesc"), tableX + 10, y + 17);
+      doc.text(t("pdfQty"), tableX + colDesc + colQty - 10, y + 17, {align:"right"});
+      doc.text(t("pdfPrice"), tableX + colDesc + colQty + colPrice - 10, y + 17, {align:"right"});
+      doc.text(t("pdfAmount"), tableX + tableW - 10, y + 17, {align:"right"});
 
       y += 34;
       doc.setFont("helvetica","normal");
@@ -468,7 +864,6 @@
 
       y += 18;
 
-      // Totals
       const {sub, dAmt, sst, total} = calc();
       const boxW = 260;
       const boxH = 110;
@@ -485,19 +880,19 @@
 
       let ty = y + 22;
       doc.setFont("helvetica","bold");
-      doc.text("Subtotal", boxX + 14, ty);
+      doc.text(t("pdfSubtotal"), boxX + 14, ty);
       doc.setFont("helvetica","normal");
       doc.text("RM " + money(sub), boxX + boxW - 14, ty, {align:"right"});
 
       ty += 22;
       doc.setFont("helvetica","bold");
-      doc.text("Diskaun", boxX + 14, ty);
+      doc.text(t("pdfDiscount"), boxX + 14, ty);
       doc.setFont("helvetica","normal");
       doc.text("- RM " + money(dAmt), boxX + boxW - 14, ty, {align:"right"});
 
       ty += 22;
       doc.setFont("helvetica","bold");
-      doc.text("SST (6%)", boxX + 14, ty);
+      doc.text(t("pdfSst"), boxX + 14, ty);
       doc.setFont("helvetica","normal");
       doc.text("RM " + money(sst), boxX + boxW - 14, ty, {align:"right"});
 
@@ -507,46 +902,36 @@
 
       doc.setFont("helvetica","bold");
       doc.setFontSize(13);
-      doc.text("TOTAL", boxX + 14, ty);
+      doc.text(t("pdfTotal"), boxX + 14, ty);
       doc.text("RM " + money(total), boxX + boxW - 14, ty, {align:"right"});
       doc.setFontSize(11);
 
-      // Note
       if(noteVal){
         y = y + boxH + 22;
         doc.setFont("helvetica","bold");
-        doc.text("Nota:", margin, y);
+        doc.text(t("pdfNote"), margin, y);
         doc.setFont("helvetica","normal");
         y += 14;
         wrapText(doc, noteVal, margin, y, pageW - margin*2, 11);
       }
 
-      // Footer
       doc.setFontSize(9);
       doc.setTextColor(140);
-      doc.text("Generated by NiagaSenang", margin, pageH - 24);
+      doc.text(t("pdfFooter"), margin, pageH - 24);
 
       const safeNo = (qtNo || "quotation").replace(/[^a-z0-9-_]/gi,"_");
       doc.save(`${safeNo}.pdf`);
     }
 
-    /* ========= listeners ========= */
     ["biz","bizAddr","cust","custAddr","discountType","discountVal","note","docDate"].forEach(id=>{
       document.getElementById(id).addEventListener("input", ()=>{ calc(); saveDraft(); });
     });
     document.getElementById("sstOn").addEventListener("change", ()=>{ calc(); saveDraft(); });
 
-    /* init */
+    document.getElementById("yearNow").textContent = new Date().getFullYear();
+
     loadDraft();
     calc();
-  </script>
-
-  <!-- ✅ Auto year for footer -->
-  <script>
-    (function () {
-      var el = document.getElementById('nsYear');
-      if (el) el.textContent = new Date().getFullYear();
-    })();
   </script>
 </body>
 </html>

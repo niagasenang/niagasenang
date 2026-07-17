@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resit Percuma Pro Malaysia | NiagaSenang</title>
-  <meta name="description" content="Resit percuma pro untuk peniaga Malaysia. Multi-item, diskaun, SST 6%, auto numbering dan terus download PDF tanpa login.">
+
+  <title>Resit Percuma Pro Malaysia | Buat Receipt PDF Online | NiagaSenang</title>
+  <meta name="description" content="Buat resit percuma untuk peniaga Malaysia. Multi-item, diskaun, SST 6%, auto numbering, payment reference, draft auto-save dan download PDF tanpa login. Sesuai untuk bisnes kecil, freelancer dan seller online.">
+
   <link rel="stylesheet" href="css/style.css">
 
   <!-- Google Analytics -->
@@ -15,6 +17,10 @@
     gtag('js', new Date());
     gtag('config', 'G-P81GM8SJWX');
   </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2042278846951839"
+     crossorigin="anonymous"></script>
 
   <style>
     table { width:100%; border-collapse:collapse; margin-top:8px; }
@@ -30,6 +36,7 @@
       border-radius:8px;
       cursor:pointer;
       margin-right:8px;
+      margin-top:8px;
     }
     .btn-secondary:hover { background:rgba(15,118,110,.18); }
     .totals-box {
@@ -40,10 +47,35 @@
       margin-top:12px;
     }
     .totals-row { display:flex; justify-content:space-between; margin:6px 0; }
-    .muted { color:#64748b; font-size:13px; }
-    .small { font-size:12px; color:#64748b; }
-
-    /* ===== Top row (title + language toggle) ===== */
+    .muted { color:#64748b; font-size:13px; line-height:1.65; }
+    .small { font-size:12px; color:#64748b; line-height:1.55; }
+    .box{
+      background:#f8fafc;
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      padding:14px;
+      margin-top:16px;
+    }
+    .box h3{ margin:0 0 8px 0; }
+    .box h4{ margin:14px 0 6px 0; }
+    .box ul, .box ol{ margin:8px 0 0 20px; }
+    .box li{ margin:7px 0; }
+    .link-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:12px;
+      margin-top:10px;
+    }
+    .link-grid a{
+      display:block;
+      text-decoration:none;
+      border:1px solid #e5e7eb;
+      background:#fff;
+      padding:12px;
+      border-radius:12px;
+    }
+    .link-title{ font-weight:900; color:#0f172a; }
+    .link-desc{ margin-top:6px; color:#64748b; font-size:13px; line-height:1.45; }
     .top-row{
       display:flex;
       align-items:flex-start;
@@ -75,27 +107,23 @@
       background:#1e293b;
       color:#ffffff;
     }
-
-    /* ===== Standard footer (inside .card) ===== */
-    .ns-footer{
-      margin-top: 16px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(0,0,0,0.08);
-      font-size: 0.92rem;
-      line-height: 1.4;
+    .footer-links{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:12px;
+      font-size:14px;
+      color:#64748b;
     }
-    .ns-footer__links{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
+    .footer-links a{ color:#64748b; text-decoration:none; }
+    .footer-links a:hover{ text-decoration:underline; }
+    @media (max-width:900px){
+      .grid-3, .link-grid{ grid-template-columns:1fr 1fr; }
     }
-    .ns-footer__links a{ text-decoration: none; }
-    .ns-footer__links a:hover{ text-decoration: underline; }
-    .ns-footer__sep{ opacity: 0.6; }
-    .ns-footer__copy{
-      margin-top: 6px;
-      opacity: 0.75;
+    @media (max-width:640px){
+      .top-row{ flex-direction:column; }
+      .grid-2, .grid-3, .link-grid{ grid-template-columns:1fr; }
     }
   </style>
 </head>
@@ -106,148 +134,239 @@
 
       <div class="top-row">
         <div>
-          <h2 data-i18n="h2">🧾 Resit Percuma (Pro)</h2>
-          <p class="muted" data-i18n="subtitle">Multi-item, diskaun, SST 6% & auto numbering. Data auto simpan (draft).</p>
+          <h2 data-i18n="h2">🧾 Resit Percuma Pro Malaysia</h2>
+          <p class="muted" data-i18n="subtitle">
+            Buat resit PDF yang kemas selepas pelanggan membuat bayaran. Sesuai untuk peniaga kecil, freelancer, seller online, kedai makan, servis rumah, katering, printing dan bisnes yang perlukan bukti bayaran.
+          </p>
         </div>
 
-        <!-- Language toggle -->
         <div class="lang-toggle" aria-label="Language toggle">
           <button type="button" class="lang-btn" data-lang="ms">BM</button>
           <button type="button" class="lang-btn" data-lang="en">EN</button>
         </div>
       </div>
 
-      <label data-i18n="lblBiz">Nama Perniagaan</label>
-      <input id="biz" placeholder="Contoh: Kedai Makan Pak Ali">
+      <div class="box">
+        <h3 data-i18n="toolTitle">Borang Resit</h3>
+        <p class="muted" data-i18n="toolDesc">
+          Isi maklumat bisnes, pelanggan, bayaran dan item jualan. Sistem akan kira subtotal, diskaun, SST dan total dibayar secara automatik.
+        </p>
 
-      <label data-i18n="lblBizAddr">Alamat Perniagaan (optional)</label>
-      <input id="bizAddr" placeholder="Contoh: No 12, Jalan ABC, 43000 Kajang">
+        <label data-i18n="lblBiz">Nama Perniagaan</label>
+        <input id="biz" placeholder="Contoh: Kedai Makan Pak Ali">
 
-      <div class="grid-2">
-        <div>
-          <label data-i18n="lblDocNo">No Resit</label>
-          <input id="docNo" readonly>
-        </div>
-        <div>
-          <label data-i18n="lblDate">Tarikh</label>
-          <input id="docDate" type="date">
-        </div>
-      </div>
+        <label data-i18n="lblBizAddr">Alamat Perniagaan (optional)</label>
+        <input id="bizAddr" placeholder="Contoh: No 12, Jalan ABC, 43000 Kajang">
 
-      <label data-i18n="lblCust">Nama Pelanggan (optional)</label>
-      <input id="cust" placeholder="Contoh: Ahmad">
-
-      <label data-i18n="lblCustAddr">Alamat Pelanggan (optional)</label>
-      <input id="custAddr" placeholder="Contoh: Shah Alam, Selangor">
-
-      <div class="grid-2" style="margin-top:10px;">
-        <div>
-          <label data-i18n="lblPayMethod">Kaedah Bayaran (optional)</label>
-          <input id="payMethod" placeholder="Contoh: Cash / Transfer / QR">
-        </div>
-        <div>
-          <label data-i18n="lblPayRef">Rujukan Bayaran (optional)</label>
-          <input id="payRef" placeholder="Contoh: TXN123 / Maybank2u">
-        </div>
-      </div>
-
-      <hr style="margin:16px 0;">
-
-      <h3 data-i18n="itemsTitle">Butiran Item</h3>
-      <table id="itemsTable">
-        <thead>
-          <tr>
-            <th style="width:52%;" data-i18n="thDesc">Butiran</th>
-            <th style="width:12%;" data-i18n="thQty">Qty</th>
-            <th style="width:20%;" data-i18n="thPrice">Harga (RM)</th>
-            <th style="width:16%;"></th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-
-      <button class="btn-secondary" onclick="addRow()" data-i18n="btnAddItem">➕ Tambah Item</button>
-      <button class="btn-secondary" onclick="clearItems()" data-i18n="btnClear">🧹 Clear</button>
-
-      <hr style="margin:16px 0;">
-
-      <div class="grid-3">
-        <div>
-          <label data-i18n="lblDiscountType">Diskaun Type</label>
-          <select id="discountType">
-            <option value="rm">RM</option>
-            <option value="percent">%</option>
-          </select>
-        </div>
-        <div>
-          <label data-i18n="lblDiscount">Diskaun</label>
-          <input id="discountVal" type="number" step="0.01" value="0">
-        </div>
-        <div>
-          <label data-i18n="lblSst">SST 6%</label>
-          <div style="display:flex; gap:10px; align-items:center; margin-top:6px;">
-            <input id="sstOn" type="checkbox">
-            <span data-i18n="sstApply">Apply</span>
+        <div class="grid-2">
+          <div>
+            <label data-i18n="lblDocNo">No Resit</label>
+            <input id="docNo" readonly>
+          </div>
+          <div>
+            <label data-i18n="lblDate">Tarikh</label>
+            <input id="docDate" type="date">
           </div>
         </div>
+
+        <label data-i18n="lblCust">Nama Pelanggan (optional)</label>
+        <input id="cust" placeholder="Contoh: Ahmad">
+
+        <label data-i18n="lblCustAddr">Alamat Pelanggan (optional)</label>
+        <input id="custAddr" placeholder="Contoh: Shah Alam, Selangor">
+
+        <div class="grid-2" style="margin-top:10px;">
+          <div>
+            <label data-i18n="lblPayMethod">Kaedah Bayaran (optional)</label>
+            <input id="payMethod" placeholder="Contoh: Cash / Transfer / QR">
+          </div>
+          <div>
+            <label data-i18n="lblPayRef">Rujukan Bayaran (optional)</label>
+            <input id="payRef" placeholder="Contoh: TXN123 / Maybank2u">
+          </div>
+        </div>
+
+        <hr style="margin:16px 0;">
+
+        <h3 data-i18n="itemsTitle">Butiran Item</h3>
+        <table id="itemsTable">
+          <thead>
+            <tr>
+              <th style="width:52%;" data-i18n="thDesc">Butiran</th>
+              <th style="width:12%;" data-i18n="thQty">Qty</th>
+              <th style="width:20%;" data-i18n="thPrice">Harga (RM)</th>
+              <th style="width:16%;"></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <button class="btn-secondary" onclick="addRow()" data-i18n="btnAddItem">➕ Tambah Item</button>
+        <button class="btn-secondary" onclick="clearItems()" data-i18n="btnClear">🧹 Clear</button>
+
+        <hr style="margin:16px 0;">
+
+        <div class="grid-3">
+          <div>
+            <label data-i18n="lblDiscountType">Diskaun Type</label>
+            <select id="discountType">
+              <option value="rm">RM</option>
+              <option value="percent">%</option>
+            </select>
+          </div>
+          <div>
+            <label data-i18n="lblDiscount">Diskaun</label>
+            <input id="discountVal" type="number" step="0.01" value="0">
+          </div>
+          <div>
+            <label data-i18n="lblSst">SST 6%</label>
+            <div style="display:flex; gap:10px; align-items:center; margin-top:6px;">
+              <input id="sstOn" type="checkbox">
+              <span data-i18n="sstApply">Apply</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="totals-box">
+          <div class="totals-row"><span data-i18n="subTotal">Subtotal</span><span>RM <span id="subtotalTxt">0.00</span></span></div>
+          <div class="totals-row"><span data-i18n="discountLabel">Diskaun</span><span>- RM <span id="discountAmtTxt">0.00</span></span></div>
+          <div class="totals-row"><span data-i18n="sstLabel">SST (6%)</span><span>RM <span id="sstAmtTxt">0.00</span></span></div>
+          <hr>
+          <div class="totals-row"><strong data-i18n="totalPaid">TOTAL DIBAYAR</strong><strong>RM <span id="grandTotalTxt">0.00</span></strong></div>
+        </div>
+
+        <label data-i18n="lblNote">Nota (optional)</label>
+        <input id="note" placeholder="Contoh: Terima kasih kerana membeli.">
+
+        <div style="margin-top:14px;">
+          <button class="btn" onclick="generatePDF()" data-i18n="btnDownload">Download PDF</button>
+          <button class="btn-secondary" onclick="newDoc()" data-i18n="btnNew">🆕 Resit Baru</button>
+        </div>
+
+        <p class="small" style="margin-top:14px;">
+          <span data-i18n="helpText">Ada cadangan / perlukan bantuan? Email</span>
+          <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>
+        </p>
       </div>
 
-      <div class="totals-box">
-        <div class="totals-row"><span data-i18n="subTotal">Subtotal</span><span>RM <span id="subtotalTxt">0.00</span></span></div>
-        <div class="totals-row"><span data-i18n="discountLabel">Diskaun</span><span>- RM <span id="discountAmtTxt">0.00</span></span></div>
-        <div class="totals-row"><span data-i18n="sstLabel">SST (6%)</span><span>RM <span id="sstAmtTxt">0.00</span></span></div>
-        <hr>
-        <div class="totals-row"><strong data-i18n="totalPaid">TOTAL DIBAYAR</strong><strong>RM <span id="grandTotalTxt">0.00</span></strong></div>
+      <div class="box">
+        <h3 data-i18n="guideH1">Panduan Resit Untuk Peniaga Malaysia</h3>
+        <p class="muted" data-i18n="guideP1">
+          Resit ialah dokumen bukti bayaran selepas pelanggan sudah membayar. Dalam bisnes kecil, resit sangat penting kerana ia membantu peniaga dan pelanggan sama-sama ada rekod transaksi yang jelas. Resit boleh digunakan untuk jualan tunai, transfer bank, bayaran QR, e-wallet atau bayaran selepas servis selesai.
+        </p>
+        <p class="muted" data-i18n="guideP2">
+          Ramai peniaga kecil hanya simpan bukti bayaran dalam WhatsApp atau screenshot bank. Cara itu boleh digunakan sementara, tetapi semakin banyak transaksi, semakin susah untuk cari semula rekod. Dengan resit PDF, setiap bayaran boleh disimpan dengan nombor resit, tarikh, item, jumlah dan rujukan bayaran yang lebih tersusun.
+        </p>
+
+        <h4 data-i18n="guideH2">Kenapa resit penting untuk bisnes kecil?</h4>
+        <ul class="muted" data-i18n="guideList1">
+          <li><strong>Bukti bayaran:</strong> pelanggan boleh rujuk semula jika ada pertanyaan.</li>
+          <li><strong>Rekod jualan lebih kemas:</strong> peniaga tahu transaksi mana sudah dibayar.</li>
+          <li><strong>Kurangkan salah faham:</strong> jumlah, item, tarikh dan kaedah bayaran jelas dalam satu dokumen.</li>
+          <li><strong>Mudah semak cashflow:</strong> resit membantu peniaga susun duit masuk dengan lebih teratur.</li>
+          <li><strong>Nampak lebih profesional:</strong> pelanggan lebih yakin bila bisnes beri resit rasmi sendiri.</li>
+        </ul>
+
+        <h4 data-i18n="guideH3">Maklumat yang patut ada dalam resit</h4>
+        <p class="muted" data-i18n="guideP3">
+          Resit yang baik biasanya mengandungi nama perniagaan, nombor resit, tarikh, nama pelanggan jika ada, senarai item, kuantiti, harga, jumlah dibayar, kaedah bayaran dan rujukan bayaran. Untuk bisnes kecil, maklumat ini sudah cukup untuk membina rekod transaksi yang jelas dan mudah dirujuk.
+        </p>
+
+        <h4 data-i18n="guideH4">Cara guna resit generator NiagaSenang</h4>
+        <ol class="muted" data-i18n="guideList2">
+          <li>Isi nama perniagaan dan alamat jika perlu.</li>
+          <li>Semak nombor resit dan tarikh.</li>
+          <li>Masukkan nama pelanggan jika mahu.</li>
+          <li>Masukkan kaedah bayaran seperti Cash, Transfer, QR atau e-wallet.</li>
+          <li>Tambah rujukan bayaran seperti nombor transaksi bank jika ada.</li>
+          <li>Tambah item, kuantiti dan harga.</li>
+          <li>Masukkan diskaun atau SST jika berkaitan.</li>
+          <li>Tekan Download PDF untuk simpan dan hantar kepada pelanggan.</li>
+        </ol>
+
+        <h4 data-i18n="guideH5">Kesilapan biasa bila buat resit</h4>
+        <ul class="muted" data-i18n="guideList3">
+          <li>Tidak letak nombor resit yang konsisten.</li>
+          <li>Tidak tulis kaedah bayaran atau rujukan bayaran.</li>
+          <li>Jumlah bayaran tidak sama dengan item yang dibeli.</li>
+          <li>Tidak simpan salinan resit untuk rekod sendiri.</li>
+          <li>Campur duit personal dan duit bisnes sampai rekod jadi keliru.</li>
+        </ul>
+
+        <h4 data-i18n="guideH6">Resit, invoice dan quotation — apa beza?</h4>
+        <p class="muted" data-i18n="guideP4">
+          Quotation digunakan sebelum pelanggan setuju membeli. Invoice digunakan untuk meminta bayaran selepas pelanggan setuju atau selepas kerja dibuat. Resit pula digunakan selepas bayaran diterima sebagai bukti bayaran. Bila peniaga guna dokumen yang betul, rekod jualan dan status bayaran jadi lebih jelas.
+        </p>
       </div>
 
-      <label data-i18n="lblNote">Nota (optional)</label>
-      <input id="note" placeholder="Contoh: Terima kasih kerana membeli.">
+      <div class="box">
+        <h3 data-i18n="faqH1">FAQ Resit</h3>
 
-      <div style="margin-top:14px;">
-        <button class="btn" onclick="generatePDF()" data-i18n="btnDownload">Download PDF</button>
-        <button class="btn-secondary" onclick="newDoc()" data-i18n="btnNew">🆕 Resit Baru</button>
+        <h4 data-i18n="faqQ1">Adakah resit ini percuma?</h4>
+        <p class="muted" data-i18n="faqA1">Ya, tool resit NiagaSenang boleh digunakan secara percuma tanpa login.</p>
+
+        <h4 data-i18n="faqQ2">Data resit disimpan di mana?</h4>
+        <p class="muted" data-i18n="faqA2">Draft resit disimpan dalam browser menggunakan localStorage. Jika anda clear browser data atau tukar device, draft boleh hilang.</p>
+
+        <h4 data-i18n="faqQ3">Boleh guna untuk bayaran transfer bank?</h4>
+        <p class="muted" data-i18n="faqA3">Boleh. Anda boleh isi kaedah bayaran sebagai Transfer dan masukkan nombor rujukan transaksi bank pada bahagian Rujukan Bayaran.</p>
+
+        <h4 data-i18n="faqQ4">Adakah resit sama dengan invoice?</h4>
+        <p class="muted" data-i18n="faqA4">Tidak. Invoice biasanya digunakan untuk meminta bayaran. Resit digunakan selepas bayaran diterima sebagai bukti pembayaran.</p>
       </div>
 
-      <p class="small" style="margin-top:14px;">
-        <span data-i18n="helpText">Ada cadangan / perlukan bantuan? Email</span>
-        <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>
-      </p>
+      <div class="box">
+        <h3 data-i18n="relatedTitle">Tools & Panduan Berkaitan</h3>
+        <div class="link-grid">
+          <a href="invoice.html">
+            <div class="link-title" data-i18n="relInvoice">Invoice Generator</div>
+            <div class="link-desc" data-i18n="relInvoiceDesc">Buat invoice untuk meminta bayaran daripada pelanggan.</div>
+          </a>
+          <a href="quotation.html">
+            <div class="link-title" data-i18n="relQuotation">Quotation Generator</div>
+            <div class="link-desc" data-i18n="relQuotationDesc">Buat quotation sebelum pelanggan setuju membeli.</div>
+          </a>
+          <a href="contoh-resit-malaysia.html">
+            <div class="link-title" data-i18n="relGuide">Contoh Resit Malaysia</div>
+            <div class="link-desc" data-i18n="relGuideDesc">Panduan contoh resit untuk peniaga Malaysia.</div>
+          </a>
+        </div>
+      </div>
 
-      <p style="margin-top:16px;">
+      <p style="margin-top:18px;">
         <a href="index.html" data-i18n="backLink">← Kembali ke NiagaSenang</a>
       </p>
 
-      <!-- ✅ Standard footer (INSIDE .card) -->
-      <footer class="ns-footer">
-        <div class="ns-footer__links">
-          <a href="privacy.html">Privacy Policy</a>
-          <span class="ns-footer__sep">•</span>
-          <a href="terms.html">Terms of Use</a>
-          <span class="ns-footer__sep">•</span>
-          <a href="mailto:niagasenang@gmail.com">niagasenang@gmail.com</a>
+      <div style="text-align:center;margin-top:22px;padding-top:16px;border-top:1px solid #e5e7eb;">
+        <div class="footer-links">
+          <a href="about.html" data-i18n="fAbout">About</a>
+          <span>•</span>
+          <a href="terms.html" data-i18n="fTerms">Terms</a>
+          <span>•</span>
+          <a href="contact.html" data-i18n="fContact">Contact</a>
+          <span>•</span>
+          <a href="privacy.html" data-i18n="fPrivacy">Privacy Policy</a>
         </div>
-
-        <div class="ns-footer__copy">
-          © <span id="nsYear"></span> NiagaSenang. All rights reserved.
+        <div class="small" style="margin-top:10px;">
+          © <span id="yearNow"></span> NiagaSenang — <span data-i18n="fNote">Tool percuma untuk peniaga Malaysia.</span>
         </div>
-      </footer>
+      </div>
 
     </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
-    /* =======================
-       Language (shared key)
-    ======================= */
     const LANG_KEY = "ns_lang";
     let CURRENT_LANG = "ms";
 
     const I18N = {
       ms: {
-        docTitle: "Resit Percuma Pro Malaysia | NiagaSenang",
-        h2: "🧾 Resit Percuma (Pro)",
-        subtitle: "Multi-item, diskaun, SST 6% & auto numbering. Data auto simpan (draft).",
+        docTitle: "Resit Percuma Pro Malaysia | Buat Receipt PDF Online | NiagaSenang",
+        h2: "🧾 Resit Percuma Pro Malaysia",
+        subtitle: "Buat resit PDF yang kemas selepas pelanggan membuat bayaran. Sesuai untuk peniaga kecil, freelancer, seller online, kedai makan, servis rumah, katering, printing dan bisnes yang perlukan bukti bayaran.",
+        toolTitle: "Borang Resit",
+        toolDesc: "Isi maklumat bisnes, pelanggan, bayaran dan item jualan. Sistem akan kira subtotal, diskaun, SST dan total dibayar secara automatik.",
 
         lblBiz: "Nama Perniagaan",
         phBiz: "Contoh: Kedai Makan Pak Ali",
@@ -293,10 +412,46 @@
 
         helpText: "Ada cadangan / perlukan bantuan? Email",
         backLink: "← Kembali ke NiagaSenang",
-
         phItemDesc: "Contoh: Nasi Ayam",
 
-        // PDF labels
+        guideH1: "Panduan Resit Untuk Peniaga Malaysia",
+        guideP1: "Resit ialah dokumen bukti bayaran selepas pelanggan sudah membayar. Dalam bisnes kecil, resit sangat penting kerana ia membantu peniaga dan pelanggan sama-sama ada rekod transaksi yang jelas. Resit boleh digunakan untuk jualan tunai, transfer bank, bayaran QR, e-wallet atau bayaran selepas servis selesai.",
+        guideP2: "Ramai peniaga kecil hanya simpan bukti bayaran dalam WhatsApp atau screenshot bank. Cara itu boleh digunakan sementara, tetapi semakin banyak transaksi, semakin susah untuk cari semula rekod. Dengan resit PDF, setiap bayaran boleh disimpan dengan nombor resit, tarikh, item, jumlah dan rujukan bayaran yang lebih tersusun.",
+        guideH2: "Kenapa resit penting untuk bisnes kecil?",
+        guideList1: "<li><strong>Bukti bayaran:</strong> pelanggan boleh rujuk semula jika ada pertanyaan.</li><li><strong>Rekod jualan lebih kemas:</strong> peniaga tahu transaksi mana sudah dibayar.</li><li><strong>Kurangkan salah faham:</strong> jumlah, item, tarikh dan kaedah bayaran jelas dalam satu dokumen.</li><li><strong>Mudah semak cashflow:</strong> resit membantu peniaga susun duit masuk dengan lebih teratur.</li><li><strong>Nampak lebih profesional:</strong> pelanggan lebih yakin bila bisnes beri resit rasmi sendiri.</li>",
+        guideH3: "Maklumat yang patut ada dalam resit",
+        guideP3: "Resit yang baik biasanya mengandungi nama perniagaan, nombor resit, tarikh, nama pelanggan jika ada, senarai item, kuantiti, harga, jumlah dibayar, kaedah bayaran dan rujukan bayaran. Untuk bisnes kecil, maklumat ini sudah cukup untuk membina rekod transaksi yang jelas dan mudah dirujuk.",
+        guideH4: "Cara guna resit generator NiagaSenang",
+        guideList2: "<li>Isi nama perniagaan dan alamat jika perlu.</li><li>Semak nombor resit dan tarikh.</li><li>Masukkan nama pelanggan jika mahu.</li><li>Masukkan kaedah bayaran seperti Cash, Transfer, QR atau e-wallet.</li><li>Tambah rujukan bayaran seperti nombor transaksi bank jika ada.</li><li>Tambah item, kuantiti dan harga.</li><li>Masukkan diskaun atau SST jika berkaitan.</li><li>Tekan Download PDF untuk simpan dan hantar kepada pelanggan.</li>",
+        guideH5: "Kesilapan biasa bila buat resit",
+        guideList3: "<li>Tidak letak nombor resit yang konsisten.</li><li>Tidak tulis kaedah bayaran atau rujukan bayaran.</li><li>Jumlah bayaran tidak sama dengan item yang dibeli.</li><li>Tidak simpan salinan resit untuk rekod sendiri.</li><li>Campur duit personal dan duit bisnes sampai rekod jadi keliru.</li>",
+        guideH6: "Resit, invoice dan quotation — apa beza?",
+        guideP4: "Quotation digunakan sebelum pelanggan setuju membeli. Invoice digunakan untuk meminta bayaran selepas pelanggan setuju atau selepas kerja dibuat. Resit pula digunakan selepas bayaran diterima sebagai bukti bayaran. Bila peniaga guna dokumen yang betul, rekod jualan dan status bayaran jadi lebih jelas.",
+
+        faqH1: "FAQ Resit",
+        faqQ1: "Adakah resit ini percuma?",
+        faqA1: "Ya, tool resit NiagaSenang boleh digunakan secara percuma tanpa login.",
+        faqQ2: "Data resit disimpan di mana?",
+        faqA2: "Draft resit disimpan dalam browser menggunakan localStorage. Jika anda clear browser data atau tukar device, draft boleh hilang.",
+        faqQ3: "Boleh guna untuk bayaran transfer bank?",
+        faqA3: "Boleh. Anda boleh isi kaedah bayaran sebagai Transfer dan masukkan nombor rujukan transaksi bank pada bahagian Rujukan Bayaran.",
+        faqQ4: "Adakah resit sama dengan invoice?",
+        faqA4: "Tidak. Invoice biasanya digunakan untuk meminta bayaran. Resit digunakan selepas bayaran diterima sebagai bukti pembayaran.",
+
+        relatedTitle: "Tools & Panduan Berkaitan",
+        relInvoice: "Invoice Generator",
+        relInvoiceDesc: "Buat invoice untuk meminta bayaran daripada pelanggan.",
+        relQuotation: "Quotation Generator",
+        relQuotationDesc: "Buat quotation sebelum pelanggan setuju membeli.",
+        relGuide: "Contoh Resit Malaysia",
+        relGuideDesc: "Panduan contoh resit untuk peniaga Malaysia.",
+
+        fAbout: "About",
+        fTerms: "Terms",
+        fContact: "Contact",
+        fPrivacy: "Privacy Policy",
+        fNote: "Tool percuma untuk peniaga Malaysia.",
+
         pdfTitle: "RESIT",
         pdfDocNo: "No Resit:",
         pdfDate: "Tarikh:",
@@ -315,14 +470,15 @@
         pdfTotalPaid: "TOTAL DIBAYAR",
         pdfNote: "Nota:",
         pdfFooter: "Generated by NiagaSenang",
-
         pdfBizFallback: "Nama Perniagaan"
       },
 
       en: {
-        docTitle: "Pro Receipt Generator | NiagaSenang",
-        h2: "🧾 Free Receipt (Pro)",
-        subtitle: "Multi-item, discounts, optional tax & auto numbering. Auto-saves as draft.",
+        docTitle: "Free Pro Receipt Generator Malaysia | Create Receipt PDF Online | NiagaSenang",
+        h2: "🧾 Free Pro Receipt Generator Malaysia",
+        subtitle: "Create clean receipt PDFs after customers make payment. Suitable for small businesses, freelancers, online sellers, restaurants, home services, catering, printing and businesses that need payment proof.",
+        toolTitle: "Receipt Form",
+        toolDesc: "Enter business details, customer details, payment details and sold items. The tool will calculate subtotal, discount, tax and total paid automatically.",
 
         lblBiz: "Business Name",
         phBiz: "Example: Pak Ali Restaurant",
@@ -368,8 +524,45 @@
 
         helpText: "Suggestions / need help? Email",
         backLink: "← Back to NiagaSenang",
-
         phItemDesc: "Example: Chicken Rice",
+
+        guideH1: "Receipt Guide for Malaysian Sellers",
+        guideP1: "A receipt is proof of payment after a customer has paid. For small businesses, receipts are important because both seller and customer have a clear transaction record. Receipts can be used for cash sales, bank transfers, QR payments, e-wallet payments or payments after a service is completed.",
+        guideP2: "Many small sellers only keep payment proof in WhatsApp or bank screenshots. This may work temporarily, but as transactions increase, records become harder to find. With receipt PDFs, every payment can be saved with receipt number, date, item, amount and payment reference in a more organized way.",
+        guideH2: "Why receipts matter for small businesses",
+        guideList1: "<li><strong>Proof of payment:</strong> customers can refer back if they have questions.</li><li><strong>Cleaner sales records:</strong> sellers know which transaction has been paid.</li><li><strong>Less misunderstanding:</strong> amount, item, date and payment method are shown clearly.</li><li><strong>Easier cashflow tracking:</strong> receipts help sellers organize money-in records.</li><li><strong>More professional:</strong> customers trust businesses that provide proper receipts.</li>",
+        guideH3: "What should be included in a receipt",
+        guideP3: "A good receipt usually includes business name, receipt number, date, customer name if available, item list, quantity, price, total paid, payment method and payment reference. For small businesses, this is enough to create clear transaction records.",
+        guideH4: "How to use NiagaSenang receipt generator",
+        guideList2: "<li>Enter business name and address if needed.</li><li>Check the receipt number and date.</li><li>Enter customer name if needed.</li><li>Enter payment method such as Cash, Transfer, QR or e-wallet.</li><li>Add payment reference such as bank transaction number if available.</li><li>Add items, quantity and price.</li><li>Enter discount or tax if applicable.</li><li>Click Download PDF to save and send to the customer.</li>",
+        guideH5: "Common receipt mistakes",
+        guideList3: "<li>No consistent receipt number.</li><li>No payment method or payment reference.</li><li>Payment amount does not match purchased items.</li><li>Not keeping a receipt copy for your own record.</li><li>Mixing personal money and business money until records become confusing.</li>",
+        guideH6: "Receipt, invoice and quotation — what is the difference?",
+        guideP4: "A quotation is used before the customer agrees to buy. An invoice is used to request payment after the customer agrees or after work is completed. A receipt is used after payment is received as payment proof. Using the right document makes sales records and payment status clearer.",
+
+        faqH1: "Receipt FAQ",
+        faqQ1: "Is this receipt tool free?",
+        faqA1: "Yes, NiagaSenang receipt tool is free to use without login.",
+        faqQ2: "Where is receipt data stored?",
+        faqA2: "Receipt drafts are stored in your browser using localStorage. If you clear browser data or switch device, the draft may be lost.",
+        faqQ3: "Can it be used for bank transfer payments?",
+        faqA3: "Yes. You can enter Transfer as payment method and add the bank transaction reference under Payment Reference.",
+        faqQ4: "Is a receipt the same as an invoice?",
+        faqA4: "No. An invoice is usually used to request payment. A receipt is used after payment is received as proof of payment.",
+
+        relatedTitle: "Related Tools & Guides",
+        relInvoice: "Invoice Generator",
+        relInvoiceDesc: "Create invoices to request payment from customers.",
+        relQuotation: "Quotation Generator",
+        relQuotationDesc: "Create quotations before customers agree to buy.",
+        relGuide: "Receipt Example Malaysia",
+        relGuideDesc: "Receipt examples and guide for Malaysian sellers.",
+
+        fAbout: "About",
+        fTerms: "Terms",
+        fContact: "Contact",
+        fPrivacy: "Privacy Policy",
+        fNote: "Free tools for Malaysian sellers.",
 
         pdfTitle: "RECEIPT",
         pdfDocNo: "Receipt No:",
@@ -389,7 +582,6 @@
         pdfTotalPaid: "TOTAL PAID",
         pdfNote: "Note:",
         pdfFooter: "Generated by NiagaSenang",
-
         pdfBizFallback: "Business Name"
       }
     };
@@ -421,7 +613,6 @@
         if (val != null && val !== "") el.innerHTML = val;
       });
 
-      // placeholders
       biz.placeholder = t("phBiz");
       bizAddr.placeholder = t("phBizAddr");
       cust.placeholder = t("phCust");
@@ -430,13 +621,11 @@
       payRef.placeholder = t("phPayRef");
       note.placeholder = t("phNote");
 
-      // update existing item row placeholders
       document.querySelectorAll("#itemsTable tbody tr .desc").forEach(inp => {
         inp.placeholder = t("phItemDesc");
       });
     }
 
-    // init language
     (function initLang(){
       const saved = localStorage.getItem(LANG_KEY);
       const start = saved || detectBrowserLang();
@@ -447,7 +636,6 @@
       });
     })();
 
-    /* ========= helpers ========= */
     function money(n){ return (Math.round((Number(n||0) + Number.EPSILON) * 100)/100).toFixed(2); }
     function today(){ return new Date().toISOString().slice(0,10); }
 
@@ -465,7 +653,6 @@
       return "R-" + String(seq).padStart(4,"0");
     }
 
-    /* ========= items ========= */
     function hookRow(tr){
       tr.querySelectorAll("input").forEach(inp=>{
         inp.addEventListener("input", ()=>{ calc(); saveDraft(); });
@@ -509,7 +696,6 @@
       saveDraft();
     }
 
-    /* ========= calc ========= */
     function calc(){
       let sub=0;
       const rows=[...document.querySelectorAll("#itemsTable tbody tr")];
@@ -540,7 +726,6 @@
       return {sub, dAmt, sst, total};
     }
 
-    /* ========= save/load ========= */
     function saveDraft(){
       const rows=[...document.querySelectorAll("#itemsTable tbody tr")].map(r=>({
         desc: r.querySelector(".desc").value.trim(),
@@ -604,7 +789,6 @@
       saveDraft();
     }
 
-    /* ========= PDF ========= */
     function wrapText(doc, text, x, y, maxW, fontSize){
       doc.setFontSize(fontSize);
       const lines = doc.splitTextToSize(text, maxW);
@@ -616,7 +800,6 @@
       const {jsPDF}=window.jspdf;
       const doc=new jsPDF({ unit:"pt", format:"a4" });
 
-      // ✅ EVENT: download_resit
       try{
         gtag('event','download_resit',{ event_category:'tools', event_label:'resit_pdf' });
       }catch(e){}
@@ -636,7 +819,6 @@
       const pr = (payRef.value || "").trim();
       const noteVal = (note.value || "").trim();
 
-      // Header
       doc.setFont("helvetica","bold");
       doc.setFontSize(22);
       doc.text(t("pdfTitle"), margin, y);
@@ -657,7 +839,6 @@
       doc.line(margin, y, pageW - margin, y);
       y += 18;
 
-      // Blocks
       const leftX = margin;
       const rightX = margin + 280;
 
@@ -684,7 +865,6 @@
 
       y = Math.max(yLeft, yRight) + 10;
 
-      // Payment info (optional)
       if(pm || pr){
         doc.setFont("helvetica","bold");
         doc.text(t("pdfPay"), leftX, y);
@@ -699,7 +879,6 @@
         y += 10;
       }
 
-      // Table
       const tableX = margin;
       const tableW = pageW - margin*2;
       const colDesc = Math.floor(tableW * 0.52);
@@ -754,7 +933,6 @@
 
       y += 18;
 
-      // Totals
       const {sub, dAmt, sst, total} = calc();
       const boxW = 280;
       const boxH = 110;
@@ -797,7 +975,6 @@
       doc.text("RM " + money(total), boxX + boxW - 14, ty, {align:"right"});
       doc.setFontSize(11);
 
-      // Note
       if(noteVal){
         y = y + boxH + 22;
         doc.setFont("helvetica","bold");
@@ -807,7 +984,6 @@
         wrapText(doc, noteVal, margin, y, pageW - margin*2, 11);
       }
 
-      // Footer
       doc.setFontSize(9);
       doc.setTextColor(140);
       doc.text(t("pdfFooter"), margin, pageH - 24);
@@ -816,23 +992,15 @@
       doc.save(`${safeNo}.pdf`);
     }
 
-    /* ========= listeners ========= */
     ["biz","bizAddr","cust","custAddr","payMethod","payRef","discountType","discountVal","note","docDate"].forEach(id=>{
       document.getElementById(id).addEventListener("input", ()=>{ calc(); saveDraft(); });
     });
     document.getElementById("sstOn").addEventListener("change", ()=>{ calc(); saveDraft(); });
 
-    /* init */
+    document.getElementById("yearNow").textContent = new Date().getFullYear();
+
     loadDraft();
     calc();
-  </script>
-
-  <!-- ✅ Auto year for footer -->
-  <script>
-    (function () {
-      var el = document.getElementById('nsYear');
-      if (el) el.textContent = new Date().getFullYear();
-    })();
   </script>
 </body>
 </html>
